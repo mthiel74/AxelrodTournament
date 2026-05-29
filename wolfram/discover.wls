@@ -130,5 +130,6 @@ Export[FileNameJoin[{dataDir, "discovered_strategies.csv"}],
 
 (* Figures are rendered by wolfram/figures.wls from the CSV/TSV outputs. *)
 Print["[discover] done."];
-Print["  eps=0   champ -> ", Thread[paramNames -> Round[gsResults[0.]["champ"], 0.01]]];
-Print["  eps=0.2 champ -> ", Thread[paramNames -> Round[gsResults[0.2]["champ"], 0.01]]];
+With[{pn = {"open", "pCC", "pCD", "pDC", "pDD"}},
+  Print["  eps=0   champ -> ", Thread[pn -> Round[gsResults[0.]["champ"], 0.01]]];
+  Print["  eps=0.2 champ -> ", Thread[pn -> Round[gsResults[0.2]["champ"], 0.01]]]];

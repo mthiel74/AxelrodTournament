@@ -28,8 +28,8 @@ names = Axelrod`strategyNames;
 n     = Length[names];
 
 (* ---- parameters ---------------------------------------------------- *)
-rounds   = 150;
-reps     = 60;
+rounds   = 200;
+reps     = 200;
 mu       = 0.001;                 (* replicator mutation (keeps interior) *)
 genSteps = 4000;                  (* replicator iterations *)
 sweep    = Range[0., 0.20, 0.02]; (* noise levels for the headline sweep *)
