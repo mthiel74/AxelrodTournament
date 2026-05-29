@@ -1,0 +1,2 @@
+(* champion: forgiveness scaled to observed flip rate  (sweep score 2.3632) *)
+candidate[me_,opp_]:=If[opp==={},1,If[Last[opp]==1,1,Module[{flips=If[Length[opp]>=2,N@Mean@Table[Boole[opp[[i]]!=opp[[i-1]]],{i,2,Length[opp]}],0.]},If[RandomReal[]<Clip[2 flips,{0,0.5}],1,0]]]];
