@@ -269,33 +269,195 @@ defection."}]
 }]];
 
 (* ===================================================================== *)
-(* 5. CONCLUSION + REPRODUCIBILITY                                        *)
+(* 5. AUTORESEARCH                                                        *)
 (* ===================================================================== *)
 writeAll[{
-  hd1["5. Conclusions"],
+  hd1["5. Letting an automated-research loop invent strategies"],
+  para[{"The discovery in \[Section]4 searched a continuous parameter box. We \
+can also run the loop the way a human researcher would: ", bold["propose a \
+named hypothesis, evaluate it, keep it if it wins, repeat"],
+    " \[Dash] exactly the shape of Karpathy-style ", ital["autoresearch"],
+    " scaffolds (an AI edits one solution file; a fixed harness scores it; \
+improvements are committed). We ported that loop to this domain: ",
+    mono["autoresearch/evaluate.wls"], " is the fixed harness (an 18-strategy \
+field \[Times] six noise levels) and a sequence of hypotheses is proposed, \
+each scored by mean field score averaged over the noise sweep."}],
+  codeIn["champion <- Tit-for-Tat
+LOOP:  propose a strategy  ->  evaluate vs the field under noise
+       if score > champion: keep (save to champions/)  else: revert
+       append (iter, score, status, description) to results.tsv"],
+  para[{"The result is a research log. Against this field (TFT baseline ",
+    mono["2.316"], "), the loop found ", bold["seven strategies that beat \
+Tit-for-Tat"], ". The winners are instructive:"}],
+  bullets[{
+    {bold["Tit-for-2-Tats (2.400). "],
+     "Patience beats vigilance: absorbing a single (possibly accidental) \
+defection before retaliating is the single biggest win."},
+    {bold["Generous Tit-for-2-Tats and Generous TFT. "],
+     "Tolerance plus probabilistic forgiveness compounds the gain."},
+    {bold["AdaptiveGenerous \[Dash] a self-tuning entrant. "],
+     "It estimates the channel noise online (from how often the opponent's \
+moves flip) and scales its own forgiveness to match \[Dash] beating TFT with \
+no hand-set forgiveness constant."}}],
+  para[{bold["What lost is as telling as what won. "],
+    "Plain contrition and Win-Stay-Lose-Shift (Pavlov) scored ", ital["below"],
+    " TFT in this well-mixed field \[Dash] forgiveness has to be ",
+    ital["patient"], " (two-strikes), not merely reflexive. Hold that thought: \
+Pavlov's fortunes change once we add spatial structure."}]
+}];
+
+(* ===================================================================== *)
+(* 6. BEYOND MEMORY-ONE                                                   *)
+(* ===================================================================== *)
+writeAll[{
+  hd1["6. Beyond memory-one: evolving finite-state machines"],
+  para[{"Memory-one strategies condition only on the previous round. Do richer \
+strategies help? We let a genetic algorithm evolve ", bold["finite-state \
+(Mealy) machines"], " \[Dash] each a little automaton with up to four internal \
+states, an action and a state-transition for every observed opponent move. \
+This space contains TFT, Grim, Pavlov and much else; we verified it encodes \
+TFT and Grim exactly before evolving it."}],
+  imgCell["fsm_vs_tft.png", 680],
+  captionCell["Evolved finite-state machines vs Tit-for-Tat across noise \[Dash] \
+the machines beat TFT at essentially every noise level."],
+  imgCell["fsm_complexity_vs_noise.png", 680],
+  captionCell["The best evolved machine uses 2\[Dash]4 of its 4 reachable \
+states \[Dash] genuine multi-state memory, beyond what memory-one can express. \
+The gain over the memory-one optimum is real but modest: against this field, \
+most of the advantage is already captured by one round of memory plus the \
+right amount of forgiveness."]
+}];
+
+(* ===================================================================== *)
+(* 7. SPATIAL STRUCTURE                                                   *)
+(* ===================================================================== *)
+writeAll[{
+  hd1["7. Spatial structure makes cooperation robust to noise"],
+  para[{"Everything so far assumed a ", ital["well-mixed"],
+    " population. But real agents interact ", bold["locally"],
+    ". We place strategies on the sites of a 32\[Times]32 lattice (a torus). \
+Each generation, every site plays its four neighbours and imitates fitter \
+neighbours (Fermi rule). This is Nowak \[Dash] May spatial game theory; the \
+classic result is that clustering lets cooperators survive. We ask what noise \
+does to it."}],
+  imgCell["spatial_composition_vs_noise.png", 760],
+  captionCell["Final lattice composition vs noise. At low noise the lattice is \
+almost entirely cooperative reciprocators (Grim, Generous TFT, Tit-for-Tat), \
+with unconditional defection nearly absent. As noise rises AllD gains ground \
+\[Dash] but never takes over: cooperation persists around 60% even at \
+\[Epsilon]=0.2."],
+  imgCell["spatial_snapshots.png", 720],
+  captionCell["Lattice snapshots (colours = strategies; legend below). \
+Reciprocators survive by forming contiguous clusters that protect their \
+cooperative interior. Noise frays the cluster boundaries but does not dissolve \
+them."],
+  imgCell["spatial_legend.png", 520],
+  para[{bold["Spatial structure makes cooperation far more robust to noise. "],
+    "In the well-mixed model (\[Section]3), once \[Epsilon] is large the \
+population collapses almost entirely to defection. On the lattice the same \
+noise erodes cooperation only partially: clustering lets reciprocators shield \
+one another, so cooperation degrades gracefully (97% \[Rule] ~60%) instead of \
+collapsing. ", bold["Whether noise is catastrophic or merely corrosive for \
+cooperation depends on population structure."]}]
+}];
+
+(* ===================================================================== *)
+(* 8. RED-QUEEN CO-EVOLUTION                                              *)
+(* ===================================================================== *)
+writeAll[{
+  hd1["8. Red-Queen co-evolution"],
+  para[{"So far strategies were optimised against a ", ital["fixed"],
+    " field. What if the field itself evolves? We co-evolve a population of \
+memory-one genomes against ", bold["itself"],
+    ": each individual's fitness is its score against the current population, \
+which changes every generation. This is a ", ital["Red Queen"],
+    " race \[Dash] you must keep adapting just to hold your rank."}],
+  imgCell["coevolution_coop_traj.png", 760],
+  captionCell["Population-mean cooperativeness over generations. At \
+\[Epsilon]=0 the population climbs to stable, highly cooperative reciprocity. \
+At \[Epsilon]=0.15 it rises, then becomes restless and slides back \[Dash] \
+noise prevents a stable cooperative equilibrium from locking in."],
+  imgCell["coevolution_genome_vs_noise.png", 760],
+  captionCell["The co-evolved mean genome vs noise. As noise rises the \
+population becomes less rigidly cooperative (pCC falls) but more forgiving \
+(pCD rises) and more able to recover from mutual defection (pDD rises) \[Dash] \
+a third independent route to the same conclusion: forgiveness answers noise."]
+}];
+
+(* ===================================================================== *)
+(* 9. ESS INVASION ANALYSIS                                               *)
+(* ===================================================================== *)
+writeAll[{
+  hd1["9. Which strategies are evolutionarily stable?"],
+  para[{"A rigorous capstone. For a panel of 25 strategies (classics, modern \
+entrants, and the discovered champions) we compute, at each noise level, the \
+pairwise ", bold["invasion matrix"], ": can a rare mutant ", math["M"],
+    " invade a resident population of ", math["R"], "? It can if ",
+    math["A[M,R] > A[R,R]"], ". A strategy is ", bold["evolutionarily stable"],
+    " if no mutant can invade it."}],
+  imgCell["ess_stability_map.png", 640],
+  captionCell["Evolutionarily stable strategies vs noise (green = no mutant \
+invades). At \[Epsilon]=0 some forgiving strategies are stable alongside the \
+defectors; the instant noise appears the stable set collapses toward AllD/Grim \
+\[Dash] forgiving strategies lose evolutionary stability."],
+  imgCell["ess_invasibility_highnoise.png", 620],
+  captionCell["Invasibility matrix at \[Epsilon]=0.2 (red = row invades \
+column). The defectors have the cleanest columns."],
+  para[{bold["Three meanings of \[OpenCurlyDoubleQuote]stable.\
+\[CloseCurlyDoubleQuote] "],
+    "\[OpenCurlyDoubleQuote]Which strategy is stable?\[CloseCurlyDoubleQuote] \
+has ", ital["three"], " answers: (i) ", bold["ESS"],
+    " (uninvadable) favours the defectors, more so under noise; (ii) ",
+    bold["replicator-stable from a cooperative start"], " (\[Section]3) gives \
+generous reciprocity collapsing under noise; (iii) ", bold["spatially \
+resilient"], " (\[Section]7) gives reciprocator clusters that survive noise. \
+All three are noise-dependent and they disagree \[Dash] there is no single \
+best strategy, only best-for-a-given-world."}]
+}];
+
+(* ===================================================================== *)
+(* 10. CONCLUSION + REPRODUCIBILITY                                       *)
+(* ===================================================================== *)
+writeAll[{
+  hd1["10. Conclusions"],
   bullets[{
     {bold["Tit-for-Tat is excellent but not optimal. "],
      "In a cooperative field, more forgiving reciprocators (Generous TFT, \
 Tit-for-2-Tats) edge it out \[Dash] and extortion finishes last."},
-    {bold["Evolutionary stability is noise-dependent. "],
-     "Replicator and Moran dynamics agree: generous cooperation is stable at \
-low noise; unconditional defection takes over at high noise."},
-    {bold["Forgiveness is the answer to noise. "],
-     "Both the evolutionary winners and the algorithmically discovered \
-strategies become more forgiving as noise rises \[Dash] up to the point where \
-the whole field collapses."}
+    {bold["Forgiveness must be patient. "],
+     "The autoresearch loop found two-strikes tolerance (Tit-for-2-Tats) beats \
+every reflexive scheme; a self-tuning strategy that estimates the noise also \
+beats TFT."},
+    {bold["\[OpenCurlyDoubleQuote]Stable\[CloseCurlyDoubleQuote] has three \
+answers. "],
+     "ESS favours defectors; replicator-from-cooperative-start gives generous \
+reciprocity collapsing under noise; spatial structure gives reciprocator \
+clusters that survive. All noise-dependent, and they disagree."},
+    {bold["Population structure changes the effect of noise. "],
+     "Well-mixed: noise drives cooperation to collapse. Spatial: clustering \
+keeps it resilient, degrading gracefully instead of collapsing."},
+    {bold["Many roads, one lesson. "],
+     "Fixed-target search, finite-state GP, replicator and Moran dynamics, \
+open-ended co-evolution, and ESS analysis all converge: forgiveness is the \
+answer to noise \[Dash] until noise is so high that nothing sustains \
+cooperation in a well-mixed world."}
   }],
   hd1["Reproducing this work"],
   para[{"Everything here is a few seconds to a few minutes of Wolfram \
 Language \[Dash] no external data, no API keys. The full source is on GitHub."}],
-  codeIn["wolframscript -file tests/sanity.wls        # correctness checks
-wolframscript -file wolfram/tournament.wls  # round-robin ranking
-wolframscript -file wolfram/evolution.wls   # replicator + Moran vs noise
-wolframscript -file wolfram/discover.wls     # strategy discovery
-wolframscript -file wolfram/figures.wls      # regenerate all figures"],
+  codeIn["wolframscript -file tests/sanity.wls            # correctness checks
+wolframscript -file wolfram/tournament.wls      # round-robin ranking
+wolframscript -file wolfram/evolution.wls       # replicator + Moran vs noise
+wolframscript -file wolfram/discover.wls         # memory-one discovery
+wolframscript -file autoresearch/run_search.wls  # autoresearch champions
+wolframscript -file wolfram/fsm_discover.wls     # evolve finite-state machines
+wolframscript -file wolfram/spatial.wls          # spatial / lattice evolution
+wolframscript -file wolfram/coevolution.wls      # Red-Queen co-evolution
+wolframscript -file wolfram/ess.wls              # ESS invasion analysis
+wolframscript -file wolfram/figures.wls          # regenerate base figures"],
   para[{ital["Built entirely in the Wolfram Language. The strategy-discovery \
-loop borrows the propose \[Rule] evaluate \[Rule] accept shape of \
-automated-research scaffolds, re-implemented natively in WL."]}]
+and autoresearch loops borrow the propose \[Rule] evaluate \[Rule] accept \
+shape of automated-research scaffolds, re-implemented natively in WL."]}]
 }];
 
 (* ===================================================================== *)
