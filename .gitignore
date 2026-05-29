@@ -1,0 +1,5 @@
+data/raw/
+*.mx
+.DS_Store
+*.tmp
+community/.img-cache/
