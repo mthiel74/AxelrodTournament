@@ -95,10 +95,10 @@ Print["[discover] hill-climb at eps=0 and eps=0.1 ..."];
 hcLow  = hillClimb[0.,  150, 0.12];
 hcHigh = hillClimb[0.1, 150, 0.12];
 
+(* write RAW numbers (NumberForm objects do not serialise to TSV) *)
 writeLog[file_, hc_] := Export[FileNameJoin[{dataDir, file}],
   Prepend[
-    {#[[1]], NumberForm[#[[3]], {6, 4}],
-       Sequence @@ (NumberForm[#, {4, 3}] & /@ #[[2]]), #[[4]]} & /@ hc["log"],
+    {#[[1]], N[#[[3]]], Sequence @@ N[#[[2]]], #[[4]]} & /@ hc["log"],
     {"iter", "fitness", "open", "pCC", "pCD", "pDC", "pDD", "status"}],
   "TSV"];
 writeLog["discovery_log_eps0.tsv",  hcLow];

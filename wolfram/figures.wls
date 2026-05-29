@@ -133,7 +133,7 @@ Export[FileNameJoin[{imgDir, "discovered_vs_tft.png"}],
 (* greedy hill-climb progress (best-so-far) from the TSV logs *)
 bestSoFar[file_] := Module[{raw, fit},
   raw = Import[FileNameJoin[{dataDir, file}], "TSV"];
-  fit = ToExpression /@ raw[[2 ;;, 2]];
+  fit = N[raw[[2 ;;, 2]]];     (* fitness column is numeric in the TSV *)
   FoldList[Max, First[fit], Rest[fit]]];
 Export[FileNameJoin[{imgDir, "discovery_progress.png"}],
   ListLinePlot[{bestSoFar["discovery_log_eps0.tsv"],
