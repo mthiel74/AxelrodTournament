@@ -16,14 +16,12 @@
         the long-run average composition.
 
     We sweep the noise level eps and show the stable mix depends on it.
-    Outputs: data/*.csv and docs/images/*.png                          *)
+    Outputs: data/*.csv  (figures are rendered by wolfram/figures.wls).  *)
 
 Get[FileNameJoin[{DirectoryName[$InputFileName], "axelrod.wl"}]];
 repoRoot = ParentDirectory @ DirectoryName[$InputFileName];
 dataDir  = FileNameJoin[{repoRoot, "data"}];
-imgDir   = FileNameJoin[{repoRoot, "docs", "images"}];
-Scan[If[! DirectoryQ[#], CreateDirectory[#, CreateIntermediateDirectories -> True]] &,
-  {dataDir, imgDir}];
+If[! DirectoryQ[dataDir], CreateDirectory[dataDir]];
 
 SeedRandom[2026];
 names = Axelrod`strategyNames;
@@ -117,39 +115,15 @@ exportComposition[file_, assoc_] := Export[
 exportComposition["replicator_vs_noise.csv", repFinal];
 exportComposition["moran_vs_noise.csv", moranFinal];
 
-(* ---- figures ------------------------------------------------------- *)
-palette = ColorData[97, "ColorList"][[;; n]];
+(* ---- save representative trajectories (for figures.wls) ------------ *)
+(* thin to every 20th generation to keep the CSV small *)
+exportTraj[file_, traj_] := Export[FileNameJoin[{dataDir, file}],
+  Join[{Prepend[names, "gen"]},
+    Table[Prepend[traj[[g]], g], {g, 1, Length[traj], 20}]]];
+exportTraj["replicator_traj_lownoise.csv", trajLow];
+exportTraj["replicator_traj_highnoise.csv", trajHigh];
 
-stackPlot[assoc_, title_] := Module[{rows},
-  rows = Table[assoc[eps], {eps, sweep}];
-  StackedListPlot[Transpose[rows],
-    PlotLayout -> "Stacked",
-    DataRange -> {First[sweep], Last[sweep]},
-    PlotStyle -> palette,
-    PlotLegends -> Placed[LineLegend[palette, names], Right],
-    PlotRange -> {0, 1}, Frame -> True,
-    FrameLabel -> {"execution noise \[Epsilon]", "population fraction"},
-    PlotLabel -> title, ImageSize -> 720, AspectRatio -> 0.55]];
-
-Export[FileNameJoin[{imgDir, "replicator_vs_noise.png"}],
-  stackPlot[repFinal, "Evolutionarily stable mix vs noise (replicator)"],
-  ImageResolution -> 144];
-Export[FileNameJoin[{imgDir, "moran_vs_noise.png"}],
-  stackPlot[moranFinal, "Long-run composition vs noise (Moran, N=" <> ToString[popN] <> ")"],
-  ImageResolution -> 144];
-
-trajPlot[traj_, title_] := StackedListPlot[Transpose[traj],
-  PlotLayout -> "Stacked", PlotStyle -> palette,
-  PlotLegends -> Placed[LineLegend[palette, names], Right],
-  PlotRange -> {0, 1}, Frame -> True,
-  FrameLabel -> {"generation", "population fraction"},
-  PlotLabel -> title, ImageSize -> 720, AspectRatio -> 0.5];
-
-Export[FileNameJoin[{imgDir, "replicator_traj_lownoise.png"}],
-  trajPlot[trajLow, "Replicator trajectory, \[Epsilon]=0"], ImageResolution -> 144];
-Export[FileNameJoin[{imgDir, "replicator_traj_highnoise.png"}],
-  trajPlot[trajHigh, "Replicator trajectory, \[Epsilon]=0.2"], ImageResolution -> 144];
-
+(* Figures are rendered by wolfram/figures.wls from these CSVs. *)
 Print["[evolution] done. Stable mix at eps=0 vs eps=0.2:"];
 Print["  eps=0  : ", Sort[Thread[names -> Round[repFinal[0.], 0.01]], #1[[2]] > #2[[2]] &][[;; 5]]];
 Print["  eps=0.2: ", Sort[Thread[names -> Round[repFinal[0.2], 0.01]], #1[[2]] > #2[[2]] &][[;; 5]]];

@@ -128,25 +128,7 @@ Export[FileNameJoin[{dataDir, "discovered_strategies.csv"}],
          gsResults[eps]["fit"] - tftScore[eps]}],
       {eps, sweep}]]];
 
-(* ---- figures ------------------------------------------------------- *)
-Export[FileNameJoin[{imgDir, "discovery_progress.png"}],
-  ListLinePlot[{hcLow["log"][[All, 3]] // FoldList[Max, #[[1]], Rest[#]] &,
-                hcHigh["log"][[All, 3]] // FoldList[Max, #[[1]], Rest[#]] &},
-    PlotLegends -> {"\[Epsilon]=0", "\[Epsilon]=0.1"},
-    Frame -> True, FrameLabel -> {"proposal #", "best field score so far"},
-    PlotLabel -> "Strategy discovery (greedy propose/evaluate/accept)",
-    ImageSize -> 700], ImageResolution -> 144];
-
-paramNames = {"open", "pCC", "pCD", "pDC", "pDD"};
-Export[FileNameJoin[{imgDir, "discovered_params_vs_noise.png"}],
-  ListLinePlot[
-    Table[Transpose[{sweep, Table[gsResults[eps]["champ"][[i]], {eps, sweep}]}], {i, 5}],
-    PlotLegends -> paramNames, Markers -> Automatic,
-    Frame -> True, PlotRange -> {0, 1},
-    FrameLabel -> {"execution noise \[Epsilon]", "optimal memory-one probability"},
-    PlotLabel -> "Discovered best-response strategy vs noise",
-    ImageSize -> 700], ImageResolution -> 144];
-
+(* Figures are rendered by wolfram/figures.wls from the CSV/TSV outputs. *)
 Print["[discover] done."];
 Print["  eps=0   champ -> ", Thread[paramNames -> Round[gsResults[0.]["champ"], 0.01]]];
 Print["  eps=0.2 champ -> ", Thread[paramNames -> Round[gsResults[0.2]["champ"], 0.01]]];
