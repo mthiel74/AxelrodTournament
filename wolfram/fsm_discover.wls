@@ -28,11 +28,13 @@ field = Axelrod`strategies /@ names;
 nField = Length[field];
 
 (* ---- parameters ---------------------------------------------------- *)
+(* NB: fsmStrategy replays the opponent history each move -> a match is
+   O(rounds^2). Keep rounds modest so the GA finishes in one kernel. *)
 kStates  = 4;             (* machine size *)
-rounds   = 120;
-reps     = 6;
-popSize  = 40;
-gens     = 22;
+rounds   = 60;
+reps     = 4;
+popSize  = 24;
+gens     = 12;
 mutRate  = 0.10;
 evalSeed = 9001;
 sweep    = {0., 0.02, 0.05, 0.1, 0.15, 0.2};

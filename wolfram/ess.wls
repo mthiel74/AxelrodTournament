@@ -36,10 +36,11 @@ Do[panel[nm] = StrategiesExt`extendedStrategies[nm],
 champDir = FileNameJoin[{repoRoot, "autoresearch", "champions"}];
 If[DirectoryQ[champDir],
   Do[Module[{nm = FileBaseName[f], sym},
+      sym = Unique["champ$"];
       Block[{candidate},
         Get[f];
-        sym = Unique["champ$"];
-        DownValues[sym] = DownValues[candidate] /. candidate -> sym;
+        (* DownValues has HoldAll -> force sym to evaluate to the Unique symbol *)
+        DownValues[Evaluate[sym]] = DownValues[candidate] /. candidate -> sym;
       ];
       panel["*" <> nm] = sym],
     {f, FileNames["*.wl", champDir]}]];
