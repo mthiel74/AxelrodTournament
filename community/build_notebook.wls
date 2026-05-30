@@ -203,9 +203,11 @@ Cooperation is evolutionarily robust."}], "Item"],
 dominate and trade the lead among themselves \[Dash] error-correction is at \
 a premium."}], "Item"],
   Cell[TextData[{bold["High noise (\[Epsilon] \[GreaterEqual] 0.2): "],
-    "cooperation collapses. AllD sweeps to ~99% of the population: under \
-heavy noise, reciprocators spend so long accidentally punishing each other \
-that unconditional defection becomes the only stable attractor."}], "Item"],
+    "cooperation collapses. A single unforgiving punisher \[Dash] Grim \[Dash] \
+sweeps to ~98% of the population: under heavy noise, reciprocators spend so \
+long accidentally punishing each other that a strategy which simply defects \
+forever after the first defection becomes the only stable attractor (once \
+noise has triggered it, it is behaviourally identical to AllD)."}], "Item"],
 
   hd2["A finite-population check: the Moran process"],
   para[{"Replicator dynamics is a deterministic, infinite-population limit. \
