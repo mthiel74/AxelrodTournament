@@ -9,3 +9,6 @@ _qa*
 data/fsm_best_genes.m
 data/tournament.mx
 data/_dbg*
+
+# long autoresearch run working dir (committed manually after the real run)
+autoresearch/long/
