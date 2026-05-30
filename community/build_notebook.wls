@@ -397,11 +397,13 @@ pairwise ", bold["invasion matrix"], ": can a rare mutant ", math["M"],
     " if no mutant can invade it."}],
   imgCell["ess_stability_map.png", 640],
   captionCell["Evolutionarily stable strategies vs noise (green = no mutant \
-invades). Only ", bold["defectors"], " are strict ESS: at \[Epsilon]=0 both \
-AllD and the extortionate zero-determinant strategy resist invasion; the \
-instant noise appears, AllD alone survives the test. No forgiving or \
-cooperative strategy is an ESS at any noise level \[Dash] cooperation is never \
-safe from invasion by a lone defector, however well it does in a population."],
+invades). At ", bold["zero noise"], " a whole cluster is uninvadable \[Dash] \
+AllD and Grim, but also Tit-for-Tat, ZD-Generous, Omega-TFT and even two of \
+the discovered Generous-TFT champions: in a clean channel, cooperation can be \
+evolutionarily stable. Add even a little ", bold["noise"], " and that cluster \
+shatters \[Dash] the stable set collapses to a lone defector (AllD or Grim), \
+with noise levels in between admitting no pure ESS at all. Noise destroys the \
+evolutionary stability of cooperation."],
   imgCell["ess_invasibility_highnoise.png", 620],
   captionCell["Invasibility matrix at \[Epsilon]=0.2 (red = row invades \
 column). The defectors have the cleanest columns."],
@@ -409,12 +411,13 @@ column). The defectors have the cleanest columns."],
 \[CloseCurlyDoubleQuote] "],
     "\[OpenCurlyDoubleQuote]Which strategy is stable?\[CloseCurlyDoubleQuote] \
 has ", ital["three"], " answers: (i) ", bold["ESS"],
-    " (uninvadable) favours the defectors, more so under noise; (ii) ",
-    bold["replicator-stable from a cooperative start"], " (\[Section]3) gives \
-generous reciprocity collapsing under noise; (iii) ", bold["spatially \
-resilient"], " (\[Section]7) gives reciprocator clusters that survive noise. \
-All three are noise-dependent and they disagree \[Dash] there is no single \
-best strategy, only best-for-a-given-world."}]
+    " (uninvadable) admits cooperation at zero noise but collapses to a lone \
+defector once noise appears; (ii) ", bold["replicator-stable from a \
+cooperative start"], " (\[Section]3) gives generous reciprocity collapsing to \
+Grim under noise; (iii) ", bold["spatially resilient"],
+    " (\[Section]7) gives reciprocator clusters that survive noise. All three \
+are noise-dependent and they disagree \[Dash] there is no single best \
+strategy, only best-for-a-given-world."}]
 }];
 
 (* ===================================================================== *)
@@ -432,9 +435,10 @@ every reflexive scheme; a self-tuning strategy that estimates the noise also \
 beats TFT."},
     {bold["\[OpenCurlyDoubleQuote]Stable\[CloseCurlyDoubleQuote] has three \
 answers. "],
-     "ESS favours defectors; replicator-from-cooperative-start gives generous \
-reciprocity collapsing under noise; spatial structure gives reciprocator \
-clusters that survive. All noise-dependent, and they disagree."},
+     "ESS admits cooperation at zero noise but collapses to a lone defector \
+under noise; replicator-from-cooperative-start gives generous reciprocity \
+collapsing to Grim under noise; spatial structure gives reciprocator clusters \
+that survive. All noise-dependent, and they disagree."},
     {bold["Population structure changes the effect of noise. "],
      "Well-mixed: noise drives cooperation to collapse. Spatial: clustering \
 keeps it resilient, degrading gracefully instead of collapsing."},
