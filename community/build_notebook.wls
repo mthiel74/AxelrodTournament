@@ -397,9 +397,11 @@ pairwise ", bold["invasion matrix"], ": can a rare mutant ", math["M"],
     " if no mutant can invade it."}],
   imgCell["ess_stability_map.png", 640],
   captionCell["Evolutionarily stable strategies vs noise (green = no mutant \
-invades). At \[Epsilon]=0 some forgiving strategies are stable alongside the \
-defectors; the instant noise appears the stable set collapses toward AllD/Grim \
-\[Dash] forgiving strategies lose evolutionary stability."],
+invades). Only ", bold["defectors"], " are strict ESS: at \[Epsilon]=0 both \
+AllD and the extortionate zero-determinant strategy resist invasion; the \
+instant noise appears, AllD alone survives the test. No forgiving or \
+cooperative strategy is an ESS at any noise level \[Dash] cooperation is never \
+safe from invasion by a lone defector, however well it does in a population."],
   imgCell["ess_invasibility_highnoise.png", 620],
   captionCell["Invasibility matrix at \[Epsilon]=0.2 (red = row invades \
 column). The defectors have the cleanest columns."],

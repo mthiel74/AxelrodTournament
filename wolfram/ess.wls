@@ -29,10 +29,19 @@ panel = <||>;
 Do[panel[nm] = Axelrod`strategies[nm], {nm, Axelrod`strategyNames}];
 Do[panel[nm] = StrategiesExt`extendedStrategies[nm],
   {nm, Keys[StrategiesExt`extendedStrategies]}];
+(* Load each champion into its OWN fresh symbol. The champion files all
+   define the global `candidate`; capturing that symbol directly would make
+   every entry alias the last-loaded (and then-cleared) definition. Instead we
+   transfer its DownValues onto a unique symbol. *)
 champDir = FileNameJoin[{repoRoot, "autoresearch", "champions"}];
 If[DirectoryQ[champDir],
-  Do[Module[{nm = FileBaseName[f]},
-      Block[{candidate}, Get[f]; panel["*" <> nm] = candidate]],
+  Do[Module[{nm = FileBaseName[f], sym},
+      Block[{candidate},
+        Get[f];
+        sym = Unique["champ$"];
+        DownValues[sym] = DownValues[candidate] /. candidate -> sym;
+      ];
+      panel["*" <> nm] = sym],
     {f, FileNames["*.wl", champDir]}]];
 names = Keys[panel];
 S = Values[panel];
