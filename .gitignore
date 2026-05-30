@@ -6,3 +6,6 @@ community/.img-cache/
 .claude/
 community/_qa*
 _qa*
+data/fsm_best_genes.m
+data/tournament.mx
+data/_dbg*
