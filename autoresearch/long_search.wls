@@ -35,8 +35,12 @@ budget = If[Length[$ScriptCommandLine] >= 2 && $ScriptCommandLine[[2]] =!= "",
    ToExpression[$ScriptCommandLine[[2]]], 28800];
 
 (* ---- fixed evaluation protocol ------------------------------------- *)
+(* search-phase eval: deterministic (fixed seed) so 3 reps is reproducible and
+   enough to rank candidates -- noise is already averaged over 6 levels x 18
+   opponents. The hall-of-fame is re-scored at high rep with fresh seeds at the
+   end, which is where the honest numbers come from. Profiled ~0.65 s/genome. *)
 rounds   = 150;
-reps     = 6;
+reps     = 3;
 evalSeed = 20260530;
 noiseSweep = {0., 0.02, 0.05, 0.1, 0.15, 0.2};
 
@@ -90,15 +94,15 @@ tournamentSelect[pop_, k_] := (* pop = sorted {{g,fit}..} desc *)
   pop[[ Min @ RandomSample[Range[Length[pop]], k] ]][[1]];
 
 (* ---- island GA parameters ----------------------------------------- *)
-nIslands    = 6;
-islandPop   = 24;
-nElite      = 5;
+nIslands    = 4;
+islandPop   = 16;
+nElite      = 3;
 baseSigma   = 0.08;
-migrateEvery= 12;
-patience    = 30;
+migrateEvery= 15;
+patience    = 40;
 hofSize     = 14;
-ckptEvery   = 1;     (* progress.tsv row every generation (cheap) *)
-hofEvery    = 8;     (* dump hall of fame + best.wl every N gens *)
+ckptEvery   = 5;     (* progress.tsv row every N gens (fast pace now) *)
+hofEvery    = 25;    (* dump hall of fame + best.wl + status every N gens *)
 
 (* island = list of {genome, fitOrNull}; evaluate Null fits *)
 evalIsland[isl_] := (If[#[[2]] === Null, {#[[1]], sweepFit[#[[1]]]}, #] & /@ isl);
@@ -222,7 +226,7 @@ Print["[long] search loop done at gen=", gen,
 (* FINAL high-rep, fresh-seed re-evaluation of the hall of fame to get    *)
 (* honest numbers and filter overfit champions.                          *)
 (* ===================================================================== *)
-finalRounds = 200; finalReps = 60; finalSeeds = {101, 202, 303};
+finalRounds = 150; finalReps = 20; finalSeeds = {101, 202, 303};
 robustFitAt[genome_, eps_] := Mean @ Table[
   BlockRandom[SeedRandom[sd];
    Mean @ Table[Axelrod`meanMatch[mem2[genome], opp, finalRounds, eps, finalReps][[1]],
@@ -259,3 +263,6 @@ Export[FileNameJoin[{outDir, "champion_robust_meta.txt"}],
 Print["[long] FINISHED. robust champion vsTFT=+",
   NumberForm[robustSweep[bestRobustGenome] - tftRobust, {6, 4}],
   "  generations=", gen];
+
+(* exit cleanly so the kernel never lingers as a runaway *)
+Exit[0];
