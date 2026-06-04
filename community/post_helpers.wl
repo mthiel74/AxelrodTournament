@@ -21,6 +21,8 @@ para::usage="";      abstractCell::usage="";  captionCell::usage="";
 bold::usage="";      ital::usage="";      mono::usage="";  math::usage="";
 displayMath::usage=""; imgCell::usage=""; wlIn::usage=""; codeIn::usage="";
 figWithCode::usage="figWithCode[call,file,width] = Input cell with the call + the static image.";
+animCell::usage="animCell[file,width] = looping AnimatedImage from a GIF.";
+animWithCode::usage="animWithCode[call,file,width] = Input cell with the call + the looping GIF.";
 bullets::usage="";   link::usage="";
 
 Begin["`Private`"];
@@ -91,6 +93,21 @@ wlIn[code_String] := Cell[code, "Input",
    visible and shift-Enter reproducible (after the setup cell loads the
    package). Returns a Sequence so it slots into writeAll[{...}]. *)
 figWithCode[call_String, file_, width_: 680] := Sequence[wlIn[call], imgCell[file, width]];
+
+(* animated GIF embedded as a looping AnimatedImage (works on the Community
+   web page and in the notebook). *)
+animCell[file_, width_: 680] := Module[{path = FileNameJoin[{$imgDir, file}], frames},
+  If[FileExistsQ[path],
+    frames = Import[path, {"GIF", "ImageList"}];
+    Cell[BoxData @ ToBoxes @ AnimatedImage[ImageResize[#, width] & /@ frames,
+        AnimationRepetitions -> Infinity],
+      "Output", ShowCellLabel -> False, TextAlignment -> Center,
+      CellMargins -> {{Automatic, Automatic}, {10, 6}}],
+    Cell[TextData[{bold["[ missing animation: " <> file <> " ]"]}], "Text",
+      FontColor -> RGBColor[0.7, 0.1, 0.1], TextAlignment -> Center]]];
+
+(* animation with its generating code (call shown, then the looping GIF) *)
+animWithCode[call_String, file_, width_: 680] := Sequence[wlIn[call], animCell[file, width]];
 
 (* plain code/shell cell (no WL syntax highlighting) *)
 codeIn[code_String] := Cell[code, "Program",

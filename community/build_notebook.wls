@@ -35,6 +35,7 @@ imgCell     = PostHelpers`imgCell;     wlIn        = PostHelpers`wlIn;
 codeIn      = PostHelpers`codeIn;      bullets     = PostHelpers`bullets;
 link        = PostHelpers`link;        writeAll    = PostHelpers`writeAll;
 figWithCode = PostHelpers`figWithCode;
+animCell    = PostHelpers`animCell;    animWithCode = PostHelpers`animWithCode;
 
 (* helper: pull a few rows from a data CSV to show live numbers *)
 dataDir = FileNameJoin[{repoRoot, "data"}];
@@ -588,10 +589,74 @@ forgiveness stops being optional."}]
 }];
 
 (* ===================================================================== *)
-(* 11. CONCLUSION + REPRODUCIBILITY                                       *)
+(* 11. THREE WAYS TO SEE A STRATEGY (special visualisations)             *)
 (* ===================================================================== *)
 writeAll[{
-  hd1["11. Conclusions"],
+  hd1["11. Three ways to see a strategy"],
+  para[{"The numbers above settle ", ital["which"], " strategies win. This \
+section is about ", ital["seeing"], " why \[Dash] three visualisations that are \
+rarely brought to the iterated Prisoner's Dilemma, each turning an abstract \
+strategy into a picture you can read at a glance."}],
+
+  hd2["11.1  Basins of attraction: where does cooperation win?"],
+  para[{"Take a three-strategy world \[Dash] ", bold["AllD"], ", ",
+    bold["Tit-for-Tat"], ", ", bold["Generous TFT"],
+    ". Every possible starting mixture is a point in a triangle (the 2-simplex). \
+We colour each starting point by which strategy the replicator dynamics \
+eventually drives it to. The result is a ", bold["basin map"],
+    ": the geography of who-wins-from-where. Sweeping the noise level shows the \
+cooperative basins (blue, green) give ground to the defector's basin (red) as \
+noise rises \[Dash] cooperation's \[OpenCurlyDoubleQuote]territory\
+\[CloseCurlyDoubleQuote] literally shrinks from 99% of the triangle at \
+\[Epsilon]=0 to ~64% at \[Epsilon]=0.2."}],
+  figWithCode["PostFigures`basinsGrid[]", "basins_grid.png", 820],
+  captionCell["Replicator basins of attraction on the three-strategy simplex, \
+across noise. Each point is an initial population mix, coloured by its eventual \
+winner. The defector (AllD, red) basin grows with noise; note how at high noise \
+plain Tit-for-Tat (blue) reclaims territory from Generous TFT as forgiveness \
+stops paying. An animated version is in the repository (basins_vs_noise.gif)."],
+
+  hd2["11.2  Fingerprints: a strategy's unique signature"],
+  para[{"A ", bold["fingerprint"], " (Ashlock, 2008) summarises a strategy as \
+an image. We play the strategy against a one-parameter family of probe \
+opponents \[Dash] the Joss-Ann transform of Tit-for-Tat, which with probability ",
+    math["x"], " just defects and with probability ", math["y"],
+    " just cooperates \[Dash] and record the strategy's score across the whole ",
+    math["(x,y)"], " square. Every strategy paints a different picture; the \
+picture exposes its character."}],
+  figWithCode["PostFigures`fingerprintsGrid[]", "fingerprints_grid.png", 720],
+  captionCell["Fingerprints at \[Epsilon]=0 (warm = high score). Grim's bright \
+hot-spot (top-left) is its signature: it scores enormously against a probe that \
+mostly cooperates but occasionally defects, because it punishes once and the \
+probe keeps cooperating. Tit-for-Tat is smooth and even-handed; Pavlov shows a \
+sharp split between exploiting cooperators and being dragged down by defectors; \
+the memory-two champion is smooth and sink-free \[Dash] no region where it is \
+badly exploited. (An animation of the champion's fingerprint blurring as noise \
+rises is in the repository: fingerprint_champion_noise.gif.)"],
+
+  hd2["11.3  A cooperation weather map"],
+  para[{"Finally, motion. On a 48\[Times]48 lattice each cell plays its \
+neighbours and imitates whoever is doing better (\[Section]7), now with the \
+discovered memory-two champion added to the mix. Played as a movie \[Dash] one \
+frame per generation \[Dash] you watch cooperative clusters nucleate, spread, \
+and defend their borders against invading defectors, side by side at low and \
+high noise. It is the clearest way to feel why spatial structure protects \
+cooperation: cooperators survive by ", bold["huddling"], "."}],
+  animWithCode["PostFigures`spatialMovieFrame[]   (* full movie: \
+spatial_movie_compare.gif *)", "spatial_movie_compare.gif", 560],
+  captionCell["Spatial IPD as a looping movie: low noise (left) sustains a rich \
+mosaic of cooperative reciprocators; high noise (right) forces them into large \
+defensive clusters of Grim and Tit-for-Tat, but cooperation never collapses. \
+The static call above shows the final frame; the looping animation is \
+spatial_movie_compare.gif (a single-world high-resolution version is \
+spatial_movie.gif)."]
+}];
+
+(* ===================================================================== *)
+(* 12. CONCLUSION + REPRODUCIBILITY                                       *)
+(* ===================================================================== *)
+writeAll[{
+  hd1["12. Conclusions"],
   bullets[{
     {bold["Tit-for-Tat is excellent but not optimal. "],
      "In a cooperative field, more forgiving reciprocators (Generous TFT, \
@@ -638,6 +703,9 @@ wolframscript -file wolfram/coevolution.wls      # Red-Queen co-evolution
 wolframscript -file wolfram/ess.wls              # ESS invasion analysis
 autoresearch/supervise.sh 28800                  # 8h memory-two search (zombie-safe)
 wolframscript -file wolfram/champion_analysis.wls # rank champions vs the field
+wolframscript -file wolfram/special_basins.wls    # basins of attraction (+ gif)
+wolframscript -file wolfram/special_fingerprints.wls # Ashlock fingerprints (+ gif)
+wolframscript -file wolfram/special_spatial_movie.wls # cooperation weather map (gif)
 wolframscript -file wolfram/figures.wls          # regenerate base figures"],
   para[{ital["Built entirely in the Wolfram Language. The strategy-discovery \
 and autoresearch loops borrow the propose \[Rule] evaluate \[Rule] accept \
@@ -650,10 +718,29 @@ shape of automated-research scaffolds, re-implemented natively in WL."]}]
 allCells = PostHelpers`$allCells;
 Print["[notebook] assembled ", Length[allCells], " cells"];
 
+(* House stylesheet -- teal headings + Roboto Condensed, matching the
+   river-basin notebook's look. Title/Section in RGBColor[.153,.51,.64]. *)
+teal = RGBColor[0.153, 0.51, 0.64];
+houseStyle = Notebook[{
+   Cell[StyleData[StyleDefinitions -> "Default.nb"]],
+   Cell[StyleData["Title"], FontFamily -> "Roboto Condensed", FontColor -> teal],
+   Cell[StyleData["Subtitle"], FontFamily -> "Roboto Condensed",
+     FontColor -> GrayLevel[0.35], FontSize -> 20],
+   Cell[StyleData["Subsubtitle"], FontFamily -> "Roboto Condensed",
+     FontColor -> GrayLevel[0.45]],
+   Cell[StyleData["Section"], FontFamily -> "Roboto Condensed",
+     FontSize -> 30, FontColor -> teal],
+   Cell[StyleData["Subsection"], FontFamily -> "Roboto Condensed",
+     FontColor -> Darker[teal, 0.15]],
+   Cell[StyleData["Subsubsection"], FontFamily -> "Roboto Condensed",
+     FontColor -> Darker[teal, 0.25]],
+   Cell[StyleData["Item"], CellMargins -> {{22, 10}, {4, 8}}]},
+   Visible -> False, StyleDefinitions -> "PrivateStylesheetFormatting.nb"];
+
 TimeConstrained[
   UsingFrontEnd[
     nbObj = CreateDocument[allCells, Visible -> False,
-      WindowSize -> {1000, 800}, StyleDefinitions -> "Default.nb"];
+      WindowSize -> {1000, 800}, StyleDefinitions -> houseStyle];
     NotebookSave[nbObj, outNb];
     Print["[notebook] wrote ", outNb, " (", FileByteCount[outNb], " B)"];
     Quiet @ Check[

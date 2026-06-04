@@ -43,6 +43,9 @@ essStabilityMap::usage     = "essStabilityMap[] -- which strategies are ESS, vs 
 essInvasibilityHigh::usage = "essInvasibilityHigh[] -- invasibility matrix at eps=0.2.";
 championVsTFT::usage       = "championVsTFT[] -- MemTwo-Long vs TFT vs best non-champion, vs noise.";
 championRanking::usage     = "championRanking[] -- field score of all 26 strategies, champions highlighted.";
+basinsGrid::usage          = "basinsGrid[] -- replicator basins of attraction on the 3-strategy simplex, vs noise.";
+fingerprintsGrid::usage    = "fingerprintsGrid[] -- Ashlock fingerprints of four strategies at eps=0.";
+spatialMovieFrame::usage   = "spatialMovieFrame[g] -- one frame of the spatial 'cooperation weather map'; spatialMovieFrame[] = last.";
 
 Begin["`Private`"];
 
@@ -270,6 +273,47 @@ championVsTFT[] := Module[{d = champData[], posOf, bestNonCh, trio, tcol},
     Frame -> True, FrameLabel -> {"execution noise \[Epsilon]", "mean field score"},
     PlotLabel -> "Discovered memory-two champion vs Tit-for-Tat across noise",
     ImageSize -> 760]];
+
+(* ---- special features (read committed .m data, return graphics) ----- *)
+
+(* basins of attraction on the {AllD, TitForTat, GenerousTFT} simplex *)
+basinsGrid[] := Module[{d, v, names, triCols, pts, plot},
+  d = Import[dpath["basins.m"]];
+  {v, names} = {d["v"], d["names"]};
+  triCols = {RGBColor[0.75, 0.2, 0.2], RGBColor[0.2, 0.4, 0.75], RGBColor[0.2, 0.6, 0.3]};
+  plot[eps_] := Graphics[{PointSize[0.012],
+     {triCols[[#[[2]]]], Point[#[[1]]]} & /@ d["points"][eps],
+     Black, Thick, Line[{v[[1]], v[[2]], v[[3]], v[[1]]}],
+     Text[Style[names[[1]], 11, triCols[[1]]], v[[1]] - {0.04, 0.03}],
+     Text[Style[names[[2]], 11, triCols[[2]]], v[[2]] + {0.04, -0.03}],
+     Text[Style[names[[3]], 11, triCols[[3]]], v[[3]] + {0, 0.04}]},
+    PlotLabel -> Style["basins, \[Epsilon]=" <> ToString[eps], 13],
+    ImageSize -> 360, PlotRange -> {{-0.12, 1.12}, {-0.1, 1.0}}];
+  Grid[Partition[plot /@ d["noise"], 3], Spacings -> {0.5, 0.5}]];
+
+(* Ashlock fingerprints at eps=0 *)
+fingerprintsGrid[] := Module[{d, allv, lo, hi, fp},
+  d = Import[dpath["fingerprint_eps0.m"]];
+  allv = Select[Flatten[d["surfaces"]], NumericQ]; lo = Min[allv]; hi = Max[allv];
+  fp[surf_, label_] := ArrayPlot[surf, DataReversed -> True,
+    ColorFunction -> (ColorData["TemperatureMap"][Rescale[#, {lo, hi}]] &),
+    ColorFunctionScaling -> False, ColorRules -> {_Missing -> GrayLevel[0.85]},
+    Frame -> True, FrameTicks -> None, PlotLabel -> Style[label, 14],
+    ImageSize -> 320, PlotLegends -> Automatic];
+  Grid[Partition[MapThread[fp, {d["surfaces"], d["names"]}], 2], Spacings -> {1, 1}]];
+
+(* one frame of the spatial cooperation movie (committed subsampled grids) *)
+spatialMovieFrame[gen_: Automatic] := Module[{d, pal, cols, fr, g, img},
+  d = Import[dpath["spatial_movie_frames.m"]];
+  pal = d["palette"];
+  cols = Append[Table[ColorData["Rainbow"][(i - 1)/(Length[pal] - 2)], {i, Length[pal] - 1}],
+     RGBColor[0.85, 0.33, 0.1]];
+  fr = d["framesHi"]; g = If[gen === Automatic, Length[fr], Clip[gen, {1, Length[fr]}]];
+  img[grid_] := ArrayPlot[grid, ColorRules -> Thread[Range[Length[pal]] -> cols],
+    Frame -> False, Mesh -> False, ImageSize -> 360, PlotRangePadding -> 0];
+  Column[{img[fr[[g]]],
+     SwatchLegend[cols, pal, LegendLayout -> "Row", LegendMarkerSize -> 11]},
+    Alignment -> Center]];
 
 End[];
 EndPackage[];
