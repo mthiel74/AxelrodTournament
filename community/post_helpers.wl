@@ -20,6 +20,7 @@ hd1::usage="";       hd2::usage="";       hd3::usage="";
 para::usage="";      abstractCell::usage="";  captionCell::usage="";
 bold::usage="";      ital::usage="";      mono::usage="";  math::usage="";
 displayMath::usage=""; imgCell::usage=""; wlIn::usage=""; codeIn::usage="";
+figWithCode::usage="figWithCode[call,file,width] = Input cell with the call + the static image.";
 bullets::usage="";   link::usage="";
 
 Begin["`Private`"];
@@ -83,6 +84,13 @@ imgCell[file_, width_: 680] := Module[{path = FileNameJoin[{$imgDir, file}], im}
 (* runnable Wolfram code cell *)
 wlIn[code_String] := Cell[code, "Input",
   CellMargins -> {{60, 30}, {6, 6}}, FontSize -> 11];
+
+(* figure with its generating code: a runnable Input cell showing the exact
+   call, immediately followed by the pre-rendered static image. Every displayed
+   figure in the post is produced this way, so the code for every output is
+   visible and shift-Enter reproducible (after the setup cell loads the
+   package). Returns a Sequence so it slots into writeAll[{...}]. *)
+figWithCode[call_String, file_, width_: 680] := Sequence[wlIn[call], imgCell[file, width]];
 
 (* plain code/shell cell (no WL syntax highlighting) *)
 codeIn[code_String] := Cell[code, "Program",

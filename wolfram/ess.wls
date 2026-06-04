@@ -86,6 +86,13 @@ Export[FileNameJoin[{dataDir, "ess_invasion_counts.csv"}],
   Join[{Prepend[ToString /@ sweep, "strategy"]},
     Table[Prepend[Table[Total[invMats[eps][[i]]], {eps, sweep}], names[[i]]],
       {i, n}]]];
+(* full invasibility matrices (row invades column) at the two displayed noise
+   levels, so the heatmaps can be rebuilt from committed data in the post. *)
+exportInvMatrix[eps_, file_] := Export[FileNameJoin[{dataDir, file}],
+  Join[{Prepend[names, "rowInvadesCol"]},
+    MapThread[Prepend, {invMats[eps], names}]]];
+exportInvMatrix[0.,  "ess_invmatrix_eps0.csv"];
+exportInvMatrix[0.2, "ess_invmatrix_eps0.2.csv"];
 
 heatmap[eps_] := MatrixPlot[invMats[eps],
   ColorRules -> {0 -> Lighter[Gray, 0.7], 1 -> RGBColor[0.78, 0.18, 0.18]},

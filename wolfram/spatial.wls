@@ -90,6 +90,12 @@ Export[FileNameJoin[{dataDir, "spatial_vs_noise.csv"}],
   Join[{Prepend[paletteNames, "noise"]},
     Table[Prepend[finalComp[eps], eps], {eps, sweep}]]];
 
+(* committed snapshot grids (integer strategy id per cell) so the snapshot
+   figure can be rebuilt from data in the post. One file per (noise, gen). *)
+Put[<|"palette" -> paletteNames, "L" -> L, "gens" -> gens,
+   "snaps" -> <|0. -> snapsAt[0.], Last[sweep] -> snapsAt[Last[sweep]]|>|>,
+  FileNameJoin[{dataDir, "spatial_snapshots.m"}]];
+
 (* ---- figures ------------------------------------------------------- *)
 Export[FileNameJoin[{imgDir, "spatial_composition_vs_noise.png"}],
   Module[{series = Transpose[Table[finalComp[eps], {eps, sweep}]]},

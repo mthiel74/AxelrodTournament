@@ -34,6 +34,7 @@ math        = PostHelpers`math;        displayMath = PostHelpers`displayMath;
 imgCell     = PostHelpers`imgCell;     wlIn        = PostHelpers`wlIn;
 codeIn      = PostHelpers`codeIn;      bullets     = PostHelpers`bullets;
 link        = PostHelpers`link;        writeAll    = PostHelpers`writeAll;
+figWithCode = PostHelpers`figWithCode;
 
 (* helper: pull a few rows from a data CSV to show live numbers *)
 dataDir = FileNameJoin[{repoRoot, "data"}];
@@ -48,7 +49,7 @@ writeAll[{
 from Tit-for-Tat to an evolutionarily stable mix that depends on noise"],
   subsubtitle["Wolfram Community submission \[Dash] May 2026"],
 
-  imgCell["replicator_vs_noise.png", 720],
+  figWithCode["PostFigures`replicatorVsNoise[]", "replicator_vs_noise.png", 720],
   captionCell["The headline result. As execution noise \[Epsilon] rises \
 (left to right), the evolutionarily stable composition of strategies shifts \
 \[Dash] from a coexistence of generous reciprocators to a collapse into \
@@ -78,6 +79,31 @@ algorithms ", ital["discover"], " new strategies \[Dash] culminating in an ",
     bold["eight-hour evolutionary search over memory-two strategies"],
     " whose champion beats Tit-for-Tat by ~9% and finishes first in a field of \
 26, by learning to tell an accidental defection from a deliberate one."}]
+}];
+
+(* ===================================================================== *)
+(* SETUP (initialization cell)                                            *)
+(* ===================================================================== *)
+writeAll[{
+  hd1["Setup (run this once if you want to evaluate the code)"],
+  para[{ital["You can skip this section if you only want to read."],
+    " Every figure below is pre-rendered as a static image, so the prose, \
+equations, and figures are all readable without evaluating anything."}],
+  para[{"If you ", ital["do"], " want to reproduce the figures, the project's \
+two packages are attached alongside this notebook: ", mono["axelrod.wl"],
+    " (the engine \[Dash] payoffs, strategies, noisy match play, ranking) and ",
+    mono["post_figures.wl"], " (one function per figure, each reading the \
+committed ", mono["data/"], " files and returning the graphic). The full \
+analysis scripts that ", ital["generated"], " those data files live in ",
+    mono["wolfram/"], " and ", mono["autoresearch/"],
+    " in the repository. Run the cell below once; then every figure in the post \
+is produced by the visible call shown just above it (e.g. ",
+    mono["PostFigures`replicatorVsNoise[]"], ")."}],
+  wlIn["(* Put axelrod.wl, post_figures.wl and the data/ folder next to this \
+notebook, then evaluate. *)
+SetDirectory[NotebookDirectory[]];
+Get[\"axelrod.wl\"];          (* the IPD engine: Axelrod` context        *)
+Get[\"post_figures.wl\"];     (* figure functions: PostFigures` context  *)"]
 }];
 
 (* ===================================================================== *)
@@ -141,7 +167,7 @@ writeAll[{
 rounds, repeated 100 times to average out randomness. Each strategy's score \
 is its mean per-round payoff against the whole field. At ",
     math["\[Epsilon] = 0"], " (no noise) the ranking is:"}],
-  imgCell["ranking_grid.png", 720],
+  figWithCode["PostFigures`rankingGrid[]", "ranking_grid.png", 720],
   captionCell["Field score of each strategy at four noise levels. At \
 \[Epsilon]=0 the generous reciprocators lead; the extortioner (ZD-Extort-2) \
 finishes last."],
@@ -154,14 +180,14 @@ the zero-determinant ", bold["extortioner finishes dead last"],
     ": extortion wins individual matches but poisons the cooperative \
 environment it depends on."}],
   para[{"The payoff structure of who-beats-whom:"}],
-  imgCell["payoff_heatmap.png", 560],
+  figWithCode["PostFigures`payoffHeatmap[]", "payoff_heatmap.png", 560],
   captionCell["Mean per-round payoff, row strategy against column strategy \
 (\[Epsilon]=0). Warm = high. The cooperative cluster (top-left block) sustains \
 mutual R=3; AllD and the extortioner do well in single matchups but drag the \
 whole field down."],
 
   hd2["What noise does to the ranking"],
-  imgCell["score_vs_noise.png", 720],
+  figWithCode["PostFigures`scoreVsNoise[]", "score_vs_noise.png", 720],
   captionCell["As noise rises, every strategy's score is pulled toward the \
 mutual-defection payoff P=1, and the gap between 'nice' and 'nasty' \
 strategies narrows. Unforgiving strategies (Grim, Gradual) fall fastest: a \
@@ -217,7 +243,7 @@ To confirm the result is not an artefact of that idealisation, we also run a \
 stochastic ", bold["Moran process"],
     " (population N=100, frequency-dependent birth-death with rare mutation) \
 and record the long-run average composition."}],
-  imgCell["moran_vs_noise.png", 720],
+  figWithCode["PostFigures`moranVsNoise[]", "moran_vs_noise.png", 720],
   captionCell["Moran process, long-run composition vs noise. Finite-population \
 stochasticity makes the picture grainier, but the qualitative story survives: \
 forgiving cooperators at low-to-moderate noise, defection-dominated outcomes \
@@ -251,17 +277,17 @@ champion = {1, 1, 0, 1, 0};                       (* start from Tit-for-Tat *)
 Do[ proposal = clip[champion + RandomVariate[NormalDistribution[0, .12], 5]];
     If[fitness[proposal, eps] > fitness[champion, eps], champion = proposal],
   {150}]"],
-  imgCell["discovery_progress.png", 640],
+  figWithCode["PostFigures`discoveryProgress[]", "discovery_progress.png", 640],
   captionCell["Greedy discovery: best field score found so far, starting from \
 Tit-for-Tat, at two noise levels. Each upward step is an accepted proposal."],
 
   hd2["The discovered strategies beat Tit-for-Tat at every noise level"],
-  imgCell["discovered_vs_tft.png", 680],
+  figWithCode["PostFigures`discoveredVsTFT[]", "discovered_vs_tft.png", 680],
   captionCell["Discovered best-response strategy (solid) vs plain Tit-for-Tat \
 (dashed) in field score, across noise. The discovered strategy wins \
 everywhere; the margin is largest where noise matters most."],
   para[{"And the ", ital["shape"], " of the optimal strategy drifts with noise:"}],
-  imgCell["discovered_params_vs_noise.png", 680],
+  figWithCode["PostFigures`discoveredParams[]", "discovered_params_vs_noise.png", 680],
   captionCell["The discovered memory-one probabilities vs noise. The \
 forgiveness parameter pCD (cooperate again after being suckered) rises with \
 noise \[Dash] error-correction becomes essential \[Dash] until, at very high \
@@ -321,10 +347,10 @@ strategies help? We let a genetic algorithm evolve ", bold["finite-state \
 states, an action and a state-transition for every observed opponent move. \
 This space contains TFT, Grim, Pavlov and much else; we verified it encodes \
 TFT and Grim exactly before evolving it."}],
-  imgCell["fsm_vs_tft.png", 680],
+  figWithCode["PostFigures`fsmVsTFT[]", "fsm_vs_tft.png", 680],
   captionCell["Evolved finite-state machines vs Tit-for-Tat across noise \[Dash] \
 the machines beat TFT at essentially every noise level."],
-  imgCell["fsm_complexity_vs_noise.png", 680],
+  figWithCode["PostFigures`fsmComplexity[]", "fsm_complexity_vs_noise.png", 680],
   captionCell["The best evolved machine uses 2\[Dash]4 of its 4 reachable \
 states \[Dash] genuine multi-state memory, beyond what memory-one can express. \
 The gain over the memory-one optimum is real but modest: against this field, \
@@ -344,18 +370,18 @@ Each generation, every site plays its four neighbours and imitates fitter \
 neighbours (Fermi rule). This is Nowak \[Dash] May spatial game theory; the \
 classic result is that clustering lets cooperators survive. We ask what noise \
 does to it."}],
-  imgCell["spatial_composition_vs_noise.png", 760],
+  figWithCode["PostFigures`spatialComposition[]", "spatial_composition_vs_noise.png", 760],
   captionCell["Final lattice composition vs noise. At low noise the lattice is \
 almost entirely cooperative reciprocators (Grim, Generous TFT, Tit-for-Tat), \
 with unconditional defection nearly absent. As noise rises AllD gains ground \
 \[Dash] but never takes over: cooperation persists around 60% even at \
 \[Epsilon]=0.2."],
-  imgCell["spatial_snapshots.png", 720],
+  figWithCode["PostFigures`spatialSnapshots[]", "spatial_snapshots.png", 720],
   captionCell["Lattice snapshots (colours = strategies; legend below). \
 Reciprocators survive by forming contiguous clusters that protect their \
 cooperative interior. Noise frays the cluster boundaries but does not dissolve \
 them."],
-  imgCell["spatial_legend.png", 520],
+  figWithCode["PostFigures`spatialLegend[]", "spatial_legend.png", 520],
   para[{bold["Spatial structure makes cooperation far more robust to noise. "],
     "In the well-mixed model (\[Section]3), once \[Epsilon] is large the \
 population collapses almost entirely to defection. On the lattice the same \
@@ -376,12 +402,12 @@ memory-one genomes against ", bold["itself"],
     ": each individual's fitness is its score against the current population, \
 which changes every generation. This is a ", ital["Red Queen"],
     " race \[Dash] you must keep adapting just to hold your rank."}],
-  imgCell["coevolution_coop_traj.png", 760],
+  figWithCode["PostFigures`coevolutionTraj[]", "coevolution_coop_traj.png", 760],
   captionCell["Population-mean cooperativeness over generations. At \
 \[Epsilon]=0 the population climbs to stable, highly cooperative reciprocity. \
 At \[Epsilon]=0.15 it rises, then becomes restless and slides back \[Dash] \
 noise prevents a stable cooperative equilibrium from locking in."],
-  imgCell["coevolution_genome_vs_noise.png", 760],
+  figWithCode["PostFigures`coevolutionGenome[]", "coevolution_genome_vs_noise.png", 760],
   captionCell["The co-evolved mean genome vs noise. As noise rises the \
 population becomes less rigidly cooperative (pCC falls) but more forgiving \
 (pCD rises) and more able to recover from mutual defection (pDD rises) \[Dash] \
@@ -399,7 +425,7 @@ pairwise ", bold["invasion matrix"], ": can a rare mutant ", math["M"],
     " invade a resident population of ", math["R"], "? It can if ",
     math["A[M,R] > A[R,R]"], ". A strategy is ", bold["evolutionarily stable"],
     " if no mutant can invade it."}],
-  imgCell["ess_stability_map.png", 640],
+  figWithCode["PostFigures`essStabilityMap[]", "ess_stability_map.png", 640],
   captionCell[{"Evolutionarily stable strategies vs noise (green = no mutant \
 invades). At ", bold["zero noise"], " a whole cluster is uninvadable \[Dash] \
 AllD and Grim, but also Tit-for-Tat, ZD-Generous, Omega-TFT and even two of \
@@ -408,7 +434,7 @@ evolutionarily stable. Add even a little ", bold["noise"], " and that cluster \
 shatters \[Dash] the stable set collapses to a lone defector (AllD or Grim), \
 with noise levels in between admitting no pure ESS at all. Noise destroys the \
 evolutionary stability of cooperation."}],
-  imgCell["ess_invasibility_highnoise.png", 620],
+  figWithCode["PostFigures`essInvasibilityHigh[]", "ess_invasibility_highnoise.png", 620],
   captionCell["Invasibility matrix at \[Epsilon]=0.2 (red = row invades \
 column). The defectors have the cleanest columns."],
   para[{bold["Three meanings of \[OpenCurlyDoubleQuote]stable.\
@@ -503,7 +529,7 @@ noise"], ", where mistakes are recoverable:"}],
     GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}},
     GridBoxItemSize -> {"Columns" -> {{11}}}], "Output",
     TextAlignment -> Center, CellMargins -> {{Automatic, Automatic}, {10, 8}}],
-  imgCell["champion_vs_tft_noise.png", 720],
+  figWithCode["PostFigures`championVsTFT[]", "champion_vs_tft_noise.png", 720],
   captionCell["The 8-hour memory-two champion (orange) vs Tit-for-Tat and the \
 best non-champion strategy, field score across noise. The champion leads \
 everywhere, and its margin over Tit-for-Tat widens as noise rises."],
@@ -515,7 +541,7 @@ the memory-two champion finishes ", bold["first overall"],
     " \[Dash] ahead of the self-tuning Adaptive strategy and well clear of \
 Tit-for-Tat in 15th place. The discovered strategies (orange) take six of the \
 top eight places:"}],
-  imgCell["champion_ranking.png", 880],
+  figWithCode["PostFigures`championRanking[]", "champion_ranking.png", 880],
   captionCell["Field score (mean over noise) for all 26 strategies. Orange = \
 discovered by an automated-research loop in this project; \[FivePointedStar] \
 marks them. MemTwo-Long, from the 8-hour run, is the single best strategy in \
