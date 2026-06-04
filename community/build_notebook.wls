@@ -530,7 +530,35 @@ other 25 strategies \[Dash] but being the best player is not the same as being \
 uninvadable. The \[OpenCurlyDoubleQuote]three meanings of stable\
 \[CloseCurlyDoubleQuote] from \[Section]9 hold: the best strategy to ",
     ital["field"], " and the strategy that ", ital["cannot be invaded"],
-    " are simply different things."}]
+    " are simply different things."}],
+
+  hd2["Related work: learning versus evolution"],
+  para[{"A complementary Wolfram Community post by Hyeri Ahn, ",
+    ital["A Q-Learning Agent Discovers the Optimal Strategy Against Each \
+Opponent in the Prisoner's Dilemma"], " (",
+    link["community.wolfram.com",
+      "https://community.wolfram.com/groups/-/m/t/3727339"],
+    "), reaches the same arena from the opposite direction. There, a single \
+agent uses ", bold["reinforcement learning"], " (Q-learning) to learn, ",
+    ital["within its own lifetime"], ", a best response tuned to each ",
+    ital["specific"], " opponent it faces. Here, a ", bold["genetic algorithm"],
+    " evolves, ", ital["across generations"],
+    ", one strategy that does well against an entire field at once."}],
+  para[{"The contrast is the interesting part. Q-learning ",
+    bold["exploits a known opponent"], ": told who it is playing, it can find \
+that opponent's weak spot. Our evolutionary search instead seeks ",
+    bold["robustness"], ": a single rule that must do well against everyone, \
+and \[Dash] the axis we stress throughout this notebook \[Dash] across every ",
+    bold["noise"], " level. The two answer different questions \
+(\[OpenCurlyDoubleQuote]how do I beat ", ital["this"],
+    " player?\[CloseCurlyDoubleQuote] versus \[OpenCurlyDoubleQuote]what plays \
+well against ", ital["any"], " player, even through mistakes?\
+\[CloseCurlyDoubleQuote]), yet both routes keep rediscovering the same \
+ingredients Axelrod identified by hand: ", bold["be nice, reciprocate, and \
+forgive"], ". An open question worth posing to the learning approach is how a \
+Q-learner trained in clean play would fare once execution ", ital["noise"],
+    " is switched on \[Dash] precisely the regime where, as we have seen, \
+forgiveness stops being optional."}]
 }];
 
 (* ===================================================================== *)

@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[   2306158,      38503]
-NotebookOptionsPosition[   2293032,      38319]
-NotebookOutlinePosition[   2293447,      38336]
-CellTagsIndexPosition[   2293404,      38333]
+NotebookDataLength[   2309008,      38581]
+NotebookOptionsPosition[   2295548,      38392]
+NotebookOutlinePosition[   2295963,      38409]
+CellTagsIndexPosition[   2295920,      38406]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -22,17 +22,17 @@ Notebook[{
 Cell[CellGroupData[{
 Cell["\<\
 Re-running Axelrod's Tournament: Cooperation, Evolution, and Noise\
-\>", "Title",ExpressionUUID->"3dd8c196-0bad-4883-9b18-acc463395663"],
+\>", "Title",ExpressionUUID->"a313ec0d-0a48-400a-8fba-4c44b282fe03"],
 
 Cell["\<\
 The iterated Prisoner's Dilemma in the Wolfram Language \[Dash] from \
 Tit-for-Tat to an evolutionarily stable mix that depends on noise\
-\>", "Subtitle",ExpressionUUID->"3b064dda-bced-4bce-adf9-2dd60d608d24"],
+\>", "Subtitle",ExpressionUUID->"df96e7ad-caf2-41b8-8fb1-1864cecbe91e"],
 
 Cell["Wolfram Community submission \[Dash] May 2026", "Subsubtitle",
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.4],ExpressionUUID->"afaf2a76-afb7-4f00-a65c-de1292039455"],
+  0.4],ExpressionUUID->"793b9599-3616-4ce7-a9e4-477a2e74d17d"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -2490,7 +2490,7 @@ A8rnOTI=
   PlotRange->{{0, 953.}, {0, 388.5}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"b2702f68-2cb5-4e1c-ac75-90cbb63bb55d"],
+ TextAlignment->Center,ExpressionUUID->"f7791f99-6bd2-4597-ba3e-6c3ed4685859"],
 
 Cell["\<\
 The headline result. As execution noise \[Epsilon] rises (left to right), the \
@@ -2502,11 +2502,11 @@ defection.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"3a45b8ee-fd07-4480-9991-afd883c83a60"],
+  0.35],ExpressionUUID->"873e165b-ba3e-4c6a-8d16-eb31bbb6e649"],
 
 Cell[CellGroupData[{
 
-Cell["Abstract", "Section",ExpressionUUID->"ec787fed-c62c-4814-9025-d171a185bfde"],
+Cell["Abstract", "Section",ExpressionUUID->"9b9587be-2586-4e74-ac0a-fa075fca9896"],
 
 Cell[TextData[{
  "In 1980 Robert Axelrod ran a now-famous computer tournament for the ",
@@ -2523,7 +2523,7 @@ zero-determinant strategies)."
  CellMargins->{{60, 60}, {6, 6}},
  FontSize->14,
  Background->RGBColor[
-  0.98, 0.96, 0.9],ExpressionUUID->"51cb090f-bff9-480b-9ec7-01c6eff7a18f"],
+  0.98, 0.96, 0.9],ExpressionUUID->"0e5a1391-f41f-47e5-a888-534bb0659f25"],
 
 Cell[TextData[{
  "It then does two things Axelrod's setup hints at but does not show. ",
@@ -2556,14 +2556,14 @@ algorithms ",
  CellMargins->{{60, 60}, {6, 6}},
  FontSize->14,
  Background->RGBColor[
-  0.98, 0.96, 0.9],ExpressionUUID->"d914d738-774c-4673-b446-be67dfe79c38"]
+  0.98, 0.96, 0.9],ExpressionUUID->"fac903df-d11c-4f00-8f59-0f762460186b"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
 Cell["\<\
 1. The Prisoner's Dilemma, and why iteration changes everything\
-\>", "Section",ExpressionUUID->"c1d598e9-4fff-42fb-95fb-8aac0370c1be"],
+\>", "Section",ExpressionUUID->"50c69512-c92d-428a-a4ac-5dd11e9cd89e"],
 
 Cell[TextData[{
  "Two players each choose, simultaneously, to ",
@@ -2587,7 +2587,7 @@ Cell[TextData[{
  ":"
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"d2f6e738-9c6f-47f4-a9d8-b0c9ebdb3568"],
+  6}},ExpressionUUID->"92260c02-09fa-44a5-be4b-b1b0eef185b8"],
 
 Cell[BoxData[
  FormBox[GridBox[{
@@ -2615,7 +2615,7 @@ Cell[BoxData[
     "Columns" -> {False, {True}, False}, "Rows" -> {False, {True}, False}}], 
   TraditionalForm]], "DisplayFormula",
  CellMargins->{{80, 50}, {8, 
-  8}},ExpressionUUID->"005072d2-ee7d-4df0-97b4-66529503af02"],
+  8}},ExpressionUUID->"31918357-2956-462f-ae7d-396660230626"],
 
 Cell[TextData[{
  "In a ",
@@ -2630,11 +2630,11 @@ more by defecting. Yet mutual cooperation (R=3 each) beats mutual defection \
 reward cooperation and punish defection in later rounds."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"6b4705d5-11dc-42b9-8987-f59dd46f71bd"],
+  6}},ExpressionUUID->"baa898ac-e1b2-48b2-ae6d-0abaf52e01f5"],
 
 Cell[CellGroupData[{
 
-Cell["Encoding strategies in the Wolfram Language", "Subsection",ExpressionUUID->"a37b2d23-7bfc-4577-a45c-190b22a72438"],
+Cell["Encoding strategies in the Wolfram Language", "Subsection",ExpressionUUID->"aeef6335-8cea-4869-a902-e79521aa6d90"],
 
 Cell[TextData[{
  "We encode ",
@@ -2651,7 +2651,7 @@ smallest interesting family is the ",
 the four possible previous outcomes:"
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"df2ccc0b-f7e0-48c0-8007-ac16cf6200cc"],
+  6}},ExpressionUUID->"d9a484cb-fee2-48e1-9efe-6db2530fd449"],
 
 Cell["\<\
 memOne[open_, {pCC_, pCD_, pDC_, pDD_}] := Function[{me, opp},
@@ -2666,7 +2666,7 @@ Pavlov    = memOne[1, {1, 0, 0, 1}];   (* win-stay, lose-shift *)
 GenerousTFT = memOne[1, {1, 1/3, 1, 1/3}];\
 \>", "Input",
  CellMargins->{{60, 30}, {6, 6}},
- FontSize->11,ExpressionUUID->"43027ac3-f91c-424e-b8f1-769bd75e30d0"],
+ FontSize->11,ExpressionUUID->"4bc530b1-394a-4fb4-99a8-3e540d22b4ac"],
 
 Cell[TextData[{
  "The full library (in ",
@@ -2677,12 +2677,12 @@ Generous TFT, Tit-for-2-Tats, 2-Tits-for-Tat, Grim, Pavlov, Gradual, and two \
 zero-determinant strategies (an extortioner and a generous one)."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"21160cad-d8e1-4c78-a502-25dd91290d10"]
+  6}},ExpressionUUID->"80fb56f7-3f74-4381-b6d1-b42d061df513"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Noise: the trembling hand", "Subsection",ExpressionUUID->"c7876f5a-fe5e-4241-9c01-e41790964649"],
+Cell["Noise: the trembling hand", "Subsection",ExpressionUUID->"8f53c508-8c8f-4a2b-bf09-d2627cbd3fde"],
 
 Cell[TextData[{
  "Real interactions are imperfect. We model ",
@@ -2699,13 +2699,13 @@ Cell[TextData[{
 follows."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"87fa8bd2-57db-4d14-aee8-77c70af99c54"]
+  6}},ExpressionUUID->"3f4345cb-ce9f-4028-b53c-3e895db01416"]
 }, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["2. The classic round-robin (reproducing Axelrod 1980)", "Section",ExpressionUUID->"e9ae22ba-1e19-4409-af73-98430dfcbf5a"],
+Cell["2. The classic round-robin (reproducing Axelrod 1980)", "Section",ExpressionUUID->"bbe6fdef-fc86-4760-a735-1697128246c7"],
 
 Cell[TextData[{
  "Every strategy plays every strategy (including itself) for 200 rounds, \
@@ -2717,7 +2717,7 @@ mean per-round payoff against the whole field. At ",
  " (no noise) the ranking is:"
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"63d1a442-d15a-4c06-8b35-2cbc61d1dc6b"],
+  6}},ExpressionUUID->"f51dba6d-f83d-4767-8c10-1a5a1321e062"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -5335,7 +5335,7 @@ u38z
   PlotRange->{{0, 940.}, {0, 753.}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"5d2665ee-aa2e-4626-8966-123b9ff4cac6"],
+ TextAlignment->Center,ExpressionUUID->"a76dd152-60a3-468c-9055-51048c95b105"],
 
 Cell["\<\
 Field score of each strategy at four noise levels. At \[Epsilon]=0 the \
@@ -5345,7 +5345,7 @@ generous reciprocators lead; the extortioner (ZD-Extort-2) finishes last.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"c82c67ea-d9bd-4e6d-8f85-dcb2e6614efc"],
+  0.35],ExpressionUUID->"d42d91da-0f66-4e50-882c-e041d53919af"],
 
 Cell[TextData[{
  StyleBox["The classic lesson holds.",
@@ -5363,11 +5363,11 @@ the zero-determinant ",
 it depends on."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"bc4f1aaf-a8ac-4bc7-b784-653b22e45b18"],
+  6}},ExpressionUUID->"deecac10-49c3-48dd-98b3-4e39a3396af6"],
 
 Cell["The payoff structure of who-beats-whom:", "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"ee45c2d8-0514-443c-92fe-c00a2f5de10e"],
+  6}},ExpressionUUID->"ee36de77-263d-4b4a-b610-33e5fc7c18cc"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -7703,7 +7703,7 @@ ERERERERERERERH99/Z/TDoWsw==
   PlotRange->{{0, 807.5}, {0, 772.5}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"9a510cd0-6af4-43e5-861e-10945f4b2cdb"],
+ TextAlignment->Center,ExpressionUUID->"f1bf3424-2736-449b-856c-a8eef0cb4a68"],
 
 Cell["\<\
 Mean per-round payoff, row strategy against column strategy (\[Epsilon]=0). \
@@ -7715,11 +7715,11 @@ down.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"d39d0393-8e46-4214-9aa3-7f32cf685c76"],
+  0.35],ExpressionUUID->"e985753e-99cb-4da2-b65c-c8b19add05d0"],
 
 Cell[CellGroupData[{
 
-Cell["What noise does to the ranking", "Subsection",ExpressionUUID->"ffc4bb3f-c7ba-49ed-a8c9-de2fba517402"],
+Cell["What noise does to the ranking", "Subsection",ExpressionUUID->"bdad8416-7344-4ed1-bfbc-ce326dd35a7a"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -11797,7 +11797,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMo/8H07Wmmg==
   PlotRange->{{0, 993.}, {0, 494.}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"42fc1857-a218-4898-9474-adda79b031c4"],
+ TextAlignment->Center,ExpressionUUID->"2e355c27-4414-461e-9eb9-c1c522280e66"],
 
 Cell["\<\
 As noise rises, every strategy's score is pulled toward the mutual-defection \
@@ -11809,7 +11809,7 @@ defection traps them in retaliation.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"65611d63-ddb0-423c-a4ad-39c0d7ecadef"]
+  0.35],ExpressionUUID->"aa08e655-e24c-423f-90bf-5fa991991e08"]
 }, Open  ]]
 }, Open  ]],
 
@@ -11817,18 +11817,18 @@ Cell[CellGroupData[{
 
 Cell["\<\
 3. The evolutionary tournament \[Dash] the stable mix depends on noise\
-\>", "Section",ExpressionUUID->"4d637b4d-5bdd-4527-8d2e-89f62ea24d30"],
+\>", "Section",ExpressionUUID->"390be202-0fe0-4f77-884a-11ce04ad8dba"],
 
 Cell["\<\
 Axelrod's deeper question was evolutionary: if successful strategies \
 reproduce, which ones survive? We answer it two ways.\
 \>", "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"ac3b2595-e030-4bc3-bd3b-69ffe2b97faa"],
+  6}},ExpressionUUID->"530f87bf-44b3-4a16-9502-72dfc7e53d3a"],
 
 Cell[CellGroupData[{
 
-Cell["Replicator dynamics", "Subsection",ExpressionUUID->"92b5d4ba-3a70-4cfe-929e-96c26f45087f"],
+Cell["Replicator dynamics", "Subsection",ExpressionUUID->"d5d859a8-669a-4923-96a5-658ac581bc9d"],
 
 Cell[TextData[{
  "Let ",
@@ -11855,7 +11855,7 @@ Cell[TextData[{
 population average:"
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"5cccdeed-a4fe-4d11-8abe-662ea37a5682"],
+  6}},ExpressionUUID->"d326958f-df90-4d41-bf1f-c67741249941"],
 
 Cell[BoxData[
  FormBox[
@@ -11870,7 +11870,7 @@ Cell[BoxData[
      RowBox[{"x", ".", "A", ".", "x"}]}], ")"}]}], 
   TraditionalForm]], "DisplayFormula",
  CellMargins->{{80, 50}, {8, 
-  8}},ExpressionUUID->"5dcadc41-01da-4088-ab49-8a22435c0e30"],
+  8}},ExpressionUUID->"44275594-8865-4729-8292-f17f060fff29"],
 
 Cell["\<\
 replicator[A_, steps_, mut_] := Module[{x = ConstantArray[1./n, n], f, phi},
@@ -11882,7 +11882,7 @@ replicator[A_, steps_, mut_] := Module[{x = ConstantArray[1./n, n], f, phi},
   x]\
 \>", "Input",
  CellMargins->{{60, 30}, {6, 6}},
- FontSize->11,ExpressionUUID->"b445dc27-7735-4f59-b570-75efd4e4c40e"],
+ FontSize->11,ExpressionUUID->"c6542abf-f51f-4d43-bee4-8ba3c1172063"],
 
 Cell[TextData[{
  "Sweeping the noise level and recording the stable composition gives the \
@@ -11892,7 +11892,7 @@ headline figure (top of this post). It reveals ",
  ":"
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"e9420f3f-0fc5-47b6-93d2-d7d71a387395"],
+  6}},ExpressionUUID->"ad27f382-b3a4-42ec-af95-ee8993ac07a8"],
 
 Cell[TextData[{
  StyleBox["Low noise (\[Epsilon] \[TildeTilde] 0): ",
@@ -11900,7 +11900,7 @@ Cell[TextData[{
  "a coexistence of cooperative strategies \[Dash] Generous TFT, \
 Tit-for-2-Tats, ZD-Generous, Tit-for-Tat and Pavlov share the population. \
 Cooperation is evolutionarily robust."
-}], "Item",ExpressionUUID->"d8fed966-3679-4d10-aef8-2fdce05f36e9"],
+}], "Item",ExpressionUUID->"90cc23a2-b734-46aa-b810-8e991bc70aa4"],
 
 Cell[TextData[{
  StyleBox["Intermediate noise: ",
@@ -11908,7 +11908,7 @@ Cell[TextData[{
  "the forgiving reciprocators (Generous TFT, Tit-for-2-Tats, ZD-Generous) \
 dominate and trade the lead among themselves \[Dash] error-correction is at a \
 premium."
-}], "Item",ExpressionUUID->"54128bf9-b767-456d-aac1-75fdb4ae5b14"],
+}], "Item",ExpressionUUID->"a90e3895-31d8-46d3-9ff6-082da2b845d9"],
 
 Cell[TextData[{
  StyleBox["High noise (\[Epsilon] \[GreaterEqual] 0.2): ",
@@ -11918,12 +11918,12 @@ sweeps to ~98% of the population: under heavy noise, reciprocators spend so \
 long accidentally punishing each other that a strategy which simply defects \
 forever after the first defection becomes the only stable attractor (once \
 noise has triggered it, it is behaviourally identical to AllD)."
-}], "Item",ExpressionUUID->"256a0ce7-b662-473f-b086-f0bc705933b5"]
+}], "Item",ExpressionUUID->"72627308-1092-421b-9e54-68b9bd08e3ad"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["A finite-population check: the Moran process", "Subsection",ExpressionUUID->"b967eb1f-2cb9-4743-9eb1-6b6f29f97e1a"],
+Cell["A finite-population check: the Moran process", "Subsection",ExpressionUUID->"21a1e688-d4a3-463e-8876-f9c59efc9c6a"],
 
 Cell[TextData[{
  "Replicator dynamics is a deterministic, infinite-population limit. To \
@@ -11935,7 +11935,7 @@ stochastic ",
 record the long-run average composition."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"d9a0d307-9734-4eb9-8b22-d81ca4aa1df5"],
+  6}},ExpressionUUID->"dd2d432d-af76-4722-9ac8-8e3bcaab831a"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -14491,7 +14491,7 @@ AAAAAAAAQEv8P8TaQsw=
   PlotRange->{{0, 953.}, {0, 388.5}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"02d80ba7-d888-46f5-84fd-058c0263ffed"],
+ TextAlignment->Center,ExpressionUUID->"21f532af-0743-4c8b-8983-ec6730583b27"],
 
 Cell["\<\
 Moran process, long-run composition vs noise. Finite-population stochasticity \
@@ -14503,7 +14503,7 @@ grows.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"28a87a64-11ca-45db-b7db-8e1a8cf57bcb"],
+  0.35],ExpressionUUID->"4c337ccf-ac56-42f2-abad-7083c9bf1fc9"],
 
 Cell[TextData[{
  StyleBox["Takeaway. ",
@@ -14515,13 +14515,13 @@ Cell[TextData[{
 channel converges on pure defection in a noisy one."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"1fa65587-1dec-404f-aa9a-4451d769dc61"]
+  6}},ExpressionUUID->"406d9db9-6403-4193-8f38-45fbbf0d5049"]
 }, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["4. Discovering strategies that beat Tit-for-Tat under noise", "Section",ExpressionUUID->"47edb0af-1cdf-4476-8bf8-f178ca6d0594"],
+Cell["4. Discovering strategies that beat Tit-for-Tat under noise", "Section",ExpressionUUID->"28f998a0-2285-413d-8057-58788a6bda69"],
 
 Cell[TextData[{
  "Can we do better than the textbook strategies? In the spirit of an \
@@ -14536,7 +14536,7 @@ automated-research loop \[Dash] ",
 hill-climb gives the narrative; a small genetic algorithm is the workhorse."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"ae077c33-54b8-4827-b218-debeb6e78d43"],
+  6}},ExpressionUUID->"36b8f774-a50c-4871-a9b4-ea5d190130ad"],
 
 Cell[CellGroupData[{
 
@@ -14553,7 +14553,7 @@ Do[ proposal = clip[champion + RandomVariate[NormalDistribution[0, .12], 5]];
   {150}]\
 \>", "Input",
  CellMargins->{{60, 30}, {6, 6}},
- FontSize->11,ExpressionUUID->"a5e10332-8fb8-4f86-b867-aaae49c9b93d"],
+ FontSize->11,ExpressionUUID->"683c1f00-c1d0-4fbd-ad16-b072707c1fa2"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -15328,7 +15328,7 @@ W9OA
   PlotRange->{{0, 795.}, {0, 469.5}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"cfe98e93-aa2d-422a-a7fc-5ec626956f31"]
+ TextAlignment->Center,ExpressionUUID->"8d5aa689-f86b-44e6-a97c-220e92c75ccc"]
 }, Open  ]],
 
 Cell["\<\
@@ -15339,13 +15339,13 @@ at two noise levels. Each upward step is an accepted proposal.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"4d78239b-39f3-4658-88a8-ece535525e91"],
+  0.35],ExpressionUUID->"635c9f20-e520-4580-b685-d5e3c906b8c1"],
 
 Cell[CellGroupData[{
 
 Cell["\<\
 The discovered strategies beat Tit-for-Tat at every noise level\
-\>", "Subsection",ExpressionUUID->"efb03256-0a53-4a00-ad92-357678529d7c"],
+\>", "Subsection",ExpressionUUID->"175e327e-2b83-4ad5-b265-eb71841d70d2"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -16735,7 +16735,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIKj+D8I4UPM=
   PlotRange->{{0, 845.5}, {0, 474.5}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"fa960999-8656-4aa8-b570-2087eba42313"],
+ TextAlignment->Center,ExpressionUUID->"1cf63b7b-e7c4-431d-bd1b-4aa3a44fff71"],
 
 Cell["\<\
 Discovered best-response strategy (solid) vs plain Tit-for-Tat (dashed) in \
@@ -16746,7 +16746,7 @@ margin is largest where noise matters most.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"5561a506-f6c7-4bf5-ad86-c95d9e70db7c"],
+  0.35],ExpressionUUID->"1bf4e18f-c5b7-4ad9-9262-c8cbf0d10e82"],
 
 Cell[TextData[{
  "And the ",
@@ -16755,7 +16755,7 @@ Cell[TextData[{
  " of the optimal strategy drifts with noise:"
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"fba8b704-51a3-4001-9a20-c347c2bf50e6"],
+  6}},ExpressionUUID->"6f7eab28-6a2a-4d0f-b678-d51bbf2ae837"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -19566,7 +19566,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOAC/j9XqVdo
   PlotRange->{{0, 791.}, {0, 474.5}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"f553865b-8726-4b07-acab-30b866359d48"],
+ TextAlignment->Center,ExpressionUUID->"2caef344-d146-4b6a-8036-bc61df4102e3"],
 
 Cell["\<\
 The discovered memory-one probabilities vs noise. The forgiveness parameter \
@@ -19578,7 +19578,7 @@ best response against a decaying field tilts back toward defection.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"15839f14-f6ae-4d4e-902a-03af18e9e441"],
+  0.35],ExpressionUUID->"d135a9d2-036a-40c5-8237-78bb5bbd5536"],
 
 Cell[TextData[{
  "This is the same lesson as the evolutionary tournament, reached by a \
@@ -19588,13 +19588,13 @@ different route: ",
  ", and noise is the knob that turns generous reciprocity into defection."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"2918d5cc-13f6-4791-ab96-9cfeb8069398"]
+  6}},ExpressionUUID->"3fef37b9-dbcd-45c9-a7a7-8a39e0cdddc3"]
 }, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["5. Letting an automated-research loop invent strategies", "Section",ExpressionUUID->"244f859f-d6f8-4747-b566-2589dff46e9c"],
+Cell["5. Letting an automated-research loop invent strategies", "Section",ExpressionUUID->"7e3d6dde-ac4a-4e5a-9b98-03ae6e996856"],
 
 Cell[TextData[{
  "The discovery in \[Section]4 searched a continuous parameter box. We can \
@@ -19614,7 +19614,7 @@ a sequence of hypotheses is proposed, each scored by mean field score \
 averaged over the noise sweep."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"bc62ae28-871c-49d0-a936-f6f8ac8dc2e1"],
+  6}},ExpressionUUID->"4fefd687-de2b-4db8-9c31-2e90f26ef75b"],
 
 Cell["\<\
 champion <- Tit-for-Tat
@@ -19627,7 +19627,7 @@ LOOP:  propose a strategy  ->  evaluate vs the field under noise
  FontFamily->"Courier",
  FontSize->11,
  Background->RGBColor[
-  0.95, 0.96, 0.98],ExpressionUUID->"e9dbf14e-b7ac-4c8b-8109-8d57a15a68bc"],
+  0.95, 0.96, 0.98],ExpressionUUID->"2cf42cfd-9b71-403b-b6ef-734ecd5ed4c7"],
 
 Cell[TextData[{
  "The result is a research log. Against this field (TFT baseline ",
@@ -19639,20 +19639,20 @@ Cell[TextData[{
  ". The winners are instructive:"
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"fb5f3ae3-1d9f-4a09-8304-98beba87262b"],
+  6}},ExpressionUUID->"54ec3c42-e08e-4f4b-a9a5-798fb1311bc3"],
 
 Cell[TextData[{
  StyleBox["Tit-for-2-Tats (2.400). ",
   FontWeight->Bold],
  "Patience beats vigilance: absorbing a single (possibly accidental) \
 defection before retaliating is the single biggest win."
-}], "Item",ExpressionUUID->"0e0b7157-5ce0-4c0c-83b8-da723d425284"],
+}], "Item",ExpressionUUID->"2a5632b5-4209-455d-97e2-922cabd52587"],
 
 Cell[TextData[{
  StyleBox["Generous Tit-for-2-Tats and Generous TFT. ",
   FontWeight->Bold],
  "Tolerance plus probabilistic forgiveness compounds the gain."
-}], "Item",ExpressionUUID->"9145a839-de0b-4a84-87dc-0b52c5ba24e9"],
+}], "Item",ExpressionUUID->"e24088fa-3328-40d1-b4bd-80d4cc26314a"],
 
 Cell[TextData[{
  StyleBox["AdaptiveGenerous \[Dash] a self-tuning entrant. ",
@@ -19660,7 +19660,7 @@ Cell[TextData[{
  "It estimates the channel noise online (from how often the opponent's moves \
 flip) and scales its own forgiveness to match \[Dash] beating TFT with no \
 hand-set forgiveness constant."
-}], "Item",ExpressionUUID->"2ff2e9e7-7826-4fb9-b424-65f65f71510e"],
+}], "Item",ExpressionUUID->"c4ea78c0-dd45-42f9-a629-bfc462097333"],
 
 Cell[TextData[{
  StyleBox["What lost is as telling as what won. ",
@@ -19675,12 +19675,12 @@ Cell[TextData[{
 change once we add spatial structure."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"47183eee-54f4-4b55-b8cf-e92213389421"]
+  6}},ExpressionUUID->"8166c61c-a180-4f43-932e-7e4311f77efd"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["6. Beyond memory-one: evolving finite-state machines", "Section",ExpressionUUID->"de0bbae6-e006-4362-b654-6b88f30259ea"],
+Cell["6. Beyond memory-one: evolving finite-state machines", "Section",ExpressionUUID->"d2612175-91cd-45b1-b1c1-c531eabbf419"],
 
 Cell[TextData[{
  "Memory-one strategies condition only on the previous round. Do richer \
@@ -19693,7 +19693,7 @@ TFT, Grim, Pavlov and much else; we verified it encodes TFT and Grim exactly \
 before evolving it."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"45a1b459-7884-45d4-852c-71335fc848b3"],
+  6}},ExpressionUUID->"7e78bbee-d71b-4e9c-9f80-4d26ee87fa7e"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -20926,7 +20926,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAIKr8f4hTTbE=
   PlotRange->{{0, 838.}, {0, 457.}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"74e64d77-86a1-47bc-aefa-09d6edeca2e4"],
+ TextAlignment->Center,ExpressionUUID->"3181519f-44ad-4f09-8405-a16b3db79b6d"],
 
 Cell["\<\
 Evolved finite-state machines vs Tit-for-Tat across noise \[Dash] the \
@@ -20936,7 +20936,7 @@ machines beat TFT at essentially every noise level.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"3405d57c-3df2-4ef4-b7f3-5500dca36992"],
+  0.35],ExpressionUUID->"24516308-0d94-4d26-8443-aa7ed15978de"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -21583,7 +21583,7 @@ AAAAUEb+fztGMXg=
   PlotRange->{{0, 700.}, {0, 462.5}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"40eecf5a-31b3-4c17-9598-e50635e04113"],
+ TextAlignment->Center,ExpressionUUID->"23a0f028-5886-4b5f-80ba-745ce0d2fa38"],
 
 Cell["\<\
 The best evolved machine uses 2\[Dash]4 of its 4 reachable states \[Dash] \
@@ -21596,12 +21596,12 @@ forgiveness.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"42fa4044-58c7-4590-91b4-f1e078bfa115"]
+  0.35],ExpressionUUID->"a25b1880-62fc-4438-88e1-e8d9c2228ac4"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["7. Spatial structure makes cooperation robust to noise", "Section",ExpressionUUID->"c93534ca-eff8-4be1-a1bf-77c559f54388"],
+Cell["7. Spatial structure makes cooperation robust to noise", "Section",ExpressionUUID->"f44cbd37-3646-4224-a7e5-a77a43f5799a"],
 
 Cell[TextData[{
  "Everything so far assumed a ",
@@ -21617,7 +21617,7 @@ classic result is that clustering lets cooperators survive. We ask what noise \
 does to it."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"f50459bd-b65c-4c32-b9f4-5c212851af97"],
+  6}},ExpressionUUID->"756eb44c-5e79-4ea2-9592-fadde4d7716b"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -22627,7 +22627,7 @@ aNQ=
   PlotRange->{{0, 870.5}, {0, 408.5}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"7f6fc8cc-7720-4a96-90f2-ad987fcfc7fd"],
+ TextAlignment->Center,ExpressionUUID->"432175db-8981-438b-8049-c6e25baa39c2"],
 
 Cell["\<\
 Final lattice composition vs noise. At low noise the lattice is almost \
@@ -22640,7 +22640,7 @@ unconditional defection nearly absent. As noise rises AllD gains ground \
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"2bbe24c4-7763-47a7-9b13-062abde505f5"],
+  0.35],ExpressionUUID->"2b2528f4-ef49-4d6b-98b0-b98781ca4462"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -24206,7 +24206,7 @@ Rv/617/+D7l7rhg=
   PlotRange->{{0, 649.5}, {0, 525.5}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"e1d7c6a6-6dd9-479d-9e4b-092796986ad8"],
+ TextAlignment->Center,ExpressionUUID->"28e98164-7edf-49a1-952d-8b7be53a37c9"],
 
 Cell["\<\
 Lattice snapshots (colours = strategies; legend below). Reciprocators survive \
@@ -24217,7 +24217,7 @@ frays the cluster boundaries but does not dissolve them.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"97f8e516-fda1-454f-9d4f-216bec56cef5"],
+  0.35],ExpressionUUID->"f05e3e5b-17bb-4f42-80b6-c9aa3595d427"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -24398,7 +24398,7 @@ IAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCXfw/LnbJYw==
   PlotRange->{{0, 407.}, {0, 25.}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"f25cb770-2902-44ea-a46d-8dc054c7be4f"],
+ TextAlignment->Center,ExpressionUUID->"8e2bc5bc-dea6-4eae-a6c4-d0c990da88ae"],
 
 Cell[TextData[{
  StyleBox["Spatial structure makes cooperation far more robust to noise. ",
@@ -24413,12 +24413,12 @@ depends on population structure.",
   FontWeight->Bold]
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"db70dcd5-4116-477d-ae76-5443b10082b5"]
+  6}},ExpressionUUID->"21c8d7fd-1129-4c25-adff-53ca20c2a729"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["8. Red-Queen co-evolution", "Section",ExpressionUUID->"08785153-9e4c-4cf6-938f-b826d3853425"],
+Cell["8. Red-Queen co-evolution", "Section",ExpressionUUID->"6920f3f8-817c-4a55-b8e9-728fcba381b9"],
 
 Cell[TextData[{
  "So far strategies were optimised against a ",
@@ -24435,7 +24435,7 @@ which changes every generation. This is a ",
  " race \[Dash] you must keep adapting just to hold your rank."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"fb9f458b-70c5-4099-a78c-1beb29e4f002"],
+  6}},ExpressionUUID->"700ce06b-9c9f-4b31-b8d9-cf09e14f56d9"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -25989,7 +25989,7 @@ AAAAEPn/42dnQA==
   PlotRange->{{0, 842.}, {0, 499.5}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"d7802fb8-e8c4-473b-a36e-3d327495bb1e"],
+ TextAlignment->Center,ExpressionUUID->"310ccff1-875e-4ea1-af3b-4ac1b37306b8"],
 
 Cell["\<\
 Population-mean cooperativeness over generations. At \[Epsilon]=0 the \
@@ -26001,7 +26001,7 @@ prevents a stable cooperative equilibrium from locking in.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"3d247b31-be26-4180-8b23-2420a45802c6"],
+  0.35],ExpressionUUID->"17c95e3e-1638-4a59-8481-9b0eb8520638"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -27984,7 +27984,7 @@ AAAAAAAAAAAAAAAAAIzw/xP8iss=
   PlotRange->{{0, 831.}, {0, 499.5}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"88e470fb-a119-47c2-8a96-a64980635986"],
+ TextAlignment->Center,ExpressionUUID->"86ca1715-e2c1-415f-84e5-bc4cb75a0d38"],
 
 Cell["\<\
 The co-evolved mean genome vs noise. As noise rises the population becomes \
@@ -27996,12 +27996,12 @@ route to the same conclusion: forgiveness answers noise.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"0ba913fb-e5db-4d2a-8bb4-1f8694a91640"]
+  0.35],ExpressionUUID->"efa00192-989b-4f81-ab25-b704b87cbf15"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["9. Which strategies are evolutionarily stable?", "Section",ExpressionUUID->"782ad39f-a92a-48a2-8ac3-cf216cb42904"],
+Cell["9. Which strategies are evolutionarily stable?", "Section",ExpressionUUID->"90196ddd-e1e3-471b-becc-dc271ed4ff46"],
 
 Cell[TextData[{
  "A rigorous capstone. For a panel of 25 strategies (classics, modern \
@@ -28027,7 +28027,7 @@ pairwise ",
  " if no mutant can invade it."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"2e77681e-d717-416c-aae4-46a2002f0e6f"],
+  6}},ExpressionUUID->"3ce1d0eb-8058-4870-88f0-597593b3eb00"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -31190,7 +31190,7 @@ m2m/4usPAAAAAAAAAAAAAAAAAAAAAAAAwHD8PyiUQPs=
   PlotRange->{{0, 620.}, {0, 2170.}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"770707cd-c25f-413a-9439-d34fee31a991"],
+ TextAlignment->Center,ExpressionUUID->"49f9b927-f2a5-456d-855c-2554371a5e8a"],
 
 Cell[TextData[{
  "Evolutionarily stable strategies vs noise (green = no mutant invades). At \
@@ -31211,7 +31211,7 @@ at all. Noise destroys the evolutionary stability of cooperation."
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"e0c45b8e-d44c-499a-901a-55cc7519aa2e"],
+  0.35],ExpressionUUID->"91410a97-6f45-41f3-b016-e6ba0207f32a"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -33831,7 +33831,7 @@ hBBCCCGEEEL84f8DfWzJqA==
   PlotRange->{{0, 620.}, {0, 633.}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"48ce87ba-223a-4ab2-8157-bf2f61e6772d"],
+ TextAlignment->Center,ExpressionUUID->"7b1cdd60-5ab7-4c22-a7fd-2de2048f055e"],
 
 Cell["\<\
 Invasibility matrix at \[Epsilon]=0.2 (red = row invades column). The \
@@ -33841,7 +33841,7 @@ defectors have the cleanest columns.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"5046c498-fde8-4f17-8a2c-367c07a5708e"],
+  0.35],ExpressionUUID->"5e8d36b2-1478-43d2-8d21-eee367606b1f"],
 
 Cell[TextData[{
  StyleBox["Three meanings of \[OpenCurlyDoubleQuote]stable.\
@@ -33867,12 +33867,12 @@ are noise-dependent and they disagree \[Dash] there is no single best \
 strategy, only best-for-a-given-world."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"a4d4a775-068b-43a4-8ff4-7391f9ac7d7c"]
+  6}},ExpressionUUID->"cb035922-f599-4ee2-b8e5-de43c4cb3c61"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["10. An 8-hour automated search: a champion beyond memory-one", "Section",ExpressionUUID->"f177ce7e-0b79-4ea3-b1bb-ebd123dc8372"],
+Cell["10. An 8-hour automated search: a champion beyond memory-one", "Section",ExpressionUUID->"1b6106ff-0d3b-477a-82f0-2800a532dbd7"],
 
 Cell[TextData[{
  "The discoveries so far searched small or fixed spaces. To see what a \
@@ -33900,7 +33900,7 @@ can tell an ",
  " one."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"dc8dfcab-2075-4f25-b739-031b72ac458b"],
+  6}},ExpressionUUID->"8d610301-243c-4397-9ffd-e45eb78f2a69"],
 
 Cell["\<\
 The engine was a 4-island genetic algorithm with ring migration and \
@@ -33911,13 +33911,13 @@ behind. Over 111 generations the best field score climbed steadily, then \
 plateaued \[Dash] the signature of a converged search:\
 \>", "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"12ed1fa7-d6ac-418c-a783-ce4e4713e4e1"],
+  6}},ExpressionUUID->"010f46e2-4bee-42b6-8b36-534d60aa575a"],
 
 Cell[TextData[StyleBox["Search progress: field score of the best strategy \
 found, by generation (selected rows):",
  FontSlant->Italic]], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"d812bfd4-068b-431a-a451-2c7d466ae5ed"],
+  6}},ExpressionUUID->"e7fa8e09-5a51-4561-931e-ddae117589c1"],
 
 Cell[BoxData[GridBox[{
    {"generation", 
@@ -33940,11 +33940,11 @@ Cell[BoxData[GridBox[{
   GridBoxFrame->{"Columns" -> {{True}}, "Rows" -> {{True}}},
   GridBoxItemSize->{"Columns" -> {{9}}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 8}},
- TextAlignment->Center,ExpressionUUID->"b5c15066-2c4c-4af3-8d07-793446bbc16b"],
+ TextAlignment->Center,ExpressionUUID->"b9cb9a40-fd78-4192-8e21-98885c7a7b3e"],
 
 Cell[CellGroupData[{
 
-Cell["Honest scoring: searching is not the same as winning", "Subsection",ExpressionUUID->"6509dad3-ee74-4441-a287-387c8808d0d4"],
+Cell["Honest scoring: searching is not the same as winning", "Subsection",ExpressionUUID->"32e2ff20-4402-4d25-8141-e656be8c7a28"],
 
 Cell[TextData[{
  "The search ranks candidates with a fixed random seed so the comparison is \
@@ -33965,12 +33965,12 @@ with ",
 not a seed artefact."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"d0db3231-3fb3-4d94-8977-c2a3ef6acbfe"]
+  6}},ExpressionUUID->"094ae83f-fe5a-4237-b0be-4ed0e18754a4"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["What the champion does", "Subsection",ExpressionUUID->"5a0ac257-69f5-42aa-a07e-c8428f2b9bee"],
+Cell["What the champion does", "Subsection",ExpressionUUID->"02afc6e4-6377-4d60-82ba-b66d53fccf62"],
 
 Cell["\<\
 Decoding the 17-number genome into behaviour reveals a clean, interpretable \
@@ -33979,7 +33979,7 @@ the key \[Dash] treats the opponent's last two moves very differently \
 depending on the pattern:\
 \>", "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"250f0608-9696-4175-ac6a-3bc4f5f74b3b"],
+  6}},ExpressionUUID->"5d791f2a-765f-4a02-a4cf-f582774003e0"],
 
 Cell[TextData[{
  StyleBox["Opponent defected once, but cooperated the round before ",
@@ -33990,7 +33990,7 @@ produces): forgive at ",
   FontFamily->"Times",
   FontSlant->Italic],
  "."
-}], "Item",ExpressionUUID->"22f61969-7b14-4a34-b769-fefdbb5b4003"],
+}], "Item",ExpressionUUID->"c688f80e-5215-4738-9dd5-dfa6b271c1cc"],
 
 Cell[TextData[{
  StyleBox["Opponent defected both of the last two rounds ",
@@ -34000,7 +34000,7 @@ Cell[TextData[{
   FontFamily->"Times",
   FontSlant->Italic],
  " \[Dash] punish."
-}], "Item",ExpressionUUID->"03fd1240-9d62-43e3-9a35-5860be2a3997"],
+}], "Item",ExpressionUUID->"e70bd76c-13df-4611-a1eb-23e6b7f38127"],
 
 Cell[TextData[{
  StyleBox["This is the crux. ",
@@ -34025,7 +34025,7 @@ Tit-for-Tat is ",
  ", where mistakes are recoverable:"
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"6a06c016-28bd-4cbe-b3a0-5da511de472b"],
+  6}},ExpressionUUID->"9b55db87-3fc1-475a-b494-66c6202974e3"],
 
 Cell[BoxData[GridBox[{
    {
@@ -34049,7 +34049,7 @@ Cell[BoxData[GridBox[{
   GridBoxFrame->{"Columns" -> {{True}}, "Rows" -> {{True}}},
   GridBoxItemSize->{"Columns" -> {{11}}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 8}},
- TextAlignment->Center,ExpressionUUID->"20cabcec-044e-4266-a59f-a2b7cb825308"],
+ TextAlignment->Center,ExpressionUUID->"d899e685-62f9-4542-b11f-e786b06e41c3"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -35978,7 +35978,7 @@ AAAAAAAAAAAAAAAA4I74f9v9uJg=
   PlotRange->{{0, 978.5}, {0, 494.}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"1062f7b8-83f6-43af-b100-4563a89d100f"],
+ TextAlignment->Center,ExpressionUUID->"18d68882-33ea-4f28-aef8-c94fc256e043"],
 
 Cell["\<\
 The 8-hour memory-two champion (orange) vs Tit-for-Tat and the best \
@@ -35989,12 +35989,12 @@ everywhere, and its margin over Tit-for-Tat widens as noise rises.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"cc2d3c30-5243-409e-aa8c-72c02cac87bf"]
+  0.35],ExpressionUUID->"35b69f83-3aee-4a6d-91a2-e9ef3b66993c"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["How it ranks against the whole field", "Subsection",ExpressionUUID->"2946e3a2-c7f8-4b05-a9b4-6408b1b40388"],
+Cell["How it ranks against the whole field", "Subsection",ExpressionUUID->"c9bcabdd-62f8-4f3a-8666-6daedd6ddc9f"],
 
 Cell[TextData[{
  "Dropped into the full panel of 26 strategies (classics, modern entrants and \
@@ -36007,7 +36007,7 @@ Tit-for-Tat in 15th place. The discovered strategies (orange) take six of the \
 top eight places:"
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"0c95a231-f9fe-4df6-a1b9-b89cf06d7d25"],
+  6}},ExpressionUUID->"56095df2-6c5e-41ba-b2c2-d67afbdc1bd3"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -38173,7 +38173,7 @@ iBAg9ggBODo6Ov5vDoL920QEFIgIKCSzICLmgohAA2Iiucji/xIReEBM5Eb1
   PlotRange->{{0, 940.}, {0, 600.5}}]], "Output",
  CellMargins->{{Automatic, Automatic}, {10, 6}},
  ShowCellLabel->False,
- TextAlignment->Center,ExpressionUUID->"c7157bec-01b1-4c8b-9900-f870f99bfee8"],
+ TextAlignment->Center,ExpressionUUID->"f1c75f13-5e3a-49a4-9a79-53feecd46231"],
 
 Cell["\<\
 Field score (mean over noise) for all 26 strategies. Orange = discovered by \
@@ -38184,7 +38184,7 @@ MemTwo-Long, from the 8-hour run, is the single best strategy in the field.\
  FontSize->11,
  FontSlant->Italic,
  FontColor->GrayLevel[
-  0.35],ExpressionUUID->"35fedc44-52cf-4c80-8445-7559c5df1e64"],
+  0.35],ExpressionUUID->"97bb5ccc-b4a4-4f75-a907-7c1b167581ef"],
 
 Cell[TextData[{
  StyleBox["But is it evolutionarily stable? No \[Dash] and that is the \
@@ -38210,20 +38210,93 @@ unconditional defector can invade a population of it. It is the strongest ",
  " are simply different things."
 }], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"e75ce4e3-c34f-4dcb-9a84-85e3e2c7e068"]
+  6}},ExpressionUUID->"c6bb6137-d3fd-4924-bbdf-d817ba760167"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Related work: learning versus evolution", "Subsection",ExpressionUUID->"b900b8c3-40a7-4844-bfc6-16b93653dfd2"],
+
+Cell[TextData[{
+ "A complementary Wolfram Community post by Hyeri Ahn, ",
+ StyleBox["A Q-Learning Agent Discovers the Optimal Strategy Against Each \
+Opponent in the Prisoner's Dilemma",
+  FontSlant->Italic],
+ " (",
+ StyleBox["community.wolfram.com",
+  FontWeight->"SemiBold"],
+ " (",
+ StyleBox["https://community.wolfram.com/groups/-/m/t/3727339",
+  FontFamily->"Courier",
+  FontSize->10],
+ ")",
+ "), reaches the same arena from the opposite direction. There, a single \
+agent uses ",
+ StyleBox["reinforcement learning",
+  FontWeight->Bold],
+ " (Q-learning) to learn, ",
+ StyleBox["within its own lifetime",
+  FontSlant->Italic],
+ ", a best response tuned to each ",
+ StyleBox["specific",
+  FontSlant->Italic],
+ " opponent it faces. Here, a ",
+ StyleBox["genetic algorithm",
+  FontWeight->Bold],
+ " evolves, ",
+ StyleBox["across generations",
+  FontSlant->Italic],
+ ", one strategy that does well against an entire field at once."
+}], "Text",
+ CellMargins->{{50, 50}, {6, 
+  6}},ExpressionUUID->"b94fda3a-8464-4fc2-b235-f436a1ffa245"],
+
+Cell[TextData[{
+ "The contrast is the interesting part. Q-learning ",
+ StyleBox["exploits a known opponent",
+  FontWeight->Bold],
+ ": told who it is playing, it can find that opponent's weak spot. Our \
+evolutionary search instead seeks ",
+ StyleBox["robustness",
+  FontWeight->Bold],
+ ": a single rule that must do well against everyone, and \[Dash] the axis we \
+stress throughout this notebook \[Dash] across every ",
+ StyleBox["noise",
+  FontWeight->Bold],
+ " level. The two answer different questions (\[OpenCurlyDoubleQuote]how do I \
+beat ",
+ StyleBox["this",
+  FontSlant->Italic],
+ " player?\[CloseCurlyDoubleQuote] versus \[OpenCurlyDoubleQuote]what plays \
+well against ",
+ StyleBox["any",
+  FontSlant->Italic],
+ " player, even through mistakes?\[CloseCurlyDoubleQuote]), yet both routes \
+keep rediscovering the same ingredients Axelrod identified by hand: ",
+ StyleBox["be nice, reciprocate, and forgive",
+  FontWeight->Bold],
+ ". An open question worth posing to the learning approach is how a Q-learner \
+trained in clean play would fare once execution ",
+ StyleBox["noise",
+  FontSlant->Italic],
+ " is switched on \[Dash] precisely the regime where, as we have seen, \
+forgiveness stops being optional."
+}], "Text",
+ CellMargins->{{50, 50}, {6, 
+  6}},ExpressionUUID->"02086f70-e05c-4937-a545-64d2473d8bc8"]
 }, Open  ]]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["11. Conclusions", "Section",ExpressionUUID->"30a6a28a-1fa3-4949-9b17-617c7f313f8c"],
+Cell["11. Conclusions", "Section",ExpressionUUID->"3f78007e-5394-4f3a-a3ce-3e5bfc46c7a9"],
 
 Cell[TextData[{
  StyleBox["Tit-for-Tat is excellent but not optimal. ",
   FontWeight->Bold],
  "In a cooperative field, more forgiving reciprocators (Generous TFT, \
 Tit-for-2-Tats) edge it out \[Dash] and extortion finishes last."
-}], "Item",ExpressionUUID->"8c8be821-9dc7-44a9-aa55-98522bed51df"],
+}], "Item",ExpressionUUID->"8985b4fc-2ed4-4222-9f62-5a5678f4b285"],
 
 Cell[TextData[{
  StyleBox["Forgiveness must be patient \[Dash] and, with more memory, \
@@ -38234,7 +38307,7 @@ every reflexive scheme; a self-tuning strategy that estimates the noise also \
 beats TFT; and the 8-hour memory-two search went further still, learning to \
 forgive an isolated (noise-like) defection while punishing a sustained one \
 \[Dash] the single best strategy in the whole field."
-}], "Item",ExpressionUUID->"f947bbab-9107-40ca-9d71-e304278051ef"],
+}], "Item",ExpressionUUID->"a8ab45d3-af97-4979-aaa1-bae279501b2f"],
 
 Cell[TextData[{
  StyleBox["More search keeps paying, but with diminishing, honest returns. ",
@@ -38244,7 +38317,7 @@ every hand-designed and short-search strategy \[Dash] yet the gain over a \
 two-minute search was modest, the run converged well before its budget, and \
 fixed-seed fitness had to be discounted by fresh-seed re-evaluation to report \
 an honest number. Automated discovery works; it is not magic."
-}], "Item",ExpressionUUID->"5361e8a7-4c77-4e7c-a507-fa739451a2ea"],
+}], "Item",ExpressionUUID->"276db8ec-7b03-4967-9ff5-f909c2b48ce8"],
 
 Cell[TextData[{
  StyleBox["\[OpenCurlyDoubleQuote]Stable\[CloseCurlyDoubleQuote] has three \
@@ -38254,14 +38327,14 @@ answers. ",
 noise; replicator-from-cooperative-start gives generous reciprocity \
 collapsing to Grim under noise; spatial structure gives reciprocator clusters \
 that survive. All noise-dependent, and they disagree."
-}], "Item",ExpressionUUID->"3d986958-cc0f-44d6-b19a-f78fdb692000"],
+}], "Item",ExpressionUUID->"a2723865-0305-43b4-bbf6-2686aacabebd"],
 
 Cell[TextData[{
  StyleBox["Population structure changes the effect of noise. ",
   FontWeight->Bold],
  "Well-mixed: noise drives cooperation to collapse. Spatial: clustering keeps \
 it resilient, degrading gracefully instead of collapsing."
-}], "Item",ExpressionUUID->"333b43b9-48fb-478a-ae1f-e42b44e6dd8e"],
+}], "Item",ExpressionUUID->"af1e0940-3082-4f9c-867b-01b7902f12f8"],
 
 Cell[TextData[{
  StyleBox["Many roads, one lesson. ",
@@ -38270,19 +38343,19 @@ Cell[TextData[{
 open-ended co-evolution, and ESS analysis all converge: forgiveness is the \
 answer to noise \[Dash] until noise is so high that nothing sustains \
 cooperation in a well-mixed world."
-}], "Item",ExpressionUUID->"eb1a3785-5cf7-4374-8198-0d431f809e8c"]
+}], "Item",ExpressionUUID->"e3712530-54ad-47be-9c89-6367d8c44057"]
 }, Open  ]],
 
 Cell[CellGroupData[{
 
-Cell["Reproducing this work", "Section",ExpressionUUID->"e961ef80-ce9a-4bac-aaa4-ec6231003434"],
+Cell["Reproducing this work", "Section",ExpressionUUID->"ab6b86f1-9534-4570-8c9e-96eb14dd32b3"],
 
 Cell["\<\
 Everything here is a few seconds to a few minutes of Wolfram Language \[Dash] \
 no external data, no API keys. The full source is on GitHub.\
 \>", "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"2bf23423-fb72-42a8-9343-120e0f67bb12"],
+  6}},ExpressionUUID->"20b774ef-e361-46d9-a9fb-7f7f25f042fd"],
 
 Cell["\<\
 wolframscript -file tests/sanity.wls            # correctness checks
@@ -38305,7 +38378,7 @@ wolframscript -file wolfram/figures.wls          # regenerate base figures\
  FontFamily->"Courier",
  FontSize->11,
  Background->RGBColor[
-  0.95, 0.96, 0.98],ExpressionUUID->"9fe634e4-5119-491e-8604-69de484e7d06"],
+  0.95, 0.96, 0.98],ExpressionUUID->"e115de95-b253-4f3c-9e3f-8ebb7cc93934"],
 
 Cell[TextData[StyleBox["Built entirely in the Wolfram Language. The \
 strategy-discovery and autoresearch loops borrow the propose \[Rule] evaluate \
@@ -38313,16 +38386,16 @@ strategy-discovery and autoresearch loops borrow the propose \[Rule] evaluate \
 in WL.",
  FontSlant->Italic]], "Text",
  CellMargins->{{50, 50}, {6, 
-  6}},ExpressionUUID->"31e88d93-72a0-41a5-91eb-aa72aef1a26c"]
+  6}},ExpressionUUID->"08f281ae-db8f-4e67-be57-7875b1f4d30b"]
 }, Open  ]]
 }, Open  ]]
 },
 WindowSize->{1000, 800},
-WindowMargins->{{364, Automatic}, {101, Automatic}},
+WindowMargins->{{364, Automatic}, {100, Automatic}},
 Visible->False,
 FrontEndVersion->"15.0 for Mac OS X ARM (64-bit) (October 27, 2025)",
 StyleDefinitions->"Default.nb",
-ExpressionUUID->"ba503eb2-757a-45e0-a7ad-2030f615b2ff"
+ExpressionUUID->"af8f2d00-a5e7-45ef-8caa-0cc2a56b72b1"
 ]
 (* End of Notebook Content *)
 
@@ -38336,173 +38409,178 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[576, 22, 146, 2, 70, "Title",ExpressionUUID->"3dd8c196-0bad-4883-9b18-acc463395663"],
-Cell[725, 26, 219, 3, 70, "Subtitle",ExpressionUUID->"3b064dda-bced-4bce-adf9-2dd60d608d24"],
-Cell[947, 31, 174, 3, 70, "Subsubtitle",ExpressionUUID->"afaf2a76-afb7-4f00-a65c-de1292039455"],
-Cell[1124, 36, 149246, 2456, 70, "Output",ExpressionUUID->"b2702f68-2cb5-4e1c-ac75-90cbb63bb55d"],
-Cell[150373, 2494, 416, 10, 70, "Text",ExpressionUUID->"3a45b8ee-fd07-4480-9991-afd883c83a60"],
+Cell[576, 22, 146, 2, 70, "Title",ExpressionUUID->"a313ec0d-0a48-400a-8fba-4c44b282fe03"],
+Cell[725, 26, 219, 3, 70, "Subtitle",ExpressionUUID->"df96e7ad-caf2-41b8-8fb1-1864cecbe91e"],
+Cell[947, 31, 174, 3, 70, "Subsubtitle",ExpressionUUID->"793b9599-3616-4ce7-a9e4-477a2e74d17d"],
+Cell[1124, 36, 149246, 2456, 70, "Output",ExpressionUUID->"f7791f99-6bd2-4597-ba3e-6c3ed4685859"],
+Cell[150373, 2494, 416, 10, 70, "Text",ExpressionUUID->"873e165b-ba3e-4c6a-8d16-eb31bbb6e649"],
 Cell[CellGroupData[{
-Cell[150814, 2508, 82, 0, 70, "Section",ExpressionUUID->"ec787fed-c62c-4814-9025-d171a185bfde"],
-Cell[150899, 2510, 675, 15, 70, "Text",ExpressionUUID->"51cb090f-bff9-480b-9ec7-01c6eff7a18f"],
-Cell[151577, 2527, 1180, 31, 70, "Text",ExpressionUUID->"d914d738-774c-4673-b446-be67dfe79c38"]
+Cell[150814, 2508, 82, 0, 70, "Section",ExpressionUUID->"9b9587be-2586-4e74-ac0a-fa075fca9896"],
+Cell[150899, 2510, 675, 15, 70, "Text",ExpressionUUID->"0e5a1391-f41f-47e5-a888-534bb0659f25"],
+Cell[151577, 2527, 1180, 31, 70, "Text",ExpressionUUID->"fac903df-d11c-4f00-8f59-0f762460186b"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[152794, 2563, 145, 2, 70, "Section",ExpressionUUID->"c1d598e9-4fff-42fb-95fb-8aac0370c1be"],
-Cell[152942, 2567, 569, 22, 70, "Text",ExpressionUUID->"d2f6e738-9c6f-47f4-a9d8-b0c9ebdb3568"],
-Cell[153514, 2591, 710, 26, 70, "DisplayFormula",ExpressionUUID->"005072d2-ee7d-4df0-97b4-66529503af02"],
-Cell[154227, 2619, 587, 13, 70, "Text",ExpressionUUID->"6b4705d5-11dc-42b9-8987-f59dd46f71bd"],
+Cell[152794, 2563, 145, 2, 70, "Section",ExpressionUUID->"50c69512-c92d-428a-a4ac-5dd11e9cd89e"],
+Cell[152942, 2567, 569, 22, 70, "Text",ExpressionUUID->"92260c02-09fa-44a5-be4b-b1b0eef185b8"],
+Cell[153514, 2591, 710, 26, 70, "DisplayFormula",ExpressionUUID->"31918357-2956-462f-ae7d-396660230626"],
+Cell[154227, 2619, 587, 13, 70, "Text",ExpressionUUID->"baa898ac-e1b2-48b2-ae6d-0abaf52e01f5"],
 Cell[CellGroupData[{
-Cell[154839, 2636, 120, 0, 70, "Subsection",ExpressionUUID->"a37b2d23-7bfc-4577-a45c-190b22a72438"],
-Cell[154962, 2638, 512, 15, 70, "Text",ExpressionUUID->"df2ccc0b-f7e0-48c0-8007-ac16cf6200cc"],
-Cell[155477, 2655, 552, 13, 70, "Input",ExpressionUUID->"43027ac3-f91c-424e-b8f1-769bd75e30d0"],
-Cell[156032, 2670, 422, 9, 70, "Text",ExpressionUUID->"21160cad-d8e1-4c78-a502-25dd91290d10"]
+Cell[154839, 2636, 120, 0, 70, "Subsection",ExpressionUUID->"aeef6335-8cea-4869-a902-e79521aa6d90"],
+Cell[154962, 2638, 512, 15, 70, "Text",ExpressionUUID->"d9a484cb-fee2-48e1-9efe-6db2530fd449"],
+Cell[155477, 2655, 552, 13, 70, "Input",ExpressionUUID->"4bc530b1-394a-4fb4-99a8-3e540d22b4ac"],
+Cell[156032, 2670, 422, 9, 70, "Text",ExpressionUUID->"80fb56f7-3f74-4381-b6d1-b42d061df513"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[156491, 2684, 102, 0, 70, "Subsection",ExpressionUUID->"c7876f5a-fe5e-4241-9c01-e41790964649"],
-Cell[156596, 2686, 502, 15, 70, "Text",ExpressionUUID->"87fa8bd2-57db-4d14-aee8-77c70af99c54"]
+Cell[156491, 2684, 102, 0, 70, "Subsection",ExpressionUUID->"8f53c508-8c8f-4a2b-bf09-d2627cbd3fde"],
+Cell[156596, 2686, 502, 15, 70, "Text",ExpressionUUID->"3f4345cb-ce9f-4028-b53c-3e895db01416"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[157147, 2707, 127, 0, 70, "Section",ExpressionUUID->"e9ae22ba-1e19-4409-af73-98430dfcbf5a"],
-Cell[157277, 2709, 428, 10, 70, "Text",ExpressionUUID->"63d1a442-d15a-4c06-8b35-2cbc61d1dc6b"],
-Cell[157708, 2721, 159000, 2616, 70, "Output",ExpressionUUID->"5d2665ee-aa2e-4626-8966-123b9ff4cac6"],
-Cell[316711, 5339, 327, 8, 70, "Text",ExpressionUUID->"c82c67ea-d9bd-4e6d-8f85-dcb2e6614efc"],
-Cell[317041, 5349, 648, 16, 70, "Text",ExpressionUUID->"bc4f1aaf-a8ac-4bc7-b784-653b22e45b18"],
-Cell[317692, 5367, 147, 2, 70, "Text",ExpressionUUID->"ee45c2d8-0514-443c-92fe-c00a2f5de10e"],
-Cell[317842, 5371, 141828, 2334, 70, "Output",ExpressionUUID->"9a510cd0-6af4-43e5-861e-10945f4b2cdb"],
-Cell[459673, 7707, 420, 10, 70, "Text",ExpressionUUID->"d39d0393-8e46-4214-9aa3-7f32cf685c76"],
+Cell[157147, 2707, 127, 0, 70, "Section",ExpressionUUID->"bbe6fdef-fc86-4760-a735-1697128246c7"],
+Cell[157277, 2709, 428, 10, 70, "Text",ExpressionUUID->"f51dba6d-f83d-4767-8c10-1a5a1321e062"],
+Cell[157708, 2721, 159000, 2616, 70, "Output",ExpressionUUID->"a76dd152-60a3-468c-9055-51048c95b105"],
+Cell[316711, 5339, 327, 8, 70, "Text",ExpressionUUID->"d42d91da-0f66-4e50-882c-e041d53919af"],
+Cell[317041, 5349, 648, 16, 70, "Text",ExpressionUUID->"deecac10-49c3-48dd-98b3-4e39a3396af6"],
+Cell[317692, 5367, 147, 2, 70, "Text",ExpressionUUID->"ee36de77-263d-4b4a-b610-33e5fc7c18cc"],
+Cell[317842, 5371, 141828, 2334, 70, "Output",ExpressionUUID->"f1bf3424-2736-449b-856c-a8eef0cb4a68"],
+Cell[459673, 7707, 420, 10, 70, "Text",ExpressionUUID->"e985753e-99cb-4da2-b65c-c8b19add05d0"],
 Cell[CellGroupData[{
-Cell[460118, 7721, 107, 0, 70, "Subsection",ExpressionUUID->"ffc4bb3f-c7ba-49ed-a8c9-de2fba517402"],
-Cell[460228, 7723, 248103, 4076, 70, "Output",ExpressionUUID->"42fc1857-a218-4898-9474-adda79b031c4"],
-Cell[708334, 11801, 444, 10, 70, "Text",ExpressionUUID->"65611d63-ddb0-423c-a4ad-39c0d7ecadef"]
+Cell[460118, 7721, 107, 0, 70, "Subsection",ExpressionUUID->"bdad8416-7344-4ed1-bfbc-ce326dd35a7a"],
+Cell[460228, 7723, 248103, 4076, 70, "Output",ExpressionUUID->"2e355c27-4414-461e-9eb9-c1c522280e66"],
+Cell[708334, 11801, 444, 10, 70, "Text",ExpressionUUID->"aa08e655-e24c-423f-90bf-5fa991991e08"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[708827, 11817, 152, 2, 70, "Section",ExpressionUUID->"4d637b4d-5bdd-4527-8d2e-89f62ea24d30"],
-Cell[708982, 11821, 240, 5, 70, "Text",ExpressionUUID->"ac3b2595-e030-4bc3-bd3b-69ffe2b97faa"],
+Cell[708827, 11817, 152, 2, 70, "Section",ExpressionUUID->"390be202-0fe0-4f77-884a-11ce04ad8dba"],
+Cell[708982, 11821, 240, 5, 70, "Text",ExpressionUUID->"530f87bf-44b3-4a16-9502-72dfc7e53d3a"],
 Cell[CellGroupData[{
-Cell[709247, 11830, 96, 0, 70, "Subsection",ExpressionUUID->"92b5d4ba-3a70-4cfe-929e-96c26f45087f"],
-Cell[709346, 11832, 635, 25, 70, "Text",ExpressionUUID->"5cccdeed-a4fe-4d11-8abe-662ea37a5682"],
-Cell[709984, 11859, 403, 13, 70, "DisplayFormula",ExpressionUUID->"5dcadc41-01da-4088-ab49-8a22435c0e30"],
-Cell[710390, 11874, 399, 10, 70, "Input",ExpressionUUID->"b445dc27-7735-4f59-b570-75efd4e4c40e"],
-Cell[710792, 11886, 298, 8, 70, "Text",ExpressionUUID->"e9420f3f-0fc5-47b6-93d2-d7d71a387395"],
-Cell[711093, 11896, 338, 6, 70, "Item",ExpressionUUID->"d8fed966-3679-4d10-aef8-2fdce05f36e9"],
-Cell[711434, 11904, 303, 6, 70, "Item",ExpressionUUID->"54128bf9-b767-456d-aac1-75fdb4ae5b14"],
-Cell[711740, 11912, 537, 8, 70, "Item",ExpressionUUID->"256a0ce7-b662-473f-b086-f0bc705933b5"]
+Cell[709247, 11830, 96, 0, 70, "Subsection",ExpressionUUID->"d5d859a8-669a-4923-96a5-658ac581bc9d"],
+Cell[709346, 11832, 635, 25, 70, "Text",ExpressionUUID->"d326958f-df90-4d41-bf1f-c67741249941"],
+Cell[709984, 11859, 403, 13, 70, "DisplayFormula",ExpressionUUID->"44275594-8865-4729-8292-f17f060fff29"],
+Cell[710390, 11874, 399, 10, 70, "Input",ExpressionUUID->"c6542abf-f51f-4d43-bee4-8ba3c1172063"],
+Cell[710792, 11886, 298, 8, 70, "Text",ExpressionUUID->"ad27f382-b3a4-42ec-af95-ee8993ac07a8"],
+Cell[711093, 11896, 338, 6, 70, "Item",ExpressionUUID->"90cc23a2-b734-46aa-b810-8e991bc70aa4"],
+Cell[711434, 11904, 303, 6, 70, "Item",ExpressionUUID->"a90e3895-31d8-46d3-9ff6-082da2b845d9"],
+Cell[711740, 11912, 537, 8, 70, "Item",ExpressionUUID->"72627308-1092-421b-9e54-68b9bd08e3ad"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[712314, 11925, 121, 0, 70, "Subsection",ExpressionUUID->"b967eb1f-2cb9-4743-9eb1-6b6f29f97e1a"],
-Cell[712438, 11927, 453, 10, 70, "Text",ExpressionUUID->"d9a0d307-9734-4eb9-8b22-d81ca4aa1df5"],
-Cell[712894, 11939, 155236, 2554, 70, "Output",ExpressionUUID->"02d80ba7-d888-46f5-84fd-058c0263ffed"],
-Cell[868133, 14495, 421, 10, 70, "Text",ExpressionUUID->"28a87a64-11ca-45db-b7db-8e1a8cf57bcb"],
-Cell[868557, 14507, 410, 10, 70, "Text",ExpressionUUID->"1fa65587-1dec-404f-aa9a-4451d769dc61"]
+Cell[712314, 11925, 121, 0, 70, "Subsection",ExpressionUUID->"21a1e688-d4a3-463e-8876-f9c59efc9c6a"],
+Cell[712438, 11927, 453, 10, 70, "Text",ExpressionUUID->"dd2d432d-af76-4722-9ac8-8e3bcaab831a"],
+Cell[712894, 11939, 155236, 2554, 70, "Output",ExpressionUUID->"21f532af-0743-4c8b-8983-ec6730583b27"],
+Cell[868133, 14495, 421, 10, 70, "Text",ExpressionUUID->"4c337ccf-ac56-42f2-abad-7083c9bf1fc9"],
+Cell[868557, 14507, 410, 10, 70, "Text",ExpressionUUID->"406d9db9-6403-4193-8f38-45fbbf0d5049"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[869016, 14523, 133, 0, 70, "Section",ExpressionUUID->"47edb0af-1cdf-4476-8bf8-f178ca6d0594"],
-Cell[869152, 14525, 631, 13, 70, "Text",ExpressionUUID->"ae077c33-54b8-4827-b218-debeb6e78d43"],
+Cell[869016, 14523, 133, 0, 70, "Section",ExpressionUUID->"28f998a0-2285-413d-8057-58788a6bda69"],
+Cell[869152, 14525, 631, 13, 70, "Text",ExpressionUUID->"36b8f774-a50c-4871-a9b4-ea5d190130ad"],
 Cell[CellGroupData[{
-Cell[869808, 14542, 555, 13, 70, "Input",ExpressionUUID->"a5e10332-8fb8-4f86-b867-aaae49c9b93d"],
-Cell[870366, 14557, 46579, 773, 70, "Output",ExpressionUUID->"cfe98e93-aa2d-422a-a7fc-5ec626956f31"]
+Cell[869808, 14542, 555, 13, 70, "Input",ExpressionUUID->"683c1f00-c1d0-4fbd-ad16-b072707c1fa2"],
+Cell[870366, 14557, 46579, 773, 70, "Output",ExpressionUUID->"8d5aa689-f86b-44e6-a97c-220e92c75ccc"]
 }, Open  ]],
-Cell[916960, 15333, 321, 8, 70, "Text",ExpressionUUID->"4d78239b-39f3-4658-88a8-ece535525e91"],
+Cell[916960, 15333, 321, 8, 70, "Text",ExpressionUUID->"635c9f20-e520-4580-b685-d5e3c906b8c1"],
 Cell[CellGroupData[{
-Cell[917306, 15345, 148, 2, 70, "Subsection",ExpressionUUID->"efb03256-0a53-4a00-ad92-357678529d7c"],
-Cell[917457, 15349, 84145, 1388, 70, "Output",ExpressionUUID->"fa960999-8656-4aa8-b570-2087eba42313"],
-Cell[1001605, 16739, 375, 9, 70, "Text",ExpressionUUID->"5561a506-f6c7-4bf5-ad86-c95d9e70db7c"],
-Cell[1001983, 16750, 220, 7, 70, "Text",ExpressionUUID->"fba8b704-51a3-4001-9a20-c347c2bf50e6"],
-Cell[1002206, 16759, 170815, 2809, 70, "Output",ExpressionUUID->"f553865b-8726-4b07-acab-30b866359d48"],
-Cell[1173024, 19570, 472, 10, 70, "Text",ExpressionUUID->"15839f14-f6ae-4d4e-902a-03af18e9e441"],
-Cell[1173499, 19582, 376, 8, 70, "Text",ExpressionUUID->"2918d5cc-13f6-4791-ab96-9cfeb8069398"]
+Cell[917306, 15345, 148, 2, 70, "Subsection",ExpressionUUID->"175e327e-2b83-4ad5-b265-eb71841d70d2"],
+Cell[917457, 15349, 84145, 1388, 70, "Output",ExpressionUUID->"1cf63b7b-e7c4-431d-bd1b-4aa3a44fff71"],
+Cell[1001605, 16739, 375, 9, 70, "Text",ExpressionUUID->"1bf4e18f-c5b7-4ad9-9262-c8cbf0d10e82"],
+Cell[1001983, 16750, 220, 7, 70, "Text",ExpressionUUID->"6f7eab28-6a2a-4d0f-b678-d51bbf2ae837"],
+Cell[1002206, 16759, 170815, 2809, 70, "Output",ExpressionUUID->"2caef344-d146-4b6a-8036-bc61df4102e3"],
+Cell[1173024, 19570, 472, 10, 70, "Text",ExpressionUUID->"d135a9d2-036a-40c5-8237-78bb5bbd5536"],
+Cell[1173499, 19582, 376, 8, 70, "Text",ExpressionUUID->"3fef37b9-dbcd-45c9-a7a7-8a39e0cdddc3"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1173924, 19596, 129, 0, 70, "Section",ExpressionUUID->"244f859f-d6f8-4747-b566-2589dff46e9c"],
-Cell[1174056, 19598, 843, 18, 70, "Text",ExpressionUUID->"bc62ae28-871c-49d0-a936-f6f8ac8dc2e1"],
-Cell[1174902, 19618, 449, 11, 70, "Program",ExpressionUUID->"e9dbf14e-b7ac-4c8b-8109-8d57a15a68bc"],
-Cell[1175354, 19631, 362, 10, 70, "Text",ExpressionUUID->"fb5f3ae3-1d9f-4a09-8304-98beba87262b"],
-Cell[1175719, 19643, 269, 5, 70, "Item",ExpressionUUID->"0e0b7157-5ce0-4c0c-83b8-da723d425284"],
-Cell[1175991, 19650, 223, 4, 70, "Item",ExpressionUUID->"9145a839-de0b-4a84-87dc-0b52c5ba24e9"],
-Cell[1176217, 19656, 352, 6, 70, "Item",ExpressionUUID->"2ff2e9e7-7826-4fb9-b424-65f65f71510e"],
-Cell[1176572, 19664, 520, 13, 70, "Text",ExpressionUUID->"47183eee-54f4-4b55-b8cf-e92213389421"]
+Cell[1173924, 19596, 129, 0, 70, "Section",ExpressionUUID->"7e3d6dde-ac4a-4e5a-9b98-03ae6e996856"],
+Cell[1174056, 19598, 843, 18, 70, "Text",ExpressionUUID->"4fefd687-de2b-4db8-9c31-2e90f26ef75b"],
+Cell[1174902, 19618, 449, 11, 70, "Program",ExpressionUUID->"2cf42cfd-9b71-403b-b6ef-734ecd5ed4c7"],
+Cell[1175354, 19631, 362, 10, 70, "Text",ExpressionUUID->"54ec3c42-e08e-4f4b-a9a5-798fb1311bc3"],
+Cell[1175719, 19643, 269, 5, 70, "Item",ExpressionUUID->"2a5632b5-4209-455d-97e2-922cabd52587"],
+Cell[1175991, 19650, 223, 4, 70, "Item",ExpressionUUID->"e24088fa-3328-40d1-b4bd-80d4cc26314a"],
+Cell[1176217, 19656, 352, 6, 70, "Item",ExpressionUUID->"c4ea78c0-dd45-42f9-a629-bfc462097333"],
+Cell[1176572, 19664, 520, 13, 70, "Text",ExpressionUUID->"8166c61c-a180-4f43-932e-7e4311f77efd"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1177129, 19682, 126, 0, 70, "Section",ExpressionUUID->"de0bbae6-e006-4362-b654-6b88f30259ea"],
-Cell[1177258, 19684, 570, 11, 70, "Text",ExpressionUUID->"45a1b459-7884-45d4-852c-71335fc848b3"],
-Cell[1177831, 19697, 74596, 1231, 70, "Output",ExpressionUUID->"74e64d77-86a1-47bc-aefa-09d6edeca2e4"],
-Cell[1252430, 20930, 304, 8, 70, "Text",ExpressionUUID->"3405d57c-3df2-4ef4-b7f3-5500dca36992"],
-Cell[1252737, 20940, 38829, 645, 70, "Output",ExpressionUUID->"40eecf5a-31b3-4c17-9598-e50635e04113"],
-Cell[1291569, 21587, 506, 11, 70, "Text",ExpressionUUID->"42fa4044-58c7-4590-91b4-f1e078bfa115"]
+Cell[1177129, 19682, 126, 0, 70, "Section",ExpressionUUID->"d2612175-91cd-45b1-b1c1-c531eabbf419"],
+Cell[1177258, 19684, 570, 11, 70, "Text",ExpressionUUID->"7e78bbee-d71b-4e9c-9f80-4d26ee87fa7e"],
+Cell[1177831, 19697, 74596, 1231, 70, "Output",ExpressionUUID->"3181519f-44ad-4f09-8405-a16b3db79b6d"],
+Cell[1252430, 20930, 304, 8, 70, "Text",ExpressionUUID->"24516308-0d94-4d26-8443-aa7ed15978de"],
+Cell[1252737, 20940, 38829, 645, 70, "Output",ExpressionUUID->"23a0f028-5886-4b5f-80ba-745ce0d2fa38"],
+Cell[1291569, 21587, 506, 11, 70, "Text",ExpressionUUID->"a25b1880-62fc-4438-88e1-e8d9c2228ac4"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1292112, 21603, 128, 0, 70, "Section",ExpressionUUID->"c93534ca-eff8-4be1-a1bf-77c559f54388"],
-Cell[1292243, 21605, 606, 14, 70, "Text",ExpressionUUID->"f50459bd-b65c-4c32-b9f4-5c212851af97"],
-Cell[1292852, 21621, 60915, 1008, 70, "Output",ExpressionUUID->"7f6fc8cc-7720-4a96-90f2-ad987fcfc7fd"],
-Cell[1353770, 22631, 492, 11, 70, "Text",ExpressionUUID->"2bbe24c4-7763-47a7-9b13-062abde505f5"],
-Cell[1354265, 22644, 94844, 1564, 70, "Output",ExpressionUUID->"e1d7c6a6-6dd9-479d-9e4b-092796986ad8"],
-Cell[1449112, 24210, 397, 9, 70, "Text",ExpressionUUID->"97f8e516-fda1-454f-9d4f-216bec56cef5"],
-Cell[1449512, 24221, 10331, 179, 70, "Output",ExpressionUUID->"f25cb770-2902-44ea-a46d-8dc054c7be4f"],
-Cell[1459846, 24402, 674, 13, 70, "Text",ExpressionUUID->"db70dcd5-4116-477d-ae76-5443b10082b5"]
+Cell[1292112, 21603, 128, 0, 70, "Section",ExpressionUUID->"f44cbd37-3646-4224-a7e5-a77a43f5799a"],
+Cell[1292243, 21605, 606, 14, 70, "Text",ExpressionUUID->"756eb44c-5e79-4ea2-9592-fadde4d7716b"],
+Cell[1292852, 21621, 60915, 1008, 70, "Output",ExpressionUUID->"432175db-8981-438b-8049-c6e25baa39c2"],
+Cell[1353770, 22631, 492, 11, 70, "Text",ExpressionUUID->"2b2528f4-ef49-4d6b-98b0-b98781ca4462"],
+Cell[1354265, 22644, 94844, 1564, 70, "Output",ExpressionUUID->"28e98164-7edf-49a1-952d-8b7be53a37c9"],
+Cell[1449112, 24210, 397, 9, 70, "Text",ExpressionUUID->"f05e3e5b-17bb-4f42-80b6-c9aa3595d427"],
+Cell[1449512, 24221, 10331, 179, 70, "Output",ExpressionUUID->"8e2bc5bc-dea6-4eae-a6c4-d0c990da88ae"],
+Cell[1459846, 24402, 674, 13, 70, "Text",ExpressionUUID->"21c8d7fd-1129-4c25-adff-53ca20c2a729"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1460557, 24420, 99, 0, 70, "Section",ExpressionUUID->"08785153-9e4c-4cf6-938f-b826d3853425"],
-Cell[1460659, 24422, 585, 15, 70, "Text",ExpressionUUID->"fb9f458b-70c5-4099-a78c-1beb29e4f002"],
-Cell[1461247, 24439, 94108, 1552, 70, "Output",ExpressionUUID->"d7802fb8-e8c4-473b-a36e-3d327495bb1e"],
-Cell[1555358, 25993, 457, 10, 70, "Text",ExpressionUUID->"3d247b31-be26-4180-8b23-2420a45802c6"],
-Cell[1555818, 26005, 120289, 1981, 70, "Output",ExpressionUUID->"88e470fb-a119-47c2-8a96-a64980635986"],
-Cell[1676110, 27988, 473, 10, 70, "Text",ExpressionUUID->"0ba913fb-e5db-4d2a-8bb4-1f8694a91640"]
+Cell[1460557, 24420, 99, 0, 70, "Section",ExpressionUUID->"6920f3f8-817c-4a55-b8e9-728fcba381b9"],
+Cell[1460659, 24422, 585, 15, 70, "Text",ExpressionUUID->"700ce06b-9c9f-4b31-b8d9-cf09e14f56d9"],
+Cell[1461247, 24439, 94108, 1552, 70, "Output",ExpressionUUID->"310ccff1-875e-4ea1-af3b-4ac1b37306b8"],
+Cell[1555358, 25993, 457, 10, 70, "Text",ExpressionUUID->"17c95e3e-1638-4a59-8481-9b0eb8520638"],
+Cell[1555818, 26005, 120289, 1981, 70, "Output",ExpressionUUID->"86ca1715-e2c1-415f-84e5-bc4cb75a0d38"],
+Cell[1676110, 27988, 473, 10, 70, "Text",ExpressionUUID->"efa00192-989b-4f81-ab25-b704b87cbf15"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1676620, 28003, 120, 0, 70, "Section",ExpressionUUID->"782ad39f-a92a-48a2-8ac3-cf216cb42904"],
-Cell[1676743, 28005, 715, 24, 70, "Text",ExpressionUUID->"2e77681e-d717-416c-aae4-46a2002f0e6f"],
-Cell[1677461, 28031, 192334, 3161, 70, "Output",ExpressionUUID->"770707cd-c25f-413a-9439-d34fee31a991"],
-Cell[1869798, 31194, 815, 19, 70, "Text",ExpressionUUID->"e0c45b8e-d44c-499a-901a-55cc7519aa2e"],
-Cell[1870616, 31215, 159188, 2618, 70, "Output",ExpressionUUID->"48ce87ba-223a-4ab2-8157-bf2f61e6772d"],
-Cell[2029807, 33835, 289, 8, 70, "Text",ExpressionUUID->"5046c498-fde8-4f17-8a2c-367c07a5708e"],
-Cell[2030099, 33845, 931, 24, 70, "Text",ExpressionUUID->"a4d4a775-068b-43a4-8ff4-7391f9ac7d7c"]
+Cell[1676620, 28003, 120, 0, 70, "Section",ExpressionUUID->"90196ddd-e1e3-471b-becc-dc271ed4ff46"],
+Cell[1676743, 28005, 715, 24, 70, "Text",ExpressionUUID->"3ce1d0eb-8058-4870-88f0-597593b3eb00"],
+Cell[1677461, 28031, 192334, 3161, 70, "Output",ExpressionUUID->"49f9b927-f2a5-456d-855c-2554371a5e8a"],
+Cell[1869798, 31194, 815, 19, 70, "Text",ExpressionUUID->"91410a97-6f45-41f3-b016-e6ba0207f32a"],
+Cell[1870616, 31215, 159188, 2618, 70, "Output",ExpressionUUID->"7b1cdd60-5ab7-4c22-a7fd-2de2048f055e"],
+Cell[2029807, 33835, 289, 8, 70, "Text",ExpressionUUID->"5e8d36b2-1478-43d2-8d21-eee367606b1f"],
+Cell[2030099, 33845, 931, 24, 70, "Text",ExpressionUUID->"cb035922-f599-4ee2-b8e5-de43c4cb3c61"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2031067, 33874, 134, 0, 70, "Section",ExpressionUUID->"f177ce7e-0b79-4ea3-b1bb-ebd123dc8372"],
-Cell[2031204, 33876, 882, 26, 70, "Text",ExpressionUUID->"dc8dfcab-2075-4f25-b739-031b72ac458b"],
-Cell[2032089, 33904, 552, 9, 70, "Text",ExpressionUUID->"12ed1fa7-d6ac-418c-a783-ce4e4713e4e1"],
-Cell[2032644, 33915, 237, 4, 70, "Text",ExpressionUUID->"d812bfd4-068b-431a-a451-2c7d466ae5ed"],
-Cell[2032884, 33921, 718, 21, 70, "Output",ExpressionUUID->"b5c15066-2c4c-4af3-8d07-793446bbc16b"],
+Cell[2031067, 33874, 134, 0, 70, "Section",ExpressionUUID->"1b6106ff-0d3b-477a-82f0-2800a532dbd7"],
+Cell[2031204, 33876, 882, 26, 70, "Text",ExpressionUUID->"8d610301-243c-4397-9ffd-e45eb78f2a69"],
+Cell[2032089, 33904, 552, 9, 70, "Text",ExpressionUUID->"010f46e2-4bee-42b6-8b36-534d60aa575a"],
+Cell[2032644, 33915, 237, 4, 70, "Text",ExpressionUUID->"e7fa8e09-5a51-4561-931e-ddae117589c1"],
+Cell[2032884, 33921, 718, 21, 70, "Output",ExpressionUUID->"b9cb9a40-fd78-4192-8e21-98885c7a7b3e"],
 Cell[CellGroupData[{
-Cell[2033627, 33946, 129, 0, 70, "Subsection",ExpressionUUID->"6509dad3-ee74-4441-a287-387c8808d0d4"],
-Cell[2033759, 33948, 791, 19, 70, "Text",ExpressionUUID->"d0db3231-3fb3-4d94-8977-c2a3ef6acbfe"]
+Cell[2033627, 33946, 129, 0, 70, "Subsection",ExpressionUUID->"32e2ff20-4402-4d25-8141-e656be8c7a28"],
+Cell[2033759, 33948, 791, 19, 70, "Text",ExpressionUUID->"094ae83f-fe5a-4237-b0be-4ed0e18754a4"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2034587, 33972, 99, 0, 70, "Subsection",ExpressionUUID->"5a0ac257-69f5-42aa-a07e-c8428f2b9bee"],
-Cell[2034689, 33974, 369, 7, 70, "Text",ExpressionUUID->"250f0608-9696-4175-ac6a-3bc4f5f74b3b"],
-Cell[2035061, 33983, 358, 9, 70, "Item",ExpressionUUID->"22f61969-7b14-4a34-b769-fefdbb5b4003"],
-Cell[2035422, 33994, 307, 8, 70, "Item",ExpressionUUID->"03fd1240-9d62-43e3-9a35-5860be2a3997"],
-Cell[2035732, 34004, 845, 23, 70, "Text",ExpressionUUID->"6a06c016-28bd-4cbe-b3a0-5da511de472b"],
-Cell[2036580, 34029, 821, 22, 70, "Output",ExpressionUUID->"20cabcec-044e-4266-a59f-a2b7cb825308"],
-Cell[2037404, 34053, 116995, 1927, 70, "Output",ExpressionUUID->"1062f7b8-83f6-43af-b100-4563a89d100f"],
-Cell[2154402, 35982, 387, 9, 70, "Text",ExpressionUUID->"cc2d3c30-5243-409e-aa8c-72c02cac87bf"]
+Cell[2034587, 33972, 99, 0, 70, "Subsection",ExpressionUUID->"02afc6e4-6377-4d60-82ba-b66d53fccf62"],
+Cell[2034689, 33974, 369, 7, 70, "Text",ExpressionUUID->"5d791f2a-765f-4a02-a4cf-f582774003e0"],
+Cell[2035061, 33983, 358, 9, 70, "Item",ExpressionUUID->"c688f80e-5215-4738-9dd5-dfa6b271c1cc"],
+Cell[2035422, 33994, 307, 8, 70, "Item",ExpressionUUID->"e70bd76c-13df-4611-a1eb-23e6b7f38127"],
+Cell[2035732, 34004, 845, 23, 70, "Text",ExpressionUUID->"9b55db87-3fc1-475a-b494-66c6202974e3"],
+Cell[2036580, 34029, 821, 22, 70, "Output",ExpressionUUID->"d899e685-62f9-4542-b11f-e786b06e41c3"],
+Cell[2037404, 34053, 116995, 1927, 70, "Output",ExpressionUUID->"18d68882-33ea-4f28-aef8-c94fc256e043"],
+Cell[2154402, 35982, 387, 9, 70, "Text",ExpressionUUID->"35b69f83-3aee-4a6d-91a2-e9ef3b66993c"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2154826, 35996, 113, 0, 70, "Subsection",ExpressionUUID->"2946e3a2-c7f8-4b05-a9b4-6408b1b40388"],
-Cell[2154942, 35998, 522, 11, 70, "Text",ExpressionUUID->"0c95a231-f9fe-4df6-a1b9-b89cf06d7d25"],
-Cell[2155467, 36011, 131481, 2164, 70, "Output",ExpressionUUID->"c7157bec-01b1-4c8b-9900-f870f99bfee8"],
-Cell[2286951, 38177, 411, 9, 70, "Text",ExpressionUUID->"35fedc44-52cf-4c80-8445-7559c5df1e64"],
-Cell[2287365, 38188, 993, 24, 70, "Text",ExpressionUUID->"e75ce4e3-c34f-4dcb-9a84-85e3e2c7e068"]
+Cell[2154826, 35996, 113, 0, 70, "Subsection",ExpressionUUID->"c9bcabdd-62f8-4f3a-8666-6daedd6ddc9f"],
+Cell[2154942, 35998, 522, 11, 70, "Text",ExpressionUUID->"56095df2-6c5e-41ba-b2c2-d67afbdc1bd3"],
+Cell[2155467, 36011, 131481, 2164, 70, "Output",ExpressionUUID->"f1c75f13-5e3a-49a4-9a79-53feecd46231"],
+Cell[2286951, 38177, 411, 9, 70, "Text",ExpressionUUID->"97bb5ccc-b4a4-4f75-a907-7c1b167581ef"],
+Cell[2287365, 38188, 993, 24, 70, "Text",ExpressionUUID->"c6bb6137-d3fd-4924-bbdf-d817ba760167"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2288395, 38217, 116, 0, 70, "Subsection",ExpressionUUID->"b900b8c3-40a7-4844-bfc6-16b93653dfd2"],
+Cell[2288514, 38219, 1035, 32, 70, "Text",ExpressionUUID->"b94fda3a-8464-4fc2-b235-f436a1ffa245"],
+Cell[2289552, 38253, 1322, 32, 70, "Text",ExpressionUUID->"02086f70-e05c-4937-a545-64d2473d8bc8"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2288407, 38218, 89, 0, 70, "Section",ExpressionUUID->"30a6a28a-1fa3-4949-9b17-617c7f313f8c"],
-Cell[2288499, 38220, 297, 5, 70, "Item",ExpressionUUID->"8c8be821-9dc7-44a9-aa55-98522bed51df"],
-Cell[2288799, 38227, 559, 9, 70, "Item",ExpressionUUID->"f947bbab-9107-40ca-9d71-e304278051ef"],
-Cell[2289361, 38238, 554, 8, 70, "Item",ExpressionUUID->"5361e8a7-4c77-4e7c-a507-fa739451a2ea"],
-Cell[2289918, 38248, 477, 8, 70, "Item",ExpressionUUID->"3d986958-cc0f-44d6-b19a-f78fdb692000"],
-Cell[2290398, 38258, 306, 5, 70, "Item",ExpressionUUID->"333b43b9-48fb-478a-ae1f-e42b44e6dd8e"],
-Cell[2290707, 38265, 398, 7, 70, "Item",ExpressionUUID->"eb1a3785-5cf7-4374-8198-0d431f809e8c"]
+Cell[2290923, 38291, 89, 0, 70, "Section",ExpressionUUID->"3f78007e-5394-4f3a-a3ce-3e5bfc46c7a9"],
+Cell[2291015, 38293, 297, 5, 70, "Item",ExpressionUUID->"8985b4fc-2ed4-4222-9f62-5a5678f4b285"],
+Cell[2291315, 38300, 559, 9, 70, "Item",ExpressionUUID->"a8ab45d3-af97-4979-aaa1-bae279501b2f"],
+Cell[2291877, 38311, 554, 8, 70, "Item",ExpressionUUID->"276db8ec-7b03-4967-9ff5-f909c2b48ce8"],
+Cell[2292434, 38321, 477, 8, 70, "Item",ExpressionUUID->"a2723865-0305-43b4-bbf6-2686aacabebd"],
+Cell[2292914, 38331, 306, 5, 70, "Item",ExpressionUUID->"af1e0940-3082-4f9c-867b-01b7902f12f8"],
+Cell[2293223, 38338, 398, 7, 70, "Item",ExpressionUUID->"e3712530-54ad-47be-9c89-6367d8c44057"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[2291142, 38277, 95, 0, 70, "Section",ExpressionUUID->"e961ef80-ce9a-4bac-aaa4-ec6231003434"],
-Cell[2291240, 38279, 256, 5, 70, "Text",ExpressionUUID->"2bf23423-fb72-42a8-9343-120e0f67bb12"],
-Cell[2291499, 38286, 1142, 21, 70, "Program",ExpressionUUID->"9fe634e4-5119-491e-8604-69de484e7d06"],
-Cell[2292644, 38309, 360, 6, 70, "Text",ExpressionUUID->"31e88d93-72a0-41a5-91eb-aa72aef1a26c"]
+Cell[2293658, 38350, 95, 0, 70, "Section",ExpressionUUID->"ab6b86f1-9534-4570-8c9e-96eb14dd32b3"],
+Cell[2293756, 38352, 256, 5, 70, "Text",ExpressionUUID->"20b774ef-e361-46d9-a9fb-7f7f25f042fd"],
+Cell[2294015, 38359, 1142, 21, 70, "Program",ExpressionUUID->"e115de95-b253-4f3c-9e3f-8ebb7cc93934"],
+Cell[2295160, 38382, 360, 6, 70, "Text",ExpressionUUID->"08f281ae-db8f-4e67-be57-7875b1f4d30b"]
 }, Open  ]]
 }, Open  ]]
 }
