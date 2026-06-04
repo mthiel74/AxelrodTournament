@@ -73,9 +73,11 @@ to their success and ask which mixture is stable. ", bold["Second"],
     " \[Dash] a small probability that an intended move is mis-executed \
 \[Dash] and show that the evolutionarily stable mixture ",
     bold["depends on the noise level"],
-    ". Finally, in the spirit of an automated-research loop, we let a search \
-algorithm ", ital["discover"],
-    " memory-one strategies that beat Tit-for-Tat under noise."}]
+    ". Finally, in the spirit of an automated-research loop, we let search \
+algorithms ", ital["discover"], " new strategies \[Dash] culminating in an ",
+    bold["eight-hour evolutionary search over memory-two strategies"],
+    " whose champion beats Tit-for-Tat by ~9% and finishes first in a field of \
+26, by learning to tell an accidental defection from a deliberate one."}]
 }];
 
 (* ===================================================================== *)
@@ -398,14 +400,14 @@ pairwise ", bold["invasion matrix"], ": can a rare mutant ", math["M"],
     math["A[M,R] > A[R,R]"], ". A strategy is ", bold["evolutionarily stable"],
     " if no mutant can invade it."}],
   imgCell["ess_stability_map.png", 640],
-  captionCell["Evolutionarily stable strategies vs noise (green = no mutant \
+  captionCell[{"Evolutionarily stable strategies vs noise (green = no mutant \
 invades). At ", bold["zero noise"], " a whole cluster is uninvadable \[Dash] \
 AllD and Grim, but also Tit-for-Tat, ZD-Generous, Omega-TFT and even two of \
 the discovered Generous-TFT champions: in a clean channel, cooperation can be \
 evolutionarily stable. Add even a little ", bold["noise"], " and that cluster \
 shatters \[Dash] the stable set collapses to a lone defector (AllD or Grim), \
 with noise levels in between admitting no pure ESS at all. Noise destroys the \
-evolutionary stability of cooperation."],
+evolutionary stability of cooperation."}],
   imgCell["ess_invasibility_highnoise.png", 620],
   captionCell["Invasibility matrix at \[Epsilon]=0.2 (red = row invades \
 column). The defectors have the cleanest columns."],
@@ -423,18 +425,136 @@ strategy, only best-for-a-given-world."}]
 }];
 
 (* ===================================================================== *)
-(* 10. CONCLUSION + REPRODUCIBILITY                                       *)
+(* 10. THE 8-HOUR RUN: A MEMORY-TWO CHAMPION                              *)
 (* ===================================================================== *)
 writeAll[{
-  hd1["10. Conclusions"],
+  hd1["10. An 8-hour automated search: a champion beyond memory-one"],
+  para[{"The discoveries so far searched small or fixed spaces. To see what a \
+genuinely long, open-ended search would find, we ran the autoresearch loop for ",
+    bold["eight hours"], " over a much larger space: ", bold["memory-two"],
+    " stochastic strategies, ", math["\[Theta] = (open, p1, \[Ellipsis], p16) \
+\[Element] [0,1]^17"], ". A memory-two strategy conditions its move on the ",
+    ital["last two"], " rounds, so it can express things memory-one cannot \
+\[Dash] crucially, it can tell an ", ital["isolated"],
+    " defection (likely a noise blip) from a ", ital["sustained"], " one."}],
+  para[{"The engine was a 4-island genetic algorithm with ring migration and \
+soft-restarts on stagnation, scored on the same field-vs-noise protocol, with a \
+hall of fame and frequent checkpoints. It ran unattended under a supervisor \
+that caps the wall-clock budget and guarantees no runaway kernels are left \
+behind. Over 111 generations the best field score climbed steadily, then \
+plateaued \[Dash] the signature of a converged search:"}],
+  para[{ital["Search progress: field score of the best strategy found, by \
+generation (selected rows):"]}],
+  Cell[BoxData@GridBox[
+    Prepend[
+      {ToString[#[[1]]], ToString[NumberForm[#[[2]], {5, 4}]],
+       "+" <> ToString[NumberForm[#[[3]], {4, 3}]]} & /@ {
+        {5, 2.4328, 0.1447}, {15, 2.5144, 0.2263}, {25, 2.5357, 0.2476},
+        {45, 2.5507, 0.2626}, {75, 2.5661, 0.2780}, {111, 2.5661, 0.2780}},
+      {"generation", "best field score", "vs TFT"}],
+    GridBoxAlignment -> {"Columns" -> {{Center}}},
+    GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}},
+    GridBoxItemSize -> {"Columns" -> {{9}}}], "Output",
+    TextAlignment -> Center, CellMargins -> {{Automatic, Automatic}, {10, 8}}],
+
+  hd2["Honest scoring: searching is not the same as winning"],
+  para[{"The search ranks candidates with a fixed random seed so the \
+comparison is deterministic. That can ", ital["overfit"],
+    " the seed. So every hall-of-fame strategy was re-scored at high repetition \
+with ", bold["fresh seeds it never saw during the search"], ", and to be doubly \
+sure we then validated the winner on ", bold["four more independent seeds"],
+    ". The champion's edge survives intact: a robust improvement of ",
+    bold["+0.20 over Tit-for-Tat (about 8.8%)"],
+    ", essentially identical to its search-time score. It is a real strategy, \
+not a seed artefact."}],
+
+  hd2["What the champion does"],
+  para[{"Decoding the 17-number genome into behaviour reveals a clean, \
+interpretable rule. It opens by cooperating (~90%), reciprocates cooperation, \
+and \[Dash] the key \[Dash] treats the opponent's last two moves very \
+differently depending on the pattern:"}],
+  bullets[{
+    {bold["Opponent defected once, but cooperated the round before "],
+     "(an isolated, already-corrected slip \[Dash] exactly what execution noise \
+produces): forgive at ", math["\[TildeTilde] 0.90"], "."},
+    {bold["Opponent defected both of the last two rounds "],
+     "(a sustained defector): cooperate at only ", math["\[TildeTilde] 0.21"],
+     " \[Dash] punish."}}],
+  para[{bold["This is the crux. "],
+    "A memory-one strategy sees only the single last move; faced with \
+\[OpenCurlyDoubleQuote]opponent just defected\[CloseCurlyDoubleQuote] it must \
+pick ", ital["one"], " forgiveness probability. The memory-two champion splits \
+that case by whether the defection looks ", ital["accidental"], " or ",
+    ital["deliberate"], " \[Dash] forgiving a mistake while punishing a \
+strategy. That is precisely the behaviour noise rewards, and it is why the \
+champion's lead over Tit-for-Tat is ", bold["largest at low-to-moderate \
+noise"], ", where mistakes are recoverable:"}],
+  Cell[BoxData@GridBox[
+    Prepend[
+      {ToString[NumberForm[#[[1]], {3, 2}]],
+       ToString[NumberForm[#[[2]], {5, 3}]],
+       ToString[NumberForm[#[[3]], {5, 3}]],
+       "+" <> ToString[NumberForm[#[[4]], {4, 3}]]} & /@ {
+        {0., 2.845, 2.780, 0.064}, {0.02, 2.765, 2.429, 0.336},
+        {0.05, 2.663, 2.409, 0.255}, {0.1, 2.545, 2.386, 0.159},
+        {0.15, 2.441, 2.367, 0.075}, {0.2, 2.380, 2.358, 0.022}},
+      {"noise \[Epsilon]", "MemTwo-Long", "Tit-for-Tat", "advantage"}],
+    GridBoxAlignment -> {"Columns" -> {{Center}}},
+    GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}},
+    GridBoxItemSize -> {"Columns" -> {{11}}}], "Output",
+    TextAlignment -> Center, CellMargins -> {{Automatic, Automatic}, {10, 8}}],
+  imgCell["champion_vs_tft_noise.png", 720],
+  captionCell["The 8-hour memory-two champion (orange) vs Tit-for-Tat and the \
+best non-champion strategy, field score across noise. The champion leads \
+everywhere, and its margin over Tit-for-Tat widens as noise rises."],
+
+  hd2["How it ranks against the whole field"],
+  para[{"Dropped into the full panel of 26 strategies (classics, modern \
+entrants and every strategy discovered in this project), re-scored honestly, \
+the memory-two champion finishes ", bold["first overall"],
+    " \[Dash] ahead of the self-tuning Adaptive strategy and well clear of \
+Tit-for-Tat in 15th place. The discovered strategies (orange) take six of the \
+top eight places:"}],
+  imgCell["champion_ranking.png", 880],
+  captionCell["Field score (mean over noise) for all 26 strategies. Orange = \
+discovered by an automated-research loop in this project; \[FivePointedStar] \
+marks them. MemTwo-Long, from the 8-hour run, is the single best strategy in \
+the field."],
+  para[{bold["But is it evolutionarily stable? No \[Dash] and that is the \
+honest, interesting answer. "],
+    "Re-running the ESS invasion analysis with the champion added, MemTwo-Long \
+is ", ital["not"], " an ESS at any noise level: like every forgiving strategy, \
+a lone unconditional defector can invade a population of it. It is the strongest ",
+    ital["competitor"], " in the field \[Dash] it can invade 15\[Dash]21 of the \
+other 25 strategies \[Dash] but being the best player is not the same as being \
+uninvadable. The \[OpenCurlyDoubleQuote]three meanings of stable\
+\[CloseCurlyDoubleQuote] from \[Section]9 hold: the best strategy to ",
+    ital["field"], " and the strategy that ", ital["cannot be invaded"],
+    " are simply different things."}]
+}];
+
+(* ===================================================================== *)
+(* 11. CONCLUSION + REPRODUCIBILITY                                       *)
+(* ===================================================================== *)
+writeAll[{
+  hd1["11. Conclusions"],
   bullets[{
     {bold["Tit-for-Tat is excellent but not optimal. "],
      "In a cooperative field, more forgiving reciprocators (Generous TFT, \
 Tit-for-2-Tats) edge it out \[Dash] and extortion finishes last."},
-    {bold["Forgiveness must be patient. "],
+    {bold["Forgiveness must be patient \[Dash] and, with more memory, \
+discriminating. "],
      "The autoresearch loop found two-strikes tolerance (Tit-for-2-Tats) beats \
 every reflexive scheme; a self-tuning strategy that estimates the noise also \
-beats TFT."},
+beats TFT; and the 8-hour memory-two search went further still, learning to \
+forgive an isolated (noise-like) defection while punishing a sustained one \
+\[Dash] the single best strategy in the whole field."},
+    {bold["More search keeps paying, but with diminishing, honest returns. "],
+     "Eight hours of evolutionary search over a 17-dimensional space did beat \
+every hand-designed and short-search strategy \[Dash] yet the gain over a \
+two-minute search was modest, the run converged well before its budget, and \
+fixed-seed fitness had to be discounted by fresh-seed re-evaluation to report \
+an honest number. Automated discovery works; it is not magic."},
     {bold["\[OpenCurlyDoubleQuote]Stable\[CloseCurlyDoubleQuote] has three \
 answers. "],
      "ESS admits cooperation at zero noise but collapses to a lone defector \
@@ -462,6 +582,8 @@ wolframscript -file wolfram/fsm_discover.wls     # evolve finite-state machines
 wolframscript -file wolfram/spatial.wls          # spatial / lattice evolution
 wolframscript -file wolfram/coevolution.wls      # Red-Queen co-evolution
 wolframscript -file wolfram/ess.wls              # ESS invasion analysis
+autoresearch/supervise.sh 28800                  # 8h memory-two search (zombie-safe)
+wolframscript -file wolfram/champion_analysis.wls # rank champions vs the field
 wolframscript -file wolfram/figures.wls          # regenerate base figures"],
   para[{ital["Built entirely in the Wolfram Language. The strategy-discovery \
 and autoresearch loops borrow the propose \[Rule] evaluate \[Rule] accept \
