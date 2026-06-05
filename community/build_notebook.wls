@@ -55,9 +55,10 @@ from Tit-for-Tat to an evolutionarily stable mix that depends on noise"],
 
   figWithCode["PostFigures`replicatorVsNoise[]", "replicator_vs_noise.png", 720],
   captionCell["The headline result. As execution noise \[Epsilon] rises \
-(left to right), the evolutionarily stable composition of strategies shifts \
-\[Dash] from a coexistence of generous reciprocators to a collapse into \
-unconditional defection."],
+(left to right), the evolutionarily stable composition shifts \[Dash] from a \
+broad coexistence of (mostly forgiving) reciprocators to near-total dominance \
+by Grim, the unforgiving trigger whose permanent retaliation locks a noisy \
+population into mutual defection."],
 
   animWithCode["PostFigures`spatialMovieFrame[]   (* full movie: \
 spatial_movie_compare.gif *)", "spatial_movie_compare.gif", 720],
