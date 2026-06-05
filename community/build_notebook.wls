@@ -164,6 +164,45 @@ GenerousTFT = memOne[1, {1, 1/3, 1, 1/3}];"],
 Generous TFT, Tit-for-2-Tats, 2-Tits-for-Tat, Grim, Pavlov, Gradual, and two \
 zero-determinant strategies (an extortioner and a generous one)."}],
 
+  hd2["Meet the strategies"],
+  para[{"Most of these are classics from the literature; the rest are \
+discovered later in this project. In plain terms, each is a different rule for ",
+    ital["when to forgive and when to retaliate"], ":"}],
+  bullets[{
+    {bold["Always Cooperate / Always Defect"], " \[Dash] the unconditional \
+baselines: cooperate (or defect) no matter what the opponent does."},
+    {bold["Tit-for-Tat"], " \[Dash] cooperate on the first move, then copy the \
+opponent's previous move. Nice, retaliatory, forgiving and clear \[Dash] the \
+strategy that won Axelrod's 1980 tournament."},
+    {bold["Suspicious Tit-for-Tat"], " \[Dash] the same, but opens with \
+defection instead of cooperation."},
+    {bold["Generous Tit-for-Tat"], " \[Dash] Tit-for-Tat that forgives a \
+fraction of defections at random \[Dash] designed to break the endless revenge \
+loops that errors trigger under noise (Nowak & Sigmund)."},
+    {bold["Tit-for-2-Tats"], " \[Dash] only retaliates after ", ital["two"],
+      " defections in a row; very slow to anger."},
+    {bold["2-Tits-for-Tat"], " \[Dash] the opposite temperament \[Dash] answers \
+each defection with two of its own."},
+    {bold["Grim (the \"grim trigger\")"], " \[Dash] cooperate until the opponent \
+defects just once, then defect forever. No second chances."},
+    {bold["Pavlov (win-stay, lose-shift)"], " \[Dash] repeat your last move if \
+it paid off (you got ", math["R"], " or ", math["T"], "), switch if it didn't (",
+      math["P"], " or ", math["S"], "). Simple, and surprisingly robust \
+(Nowak & Sigmund)."},
+    {bold["Gradual"], " \[Dash] cooperates, but answers the ", math["n"],
+      "-th defection with ", math["n"], " defections, then offers reconciliation."},
+    {bold["Zero-determinant (ZD) strategies"], " \[Dash] Press & Dyson's 2012 \
+family that pins a fixed linear relation between the two players' scores. The ",
+      bold["extortioner"], " (ZD-Extort-2) guarantees itself a share of any \
+surplus; the ", bold["generous"], " one (ZD-Generous) never scores above its \
+opponent."},
+    {bold["Random"], " \[Dash] cooperates with probability one-half; a control."},
+    {bold["The discovered champion (memory-two)"], " \[Dash] conditions on the \
+last ", ital["two"], " rounds rather than one, so it can tell a one-off slip \
+from sustained defection \[Dash] exactly the distinction that matters under \
+noise."}
+  }],
+
   hd2["Noise: the trembling hand"],
   para[{"Real interactions are imperfect. We model ", bold["execution noise"],
     ": each intended move is flipped with probability ", math["\[Epsilon]"],
