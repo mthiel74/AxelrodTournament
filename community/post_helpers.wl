@@ -98,7 +98,10 @@ wlIn[code_String] := Cell[code, "Input",
    context) and shows a red placeholder instead of embedding the literal
    source code as if it were the figure.                                *)
 evalFigCell[call_String, width_Integer] := Module[{g, sized, didEval},
-  g = Quiet @ Check[ToExpression[call], $Failed];
+  (* UsingFrontEnd (outside Check) so figures that need a front end \[Dash]
+     MatrixPlot, continuous BarLegend, etc. \[Dash] evaluate instead of
+     tripping FrontEndObject::notavail and embedding a placeholder. *)
+  g = Quiet @ UsingFrontEnd @ Check[ToExpression[call], $Failed];
   didEval = g =!= $Failed && FreeQ[g, _Symbol?(Context[#] === "PostFigures`" &)];
   If[! didEval,
     Cell[TextData[{bold["[ failed to evaluate: " <> call <>
