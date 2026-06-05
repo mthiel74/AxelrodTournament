@@ -96,41 +96,44 @@ palette = nameColor /@ names;
 stackOrder = {"AllC", "GenerousTFT", "ZD-Generous", "TitFor2Tats",
               "2TitsForTat", "Pavlov", "Gradual", "TitForTat",
               "SuspiciousTFT", "Grim", "AllD", "ZD-Extort-2", "Random"};
-$muteThreshold = 0.03;
-$muteColor     = GrayLevel[0.82];
 swatches[which_: names] := SwatchLegend[nameColor /@ which, which,
   LegendLayout -> "Column", LegendMarkerSize -> 14];
 
+(* ---- solid stacked-area renderer -----------------------------------
+   StackedListPlot[..., Filling -> Automatic] renders translucent fills,
+   which left muddy bands and white seams where the faded fills met the
+   background. Instead we draw the CUMULATIVE curves from the top band
+   down, each filled to the axis with an OPAQUE colour, so every lower
+   band over-paints the one above it. Result: solid, crisp, edge-matched
+   bands with no white lines. Band i (between cumulative i-1 and i) shows
+   the colour of ord[[i]].                                              *)
+solidStack[x_, ord_, series_, xlabel_, ylabel_, label_, imgSize_, aspect_] :=
+  Module[{k = Length @ ord, cum, draw},
+  cum  = Accumulate[series];           (* cum[[i]] = sum of bands 1..i *)
+  draw = Range[k, 1, -1];              (* top band first, bottom last *)
+  ListLinePlot[
+    Table[Transpose[{x, cum[[j]]}], {j, draw}],
+    PlotStyle  -> Table[Directive[nameColor[ord[[j]]], AbsoluteThickness[0.8]], {j, draw}],
+    Filling      -> Axis,
+    FillingStyle -> Table[p -> Directive[Opacity[1], nameColor[ord[[draw[[p]]]]]], {p, k}],
+    PlotRange  -> {{Min[x], Max[x]}, {0, 1}}, Frame -> True,
+    FrameLabel -> {xlabel, ylabel}, PlotLabel -> label,
+    ImageSize  -> imgSize, AspectRatio -> aspect,
+    PlotLegends -> SwatchLegend[nameColor /@ Reverse[ord], Reverse[ord],
+       LegendLayout -> "Column", LegendMarkerSize -> 14]]];
+
 (* ---- composition / trajectory stacked-area helper ------------------- *)
-(* Reorders strategies by behaviour, mutes any whose max share < 3% into
-   a single grey "trace" band, and matches band edges to fill colour so
-   no white outlines remain. *)
+(* Reorders strategies by behaviour (so similar colours stay adjacent) and
+   renders solid, opaque bands via solidStack. *)
 stackFromCSV[file_, xlabel_, label_] := Module[
-   {raw, hdr, x, byName, ord, series, mutedQ, edge, styles, vis, legend},
+   {raw, hdr, x, byName, ord, series},
   raw    = csv[file];
   hdr    = raw[[1, 2 ;;]];
   x      = N @ raw[[2 ;;, 1]];
   byName = AssociationThread[hdr -> Transpose[N @ raw[[2 ;;, 2 ;;]]]];
   ord    = Select[stackOrder, KeyExistsQ[byName, #] &];
   series = byName /@ ord;
-  mutedQ = Max[#] < $muteThreshold & /@ series;
-  edge[c_] := EdgeForm[Directive[c, AbsoluteThickness[0.4]]];
-  styles = MapThread[
-    With[{c = If[#2, $muteColor, nameColor[#1]]}, Directive[c, edge[c]]] &,
-    {ord, mutedQ}];
-  vis = Pick[ord, mutedQ, False];
-  legend = If[AnyTrue[mutedQ, TrueQ],
-    SwatchLegend[
-      Append[nameColor /@ vis, $muteColor],
-      Append[vis, "trace (<" <> ToString[Round[100 $muteThreshold]] <> "%)"],
-      LegendLayout -> "Column", LegendMarkerSize -> 14],
-    swatches[vis]];
-  StackedListPlot[
-    Table[Transpose[{x, series[[i]]}], {i, Length @ ord}],
-    PlotStyle -> styles, PlotRange -> {{Min[x], Max[x]}, {0, 1}},
-    Filling -> Automatic, Frame -> True,
-    FrameLabel -> {xlabel, "population fraction"}, PlotLabel -> label,
-    ImageSize -> 720, AspectRatio -> 0.5, PlotLegends -> legend]];
+  solidStack[x, ord, series, xlabel, "population fraction", label, 720, 0.5]];
 
 replicatorVsNoise[] := stackFromCSV["replicator_vs_noise.csv",
   "execution noise \[Epsilon]", "Evolutionarily stable mix vs noise (replicator dynamics)"];
@@ -233,23 +236,15 @@ fsmComplexity[] := Module[{d = fsmData[]},
 spatialPalette = {"AllC", "AllD", "TitForTat", "GenerousTFT", "Pavlov", "Grim"};
 spatialCols    = nameColor /@ spatialPalette;
 spatialComposition[] := Module[
-   {raw, hdr, x, byName, ord, series, edge, styles},
+   {raw, hdr, x, byName, ord, series},
   raw    = csv["spatial_vs_noise.csv"];
   hdr    = raw[[1, 2 ;;]];
   x      = N @ raw[[2 ;;, 1]];
   byName = AssociationThread[hdr -> Transpose[N @ raw[[2 ;;, 2 ;;]]]];
   ord    = Select[stackOrder, KeyExistsQ[byName, #] &];
   series = byName /@ ord;
-  edge[c_] := EdgeForm[Directive[c, AbsoluteThickness[0.4]]];
-  styles = With[{c = nameColor[#]}, Directive[c, edge[c]]] & /@ ord;
-  StackedListPlot[Table[Transpose[{x, series[[i]]}], {i, Length @ ord}],
-    PlotStyle -> styles, Filling -> Automatic,
-    PlotRange -> {{0, Max[x]}, {0, 1}}, Frame -> True,
-    FrameLabel -> {"execution noise \[Epsilon]", "lattice fraction"},
-    PlotLabel -> "Spatial evolution: final composition vs noise",
-    PlotLegends -> SwatchLegend[nameColor /@ ord, ord,
-       LegendLayout -> "Column", LegendMarkerSize -> 14],
-    ImageSize -> 760, AspectRatio -> 0.5]];
+  solidStack[x, ord, series, "execution noise \[Epsilon]", "lattice fraction",
+    "Spatial evolution: final composition vs noise", 760, 0.5]];
 spatialLegend[] := SwatchLegend[spatialCols, spatialPalette, LegendLayout -> "Row"];
 spatialSnapshots[] := Module[{s = Import[dpath["spatial_snapshots.m"]], lo, hi, g, pal, cells},
   pal = s["palette"]; g = s["gens"];

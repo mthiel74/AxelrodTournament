@@ -54,41 +54,38 @@ stackOrder = {"AllC", "GenerousTFT", "ZD-Generous", "TitFor2Tats",
 
 (* Strategies whose max share never reaches this fraction are drawn as
    a faint grey band and collapsed into a single 'trace' legend entry. *)
-$muteThreshold = 0.03;
-$muteColor     = GrayLevel[0.82];
 
 swatches[which_: names] := SwatchLegend[nameColor /@ which, which,
   LegendLayout -> "Column", LegendMarkerSize -> 14];
 
-(* cumulative stacked-area chart: behaviour-ordered, edges matched to fill
-   (no white outlines), low-share strategies muted into the background. *)
+(* Solid stacked-area: draw cumulative curves from the top band down, each
+   filled to the axis with an OPAQUE colour so lower bands over-paint the
+   ones above. Avoids StackedListPlot's translucent Filling (which left
+   muddy fills + white seams). Band i shows the colour of ord[[i]]. *)
+solidStack[x_, ord_, series_, xLabel_, yLabel_, label_, imgSize_, aspect_] :=
+  Module[{k = Length @ ord, cum, draw},
+  cum  = Accumulate[series];
+  draw = Range[k, 1, -1];
+  ListLinePlot[
+    Table[Transpose[{x, cum[[j]]}], {j, draw}],
+    PlotStyle  -> Table[Directive[nameColor[ord[[j]]], AbsoluteThickness[0.8]], {j, draw}],
+    Filling      -> Axis,
+    FillingStyle -> Table[p -> Directive[Opacity[1], nameColor[ord[[draw[[p]]]]]], {p, k}],
+    PlotRange  -> {{Min[x], Max[x]}, {0, 1}}, Frame -> True,
+    FrameLabel -> {xLabel, yLabel}, PlotLabel -> label,
+    ImageSize  -> imgSize, AspectRatio -> aspect,
+    PlotLegends -> SwatchLegend[nameColor /@ Reverse[ord], Reverse[ord],
+       LegendLayout -> "Column", LegendMarkerSize -> 14]]];
+
 stackArea[file_, label_, xLabel_: "execution noise \[Epsilon]"] := Module[
-   {raw, hdr, x, byName, ord, series, mutedQ, edge, styles, vis, legend},
+   {raw, hdr, x, byName, ord, series},
   raw    = Import[FileNameJoin[{dataDir, file}], "CSV"];
   hdr    = raw[[1, 2 ;;]];
   x      = N @ raw[[2 ;;, 1]];
   byName = AssociationThread[hdr -> Transpose[N @ raw[[2 ;;, 2 ;;]]]];
   ord    = Select[stackOrder, KeyExistsQ[byName, #] &];
   series = byName /@ ord;
-  mutedQ = Max[#] < $muteThreshold & /@ series;
-  edge[c_] := EdgeForm[Directive[c, AbsoluteThickness[0.4]]];
-  styles = MapThread[
-    With[{c = If[#2, $muteColor, nameColor[#1]]}, Directive[c, edge[c]]] &,
-    {ord, mutedQ}];
-  vis = Pick[ord, mutedQ, False];
-  legend = If[AnyTrue[mutedQ, TrueQ],
-    SwatchLegend[
-      Append[nameColor /@ vis, $muteColor],
-      Append[vis, "trace (<" <> ToString[Round[100 $muteThreshold]] <> "%)"],
-      LegendLayout -> "Column", LegendMarkerSize -> 14],
-    swatches[vis]];
-  StackedListPlot[
-    Table[Transpose[{x, series[[i]]}], {i, Length @ ord}],
-    PlotStyle -> styles, PlotRange -> {{Min[x], Max[x]}, {0, 1}},
-    Filling -> Automatic, Frame -> True,
-    FrameLabel -> {xLabel, "population fraction"},
-    PlotLabel -> label, ImageSize -> 720, AspectRatio -> 0.5,
-    PlotLegends -> legend]
+  solidStack[x, ord, series, xLabel, "population fraction", label, 720, 0.5]
 ];
 
 Print["[figures] evolution: replicator + Moran composition..."];

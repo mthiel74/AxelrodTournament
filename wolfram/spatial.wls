@@ -114,18 +114,22 @@ Put[<|"palette" -> paletteNames, "L" -> L, "gens" -> gens,
 (* ---- figures ------------------------------------------------------- *)
 Export[FileNameJoin[{imgDir, "spatial_composition_vs_noise.png"}],
   Module[{series = Transpose[Table[finalComp[eps], {eps, sweep}]],
-          ordIdx, ordSeries, edge, styles},
-    ordIdx    = Position[paletteNames, #][[1, 1]] & /@ stackOrder;
+          ord, ordIdx, ordSeries, k, cum, draw},
+    (* Solid opaque bands via overlapping fill-to-axis (top band drawn first,
+       lower bands over-paint): no translucent fills, no white seams. *)
+    ord       = Select[stackOrder, MemberQ[paletteNames, #] &];
+    ordIdx    = Position[paletteNames, #][[1, 1]] & /@ ord;
     ordSeries = series[[ordIdx]];
-    edge[c_]  := EdgeForm[Directive[c, AbsoluteThickness[0.4]]];
-    styles    = With[{c = nameColor[#]}, Directive[c, edge[c]]] & /@ stackOrder;
-    StackedListPlot[
-      Table[Transpose[{sweep, ordSeries[[i]]}], {i, Length[stackOrder]}],
-      PlotStyle -> styles, Filling -> Automatic,
+    k = Length[ord]; cum = Accumulate[ordSeries]; draw = Range[k, 1, -1];
+    ListLinePlot[
+      Table[Transpose[{sweep, cum[[j]]}], {j, draw}],
+      PlotStyle  -> Table[Directive[nameColor[ord[[j]]], AbsoluteThickness[0.8]], {j, draw}],
+      Filling      -> Axis,
+      FillingStyle -> Table[p -> Directive[Opacity[1], nameColor[ord[[draw[[p]]]]]], {p, k}],
       PlotRange -> {{0, Last[sweep]}, {0, 1}}, Frame -> True,
       FrameLabel -> {"execution noise \[Epsilon]", "lattice fraction"},
       PlotLabel -> "Spatial evolution: final composition vs noise (Pavlov rescues cooperation)",
-      PlotLegends -> SwatchLegend[nameColor /@ stackOrder, stackOrder,
+      PlotLegends -> SwatchLegend[nameColor /@ Reverse[ord], Reverse[ord],
          LegendLayout -> "Column", LegendMarkerSize -> 14],
       ImageSize -> 760, AspectRatio -> 0.5]],
   ImageResolution -> 144];
