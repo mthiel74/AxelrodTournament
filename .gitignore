@@ -12,3 +12,6 @@ data/_dbg*
 
 # long autoresearch run working dir (committed manually after the real run)
 autoresearch/long/
+
+# agent instructions: keep locally, do not publish
+CLAUDE.md
