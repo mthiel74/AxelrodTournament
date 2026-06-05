@@ -71,9 +71,7 @@ AxelrodTournament/
 │   ├── ess.wls           # [ext] ESS invasion analysis
 │   └── figures.wls       # regenerate base figures
 ├── autoresearch/         # [ext] Karpathy-style autoresearch loop ported to IPD
-│   ├── program.md        #   research instructions
-│   ├── evaluate.wls      #   FIXED evaluation harness (do not edit to win)
-│   ├── run_search.wls    #   propose→evaluate→keep driver
+│   ├── run_search.wls    #   FIXED harness + propose→evaluate→keep driver
 │   ├── results.tsv       #   experiment log
 │   └── champions/        #   discovered strategies that beat TFT
 ├── tests/sanity.wls      # correctness checks (payoffs, ZD relations)

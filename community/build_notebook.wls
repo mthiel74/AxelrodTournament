@@ -322,7 +322,7 @@ named hypothesis, evaluate it, keep it if it wins, repeat"],
     " \[Dash] exactly the shape of Karpathy-style ", ital["autoresearch"],
     " scaffolds (an AI edits one solution file; a fixed harness scores it; \
 improvements are committed). We ported that loop to this domain: ",
-    mono["autoresearch/evaluate.wls"], " is the fixed harness (an 18-strategy \
+    mono["autoresearch/run_search.wls"], " is the fixed harness (an 18-strategy \
 field \[Times] six noise levels) and a sequence of hypotheses is proposed, \
 each scored by mean field score averaged over the noise sweep."}],
   codeIn["champion <- Tit-for-Tat
@@ -432,7 +432,7 @@ a third independent route to the same conclusion: forgiveness answers noise."]
 (* ===================================================================== *)
 writeAll[{
   hd1["9. Which strategies are evolutionarily stable?"],
-  para[{"A rigorous capstone. For a panel of 25 strategies (classics, modern \
+  para[{"A rigorous capstone. For a panel of 26 strategies (classics, modern \
 entrants, and the discovered champions) we compute, at each noise level, the \
 pairwise ", bold["invasion matrix"], ": can a rare mutant ", math["M"],
     " invade a resident population of ", math["R"], "? It can if ",
@@ -545,7 +545,7 @@ noise"], ", where mistakes are recoverable:"}],
   figWithCode["PostFigures`championVsTFT[]", "champion_vs_tft_noise.png", 720],
   captionCell["The 8-hour memory-two champion (orange) vs Tit-for-Tat and the \
 best non-champion strategy, field score across noise. The champion leads \
-everywhere, and its margin over Tit-for-Tat widens as noise rises."],
+everywhere, though its margin over Tit-for-Tat narrows as noise rises."],
 
   hd2["How it ranks against the whole field"],
   para[{"Dropped into the full panel of 26 strategies (classics, modern \

@@ -3,7 +3,7 @@
 
 (*  run_search.wls -- drives the autoresearch propose -> evaluate -> keep
     loop over a curated sequence of hypotheses (the "researcher's notebook").
-    Uses the SAME fixed protocol as evaluate.wls. Records every experiment to
+    Uses the fixed evaluation protocol below. Records every experiment to
     results.tsv and saves any strategy that beats the running champion into
     champions/. This is the autoresearch loop, batched into one kernel so the
     18x6x8x150 evaluations don't pay repeated startup cost.
@@ -15,7 +15,7 @@ repoRoot = ParentDirectory[here];
 Get[FileNameJoin[{repoRoot, "wolfram", "axelrod.wl"}]];
 Get[FileNameJoin[{repoRoot, "wolfram", "strategies_ext.wl"}]];
 
-(* fixed protocol -- identical to evaluate.wls *)
+(* fixed evaluation protocol -- never edited to win *)
 rounds = 150; reps = 8; evalSeed = 20260529;
 sweep  = {0., 0.02, 0.05, 0.1, 0.15, 0.2};
 

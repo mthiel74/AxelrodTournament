@@ -59,11 +59,11 @@ noise level*:
   Tit-for-Tat) share the population in roughly equal measure. Cooperation is
   evolutionarily robust: mutual-cooperation payoffs sustain the whole cluster,
   and defectors cannot invade because the reciprocators punish them.
-- **High noise (ε ≳ 0.15):** **cooperation collapses** — `AllD` sweeps the
-  population (→ ~0.99 at ε = 0.2). Under heavy execution error, reciprocators
-  spend so much time accidentally punishing each other that their cooperative
-  advantage evaporates, and unconditional defection becomes the only stable
-  attractor.
+- **High noise (ε ≳ 0.15):** the forgiving cluster collapses — `Grim` sweeps the
+  population (→ ~0.98 at ε = 0.2). Under heavy execution error, the gentler
+  reciprocators spend so much time accidentally punishing each other that their
+  cooperative advantage evaporates, and the unforgiving trigger strategy becomes
+  the dominant attractor.
 
 The transition between these regimes is the headline figure. The Moran process
 tells the same qualitative story with finite-population stochasticity, confirming
@@ -77,7 +77,7 @@ the replicator result is not an artefact of the deterministic limit.
 
 In the spirit of an automated-research loop (*propose → evaluate → accept →
 repeat*; cf. Karpathy's `autoresearch`, re-implemented natively in WL — see
-[`program.md`](program.md)), we search the memory-one strategy space
+[`run_search.wls`](autoresearch/run_search.wls)), we search the memory-one strategy space
 `θ = (open, pCC, pCD, pDC, pDD) ∈ [0,1]⁵` for the **best response to the standard
 field at a given noise level**. A greedy hill-climb provides the narrative log
 (`data/discovery_log_eps*.tsv`); a genetic search is the workhorse for the noise

@@ -24,7 +24,7 @@ ESS). Deliverable: a Wolfram Community post (a programmatically-built `.nb` +
 - `docs/images/` — figures, `Export[..., ImageResolution -> 144]`.
 - `community/` — `build_notebook.wls` builds the post from `Cell[]` expressions
   (helpers in `post_helpers.wl`) and exports `.nb` + `.pdf`.
-- `autoresearch/` — the Karpathy-style loop: `evaluate.wls` is the FIXED harness
+- `autoresearch/` — the Karpathy-style loop: `run_search.wls` is the FIXED harness
   (never edit it to win); `run_search.wls` proposes/evaluates/keeps; champions
   are saved to `champions/*.wl`.
 - `tests/` — sanity checks (payoffs, ZD enforced relations).
