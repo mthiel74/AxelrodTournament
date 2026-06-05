@@ -15,6 +15,9 @@
 repoRoot = ParentDirectory @ DirectoryName[$InputFileName];
 Get[FileNameJoin[{repoRoot, "community", "post_helpers.wl"}]];
 Get[FileNameJoin[{repoRoot, "wolfram", "axelrod.wl"}]];
+(* Load PostFigures so figWithCode's inline evaluation can resolve the
+   figure functions (replicatorVsNoise[], rankingGrid[], ...). *)
+Get[FileNameJoin[{repoRoot, "community", "post_figures.wl"}]];
 
 imgDir = FileNameJoin[{repoRoot, "docs", "images"}];
 outNb  = FileNameJoin[{repoRoot, "community", "axelrod_tournament.nb"}];
@@ -55,6 +58,15 @@ from Tit-for-Tat to an evolutionarily stable mix that depends on noise"],
 (left to right), the evolutionarily stable composition of strategies shifts \
 \[Dash] from a coexistence of generous reciprocators to a collapse into \
 unconditional defection."],
+
+  animWithCode["PostFigures`spatialMovieFrame[]   (* full movie: \
+spatial_movie_compare.gif *)", "spatial_movie_compare.gif", 720],
+  captionCell["Spatial IPD as a looping movie: low noise (left) sustains a rich \
+mosaic of cooperative reciprocators; high noise (right) forces them into large \
+defensive clusters of Grim and Tit-for-Tat, but cooperation never collapses. \
+The static call above shows the final frame; the looping animation is \
+spatial_movie_compare.gif (a single-world high-resolution version is \
+spatial_movie.gif)."],
 
   hd1["Abstract"],
   abstractCell[{

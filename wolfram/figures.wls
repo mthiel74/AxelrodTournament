@@ -15,28 +15,80 @@ If[! DirectoryQ[imgDir], CreateDirectory[imgDir, CreateIntermediateDirectories -
 names = Axelrod`strategyNames;
 n     = Length[names];
 
-(* stable, distinguishable colours, one per strategy *)
-palette = Table[ColorData["Rainbow"][(i - 1)/(n - 1)], {i, n}];
-nameColor = AssociationThread[names -> palette];
+(* Readable axis & label defaults: same fonts as post_figures.wl so the
+   PNG outputs and the in-notebook evaluated graphics match visually. *)
+$baseStyle  = {FontFamily -> "Helvetica", FontSize -> 13};
+$labelStyle = Directive[FontSize -> 15, FontFamily -> "Helvetica",
+                        FontColor -> GrayLevel[0.18]];
+SetOptions[#, BaseStyle -> $baseStyle, LabelStyle -> $labelStyle] & /@ {
+  ListLinePlot, ListPlot, StackedListPlot, BarChart, MatrixPlot,
+  ArrayPlot, Graphics, GraphicsGrid};
+
+(* Behaviour-grouped categorical palette: cooperator (blue), forgiving
+   reciprocators (teal/green), strict reciprocators (gold/orange),
+   punitive reciprocators (burnt), exploiters (red/magenta), Random (grey).
+   Replaces the perceptually-flat "Rainbow" ramp. *)
+nameColor = <|
+  "AllC"          -> RGBColor[0.22, 0.45, 0.72],
+  "GenerousTFT"   -> RGBColor[0.27, 0.66, 0.60],
+  "ZD-Generous"   -> RGBColor[0.45, 0.80, 0.73],
+  "TitFor2Tats"   -> RGBColor[0.40, 0.74, 0.36],
+  "2TitsForTat"   -> RGBColor[0.60, 0.78, 0.32],
+  "Pavlov"        -> RGBColor[0.78, 0.78, 0.30],
+  "Gradual"       -> RGBColor[0.86, 0.70, 0.27],
+  "TitForTat"     -> RGBColor[0.92, 0.60, 0.22],
+  "SuspiciousTFT" -> RGBColor[0.83, 0.43, 0.27],
+  "Grim"          -> RGBColor[0.65, 0.30, 0.25],
+  "AllD"          -> RGBColor[0.80, 0.18, 0.20],
+  "ZD-Extort-2"   -> RGBColor[0.48, 0.16, 0.34],
+  "Random"        -> GrayLevel[0.55]
+|>;
+palette = nameColor /@ names;
+
+(* Stack order (bottom -> top) tells a story:
+   cooperators -> forgiving reciprocators -> strict reciprocators ->
+   exploiters -> noise. Keeps similar behaviours adjacent in the band. *)
+stackOrder = {"AllC", "GenerousTFT", "ZD-Generous", "TitFor2Tats",
+              "2TitsForTat", "Pavlov", "Gradual", "TitForTat",
+              "SuspiciousTFT", "Grim", "AllD", "ZD-Extort-2", "Random"};
+
+(* Strategies whose max share never reaches this fraction are drawn as
+   a faint grey band and collapsed into a single 'trace' legend entry. *)
+$muteThreshold = 0.03;
+$muteColor     = GrayLevel[0.82];
+
 swatches[which_: names] := SwatchLegend[nameColor /@ which, which,
   LegendLayout -> "Column", LegendMarkerSize -> 14];
 
-readComp[file_] := Module[{raw},
-  raw = Import[FileNameJoin[{dataDir, file}], "CSV"];
-  {raw[[2 ;;, 1]], raw[[2 ;;, 2 ;;]]}    (* {noiseGrid, fractionRows} *)
-];
-
-(* cumulative stacked-area chart of composition vs noise *)
-stackArea[file_, label_] := Module[{eps, rows, series},
-  {eps, rows} = readComp[file];
-  series = Transpose[rows];                 (* one series per strategy *)
+(* cumulative stacked-area chart: behaviour-ordered, edges matched to fill
+   (no white outlines), low-share strategies muted into the background. *)
+stackArea[file_, label_, xLabel_: "execution noise \[Epsilon]"] := Module[
+   {raw, hdr, x, byName, ord, series, mutedQ, edge, styles, vis, legend},
+  raw    = Import[FileNameJoin[{dataDir, file}], "CSV"];
+  hdr    = raw[[1, 2 ;;]];
+  x      = N @ raw[[2 ;;, 1]];
+  byName = AssociationThread[hdr -> Transpose[N @ raw[[2 ;;, 2 ;;]]]];
+  ord    = Select[stackOrder, KeyExistsQ[byName, #] &];
+  series = byName /@ ord;
+  mutedQ = Max[#] < $muteThreshold & /@ series;
+  edge[c_] := EdgeForm[Directive[c, AbsoluteThickness[0.4]]];
+  styles = MapThread[
+    With[{c = If[#2, $muteColor, nameColor[#1]]}, Directive[c, edge[c]]] &,
+    {ord, mutedQ}];
+  vis = Pick[ord, mutedQ, False];
+  legend = If[AnyTrue[mutedQ, TrueQ],
+    SwatchLegend[
+      Append[nameColor /@ vis, $muteColor],
+      Append[vis, "trace (<" <> ToString[Round[100 $muteThreshold]] <> "%)"],
+      LegendLayout -> "Column", LegendMarkerSize -> 14],
+    swatches[vis]];
   StackedListPlot[
-    Table[Transpose[{eps, series[[i]]}], {i, n}],
-    PlotStyle -> palette, PlotRange -> {{Min[eps], Max[eps]}, {0, 1}},
+    Table[Transpose[{x, series[[i]]}], {i, Length @ ord}],
+    PlotStyle -> styles, PlotRange -> {{Min[x], Max[x]}, {0, 1}},
     Filling -> Automatic, Frame -> True,
-    FrameLabel -> {"execution noise \[Epsilon]", "population fraction"},
+    FrameLabel -> {xLabel, "population fraction"},
     PlotLabel -> label, ImageSize -> 720, AspectRatio -> 0.5,
-    PlotLegends -> swatches[]]
+    PlotLegends -> legend]
 ];
 
 Print["[figures] evolution: replicator + Moran composition..."];
@@ -50,26 +102,26 @@ Export[FileNameJoin[{imgDir, "moran_vs_noise.png"}],
   ImageResolution -> 144];
 
 (* representative replicator trajectories (generation -> composition) *)
-stackTraj[file_, label_] := Module[{raw, gen, series},
-  raw = Import[FileNameJoin[{dataDir, file}], "CSV"];
-  gen = raw[[2 ;;, 1]]; series = Transpose[raw[[2 ;;, 2 ;;]]];
-  StackedListPlot[Table[Transpose[{gen, series[[i]]}], {i, n}],
-    PlotStyle -> palette, PlotRange -> {{Min[gen], Max[gen]}, {0, 1}},
-    Filling -> Automatic, Frame -> True,
-    FrameLabel -> {"generation", "population fraction"},
-    PlotLabel -> label, ImageSize -> 720, AspectRatio -> 0.5,
-    PlotLegends -> swatches[]]];
 Export[FileNameJoin[{imgDir, "replicator_traj_lownoise.png"}],
-  stackTraj["replicator_traj_lownoise.csv", "Replicator trajectory, \[Epsilon]=0"],
+  stackArea["replicator_traj_lownoise.csv",
+    "Replicator trajectory, \[Epsilon]=0", "generation"],
   ImageResolution -> 144];
 Export[FileNameJoin[{imgDir, "replicator_traj_highnoise.png"}],
-  stackTraj["replicator_traj_highnoise.csv", "Replicator trajectory, \[Epsilon]=0.2"],
+  stackArea["replicator_traj_highnoise.csv",
+    "Replicator trajectory, \[Epsilon]=0.2", "generation"],
   ImageResolution -> 144];
 
-(* ---- tournament: heatmap, score-vs-noise, ranking grid ------------- *)
-d      = Import[FileNameJoin[{dataDir, "tournament.mx"}]];
-noises = d["noises"];
-M0     = d["matrices"][0.];
+(* ---- tournament: heatmap, score-vs-noise, ranking grid -------------
+   Read matrices from the committed CSVs (the .mx file is regenerable
+   and git-ignored, so don't depend on it).                            *)
+noiseTags = {"0.", "0.01", "0.05", "0.1"};
+noises    = {0., 0.01, 0.05, 0.1};
+matFromCSV[tag_] := With[
+    {raw = Import[FileNameJoin[{dataDir, "matrix_noise" <> tag <> ".csv"}], "CSV"]},
+  N @ raw[[2 ;;, 2 ;;]]];
+matrices = AssociationThread[noises -> matFromCSV /@ noiseTags];
+d  = <|"noises" -> noises, "matrices" -> matrices|>;
+M0 = matrices[0.];
 
 Print["[figures] tournament: heatmap, score-vs-noise, ranking grid..."];
 Export[FileNameJoin[{imgDir, "payoff_heatmap.png"}],

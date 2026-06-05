@@ -33,7 +33,22 @@ SeedRandom[2718];
 paletteNames = {"AllC", "AllD", "TitForTat", "GenerousTFT", "Pavlov", "Grim"};
 strat = Axelrod`strategies /@ paletteNames;
 nS = Length[paletteNames];
-cols = Table[ColorData["Rainbow"][(i - 1)/(nS - 1)], {i, nS}];
+(* Behaviour-grouped colours: subset of the global nameColor used by
+   figures.wls and post_figures.wl. Order matches paletteNames so the
+   integer strategy ids written to spatial_snapshots.m index correctly
+   into cols for the lattice ArrayPlot ColorRules.                      *)
+nameColor = <|
+  "AllC"        -> RGBColor[0.22, 0.45, 0.72],
+  "GenerousTFT" -> RGBColor[0.27, 0.66, 0.60],
+  "Pavlov"      -> RGBColor[0.78, 0.78, 0.30],
+  "TitForTat"   -> RGBColor[0.92, 0.60, 0.22],
+  "Grim"        -> RGBColor[0.65, 0.30, 0.25],
+  "AllD"        -> RGBColor[0.80, 0.18, 0.20]
+|>;
+cols = nameColor /@ paletteNames;
+(* stack order: cooperator -> forgiving reciprocators -> strict ->
+   punitive -> exploiter. Same story as the global figure palette. *)
+stackOrder = {"AllC", "GenerousTFT", "Pavlov", "TitForTat", "Grim", "AllD"};
 
 L = 32;                 (* lattice side *)
 gens = 80;              (* generations *)
@@ -98,14 +113,21 @@ Put[<|"palette" -> paletteNames, "L" -> L, "gens" -> gens,
 
 (* ---- figures ------------------------------------------------------- *)
 Export[FileNameJoin[{imgDir, "spatial_composition_vs_noise.png"}],
-  Module[{series = Transpose[Table[finalComp[eps], {eps, sweep}]]},
-    StackedListPlot[Table[Transpose[{sweep, series[[i]]}], {i, nS}],
-      PlotStyle -> cols, Filling -> Automatic,
+  Module[{series = Transpose[Table[finalComp[eps], {eps, sweep}]],
+          ordIdx, ordSeries, edge, styles},
+    ordIdx    = Position[paletteNames, #][[1, 1]] & /@ stackOrder;
+    ordSeries = series[[ordIdx]];
+    edge[c_]  := EdgeForm[Directive[c, AbsoluteThickness[0.4]]];
+    styles    = With[{c = nameColor[#]}, Directive[c, edge[c]]] & /@ stackOrder;
+    StackedListPlot[
+      Table[Transpose[{sweep, ordSeries[[i]]}], {i, Length[stackOrder]}],
+      PlotStyle -> styles, Filling -> Automatic,
       PlotRange -> {{0, Last[sweep]}, {0, 1}}, Frame -> True,
       FrameLabel -> {"execution noise \[Epsilon]", "lattice fraction"},
       PlotLabel -> "Spatial evolution: final composition vs noise (Pavlov rescues cooperation)",
-      PlotLegends -> SwatchLegend[cols, paletteNames], ImageSize -> 760,
-      AspectRatio -> 0.5]],
+      PlotLegends -> SwatchLegend[nameColor /@ stackOrder, stackOrder,
+         LegendLayout -> "Column", LegendMarkerSize -> 14],
+      ImageSize -> 760, AspectRatio -> 0.5]],
   ImageResolution -> 144];
 
 latticeImg[grid_, lbl_] := Labeled[

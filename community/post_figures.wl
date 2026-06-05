@@ -62,22 +62,75 @@ setDataDir[d_] := ($dataDir = d);
 dpath[f_] := FileNameJoin[{$dataDir, f}];
 csv[f_]  := Import[dpath[f], "CSV"];
 
-(* ---- shared palette: one colour per classic strategy --------------- *)
+(* ---- readable axis & label defaults --------------------------------
+   Applied via SetOptions so every figure picks them up without each
+   function having to repeat them. BaseStyle controls frame ticks;
+   LabelStyle controls FrameLabel + PlotLabel. Per-figure options still
+   override these defaults where needed.                               *)
+$baseStyle  = {FontFamily -> "Helvetica", FontSize -> 13};
+$labelStyle = Directive[FontSize -> 15, FontFamily -> "Helvetica",
+                        FontColor -> GrayLevel[0.18]];
+SetOptions[#, BaseStyle -> $baseStyle, LabelStyle -> $labelStyle] & /@ {
+  ListLinePlot, ListPlot, StackedListPlot, BarChart, MatrixPlot,
+  ArrayPlot, Graphics, GraphicsGrid};
+
+(* ---- shared palette: behaviour-grouped, one colour per strategy ---- *)
 names = Axelrod`strategyNames;
 nN    = Length[names];
-palette   = Table[ColorData["Rainbow"][(i - 1)/(nN - 1)], {i, nN}];
-nameColor = AssociationThread[names -> palette];
+nameColor = <|
+  "AllC"          -> RGBColor[0.22, 0.45, 0.72],
+  "GenerousTFT"   -> RGBColor[0.27, 0.66, 0.60],
+  "ZD-Generous"   -> RGBColor[0.45, 0.80, 0.73],
+  "TitFor2Tats"   -> RGBColor[0.40, 0.74, 0.36],
+  "2TitsForTat"   -> RGBColor[0.60, 0.78, 0.32],
+  "Pavlov"        -> RGBColor[0.78, 0.78, 0.30],
+  "Gradual"       -> RGBColor[0.86, 0.70, 0.27],
+  "TitForTat"     -> RGBColor[0.92, 0.60, 0.22],
+  "SuspiciousTFT" -> RGBColor[0.83, 0.43, 0.27],
+  "Grim"          -> RGBColor[0.65, 0.30, 0.25],
+  "AllD"          -> RGBColor[0.80, 0.18, 0.20],
+  "ZD-Extort-2"   -> RGBColor[0.48, 0.16, 0.34],
+  "Random"        -> GrayLevel[0.55]
+|>;
+palette = nameColor /@ names;
+stackOrder = {"AllC", "GenerousTFT", "ZD-Generous", "TitFor2Tats",
+              "2TitsForTat", "Pavlov", "Gradual", "TitForTat",
+              "SuspiciousTFT", "Grim", "AllD", "ZD-Extort-2", "Random"};
+$muteThreshold = 0.03;
+$muteColor     = GrayLevel[0.82];
 swatches[which_: names] := SwatchLegend[nameColor /@ which, which,
   LegendLayout -> "Column", LegendMarkerSize -> 14];
 
-(* ---- composition / trajectory stacked-area helpers ----------------- *)
-stackFromCSV[file_, xlabel_, label_] := Module[{raw, x, series},
-  raw = csv[file]; x = N@raw[[2 ;;, 1]]; series = Transpose[N@raw[[2 ;;, 2 ;;]]];
-  StackedListPlot[Table[Transpose[{x, series[[i]]}], {i, nN}],
-    PlotStyle -> palette, PlotRange -> {{Min[x], Max[x]}, {0, 1}},
+(* ---- composition / trajectory stacked-area helper ------------------- *)
+(* Reorders strategies by behaviour, mutes any whose max share < 3% into
+   a single grey "trace" band, and matches band edges to fill colour so
+   no white outlines remain. *)
+stackFromCSV[file_, xlabel_, label_] := Module[
+   {raw, hdr, x, byName, ord, series, mutedQ, edge, styles, vis, legend},
+  raw    = csv[file];
+  hdr    = raw[[1, 2 ;;]];
+  x      = N @ raw[[2 ;;, 1]];
+  byName = AssociationThread[hdr -> Transpose[N @ raw[[2 ;;, 2 ;;]]]];
+  ord    = Select[stackOrder, KeyExistsQ[byName, #] &];
+  series = byName /@ ord;
+  mutedQ = Max[#] < $muteThreshold & /@ series;
+  edge[c_] := EdgeForm[Directive[c, AbsoluteThickness[0.4]]];
+  styles = MapThread[
+    With[{c = If[#2, $muteColor, nameColor[#1]]}, Directive[c, edge[c]]] &,
+    {ord, mutedQ}];
+  vis = Pick[ord, mutedQ, False];
+  legend = If[AnyTrue[mutedQ, TrueQ],
+    SwatchLegend[
+      Append[nameColor /@ vis, $muteColor],
+      Append[vis, "trace (<" <> ToString[Round[100 $muteThreshold]] <> "%)"],
+      LegendLayout -> "Column", LegendMarkerSize -> 14],
+    swatches[vis]];
+  StackedListPlot[
+    Table[Transpose[{x, series[[i]]}], {i, Length @ ord}],
+    PlotStyle -> styles, PlotRange -> {{Min[x], Max[x]}, {0, 1}},
     Filling -> Automatic, Frame -> True,
     FrameLabel -> {xlabel, "population fraction"}, PlotLabel -> label,
-    ImageSize -> 720, AspectRatio -> 0.5, PlotLegends -> swatches[]]];
+    ImageSize -> 720, AspectRatio -> 0.5, PlotLegends -> legend]];
 
 replicatorVsNoise[] := stackFromCSV["replicator_vs_noise.csv",
   "execution noise \[Epsilon]", "Evolutionarily stable mix vs noise (replicator dynamics)"];
@@ -172,19 +225,30 @@ fsmComplexity[] := Module[{d = fsmData[]},
     FrameLabel -> {"execution noise \[Epsilon]", "reachable states of best machine"},
     PlotLabel -> "Evolved strategy complexity vs noise", ImageSize -> 700]];
 
-(* ---- spatial ------------------------------------------------------- *)
+(* ---- spatial -------------------------------------------------------
+   spatialPalette order MUST match the integer strategy ids written into
+   spatial_snapshots.m, so spatialCols stays in that order for the
+   ColorRules used by spatialSnapshots. The stacked area reorders
+   internally using the global stackOrder for behaviour grouping.       *)
 spatialPalette = {"AllC", "AllD", "TitForTat", "GenerousTFT", "Pavlov", "Grim"};
-spatialCols = Table[ColorData["Rainbow"][(i - 1)/(Length[spatialPalette] - 1)],
-  {i, Length[spatialPalette]}];
-spatialComposition[] := Module[{raw, x, series},
-  raw = csv["spatial_vs_noise.csv"]; x = N@raw[[2 ;;, 1]];
-  series = Transpose[N@raw[[2 ;;, 2 ;;]]];
-  StackedListPlot[Table[Transpose[{x, series[[i]]}], {i, Length[spatialPalette]}],
-    PlotStyle -> spatialCols, Filling -> Automatic,
+spatialCols    = nameColor /@ spatialPalette;
+spatialComposition[] := Module[
+   {raw, hdr, x, byName, ord, series, edge, styles},
+  raw    = csv["spatial_vs_noise.csv"];
+  hdr    = raw[[1, 2 ;;]];
+  x      = N @ raw[[2 ;;, 1]];
+  byName = AssociationThread[hdr -> Transpose[N @ raw[[2 ;;, 2 ;;]]]];
+  ord    = Select[stackOrder, KeyExistsQ[byName, #] &];
+  series = byName /@ ord;
+  edge[c_] := EdgeForm[Directive[c, AbsoluteThickness[0.4]]];
+  styles = With[{c = nameColor[#]}, Directive[c, edge[c]]] & /@ ord;
+  StackedListPlot[Table[Transpose[{x, series[[i]]}], {i, Length @ ord}],
+    PlotStyle -> styles, Filling -> Automatic,
     PlotRange -> {{0, Max[x]}, {0, 1}}, Frame -> True,
     FrameLabel -> {"execution noise \[Epsilon]", "lattice fraction"},
     PlotLabel -> "Spatial evolution: final composition vs noise",
-    PlotLegends -> SwatchLegend[spatialCols, spatialPalette],
+    PlotLegends -> SwatchLegend[nameColor /@ ord, ord,
+       LegendLayout -> "Column", LegendMarkerSize -> 14],
     ImageSize -> 760, AspectRatio -> 0.5]];
 spatialLegend[] := SwatchLegend[spatialCols, spatialPalette, LegendLayout -> "Row"];
 spatialSnapshots[] := Module[{s = Import[dpath["spatial_snapshots.m"]], lo, hi, g, pal, cells},

@@ -74,7 +74,8 @@ link[txt_String, url_String] := Sequence[
   StyleBox[txt, FontWeight -> "SemiBold"], " (",
   StyleBox[url, FontFamily -> "Courier", FontSize -> 10], ")"];
 
-(* static image cell from a PNG in $imgDir *)
+(* static image cell from a PNG in $imgDir (legacy; superseded by the
+   inline-evaluated figWithCode below, kept for direct callers). *)
 imgCell[file_, width_: 680] := Module[{path = FileNameJoin[{$imgDir, file}], im},
   If[FileExistsQ[path],
     im = Image[Import[path], ImageSize -> width];
@@ -87,20 +88,43 @@ imgCell[file_, width_: 680] := Module[{path = FileNameJoin[{$imgDir, file}], im}
 wlIn[code_String] := Cell[code, "Input",
   CellMargins -> {{60, 30}, {6, 6}}, FontSize -> 11];
 
-(* figure with its generating code: a runnable Input cell showing the exact
-   call, immediately followed by the pre-rendered static image. Every displayed
-   figure in the post is produced this way, so the code for every output is
-   visible and shift-Enter reproducible (after the setup cell loads the
-   package). Returns a Sequence so it slots into writeAll[{...}]. *)
-figWithCode[call_String, file_, width_: 680] := Sequence[wlIn[call], imgCell[file, width]];
+(* Evaluate `call` at build time and embed the resulting expression as a
+   vector Graphics output (no PNG round-trip). Smaller and sharper than
+   importing the rasterised PNG; the data files used by the call do NOT
+   need to be present when the saved notebook is opened.
 
-(* animated GIF embedded as a looping AnimatedImage (works on the Community
-   web page and in the notebook). *)
-animCell[file_, width_: 680] := Module[{path = FileNameJoin[{$imgDir, file}], frames},
+   Detects the "PostFigures package not loaded" case (where ToExpression
+   returns an unevaluated symbol whose Head lives in the PostFigures
+   context) and shows a red placeholder instead of embedding the literal
+   source code as if it were the figure.                                *)
+evalFigCell[call_String, width_Integer] := Module[{g, sized, didEval},
+  g = Quiet @ Check[ToExpression[call], $Failed];
+  didEval = g =!= $Failed && FreeQ[g, _Symbol?(Context[#] === "PostFigures`" &)];
+  If[! didEval,
+    Cell[TextData[{bold["[ failed to evaluate: " <> call <>
+      " \[Dash] is PostFigures` loaded? ]"]}], "Text",
+      FontColor -> RGBColor[0.7, 0.1, 0.1], TextAlignment -> Center],
+    sized = Quiet @ Check[Show[g, ImageSize -> width], g];
+    Cell[BoxData @ ToBoxes[sized], "Output", ShowCellLabel -> False,
+      TextAlignment -> Center, CellMargins -> {{Automatic, Automatic}, {10, 6}}]]];
+
+(* figure with its generating code: a runnable Input cell showing the exact
+   call, followed by the call's evaluated graphics (embedded as vector boxes,
+   not as a rasterised PNG). The legacy 3-arg signature ignores the PNG
+   filename so existing build scripts keep working unchanged. *)
+figWithCode[call_String, width_Integer: 680] :=
+  Sequence[wlIn[call], evalFigCell[call, width]];
+figWithCode[call_String, _String, width_Integer] :=
+  Sequence[wlIn[call], evalFigCell[call, width]];
+
+(* Animated GIF embedded as a single AnimatedImage. Critically: do NOT
+   ImageResize each frame (that re-encodes every frame as an uncompressed
+   PNG inside BoxData, multiplying notebook size by 20-25x). Instead let
+   Import return the native frames and use ImageSize on the AnimatedImage. *)
+animCell[file_, width_: 680] := Module[{path = FileNameJoin[{$imgDir, file}]},
   If[FileExistsQ[path],
-    frames = Import[path, {"GIF", "ImageList"}];
-    Cell[BoxData @ ToBoxes @ AnimatedImage[ImageResize[#, width] & /@ frames,
-        AnimationRepetitions -> Infinity],
+    Cell[BoxData @ ToBoxes @ AnimatedImage[Import[path, "GIF"],
+        ImageSize -> width, AnimationRepetitions -> Infinity],
       "Output", ShowCellLabel -> False, TextAlignment -> Center,
       CellMargins -> {{Automatic, Automatic}, {10, 6}}],
     Cell[TextData[{bold["[ missing animation: " <> file <> " ]"]}], "Text",
