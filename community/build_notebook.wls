@@ -103,21 +103,22 @@ writeAll[{
   para[{ital["You can skip this section if you only want to read."],
     " Every figure below is pre-rendered as a static image, so the prose, \
 equations, and figures are all readable without evaluating anything."}],
-  para[{"If you ", ital["do"], " want to reproduce the figures, the project's \
-two packages are attached alongside this notebook: ", mono["axelrod.wl"],
+  para[{"If you ", ital["do"], " want to reproduce the figures, attach just \
+two files alongside this notebook: ", mono["axelrod.wl"],
     " (the engine \[Dash] payoffs, strategies, noisy match play, ranking) and ",
-    mono["post_figures.wl"], " (one function per figure, each reading the \
-committed ", mono["data/"], " files and returning the graphic). The full \
-analysis scripts that ", ital["generated"], " those data files live in ",
+    mono["post_figures.wl"], " (one function per figure). The small data tables \
+the figures read are ", bold["bundled inside "], mono["post_figures.wl"],
+    " and unpacked automatically, so no separate data files are needed. The full \
+analysis scripts that ", ital["generated"], " those tables live in ",
     mono["wolfram/"], " and ", mono["autoresearch/"],
     " in the repository. Run the cell below once; then every figure in the post \
 is produced by the visible call shown just above it (e.g. ",
     mono["PostFigures`replicatorVsNoise[]"], ")."}],
-  wlIn["(* Put axelrod.wl, post_figures.wl and the data/ folder next to this \
-notebook, then evaluate. *)
+  wlIn["(* Attach axelrod.wl and post_figures.wl next to this notebook, then \
+evaluate. The data is bundled inside post_figures.wl -- no data files needed. *)
 SetDirectory[NotebookDirectory[]];
-Get[\"axelrod.wl\"];          (* the IPD engine: Axelrod` context        *)
-Get[\"post_figures.wl\"];     (* figure functions: PostFigures` context  *)"]
+Get[\"axelrod.wl\"];          (* the IPD engine: Axelrod` context           *)
+Get[\"post_figures.wl\"];     (* figure functions + bundled data: PostFigures` *)"]
 }];
 
 (* ===================================================================== *)
@@ -765,4 +766,11 @@ TimeConstrained[
   600,
   Print["[notebook] warn: notebook save timed out"]
 ];
+
+(* Co-locate the reader's two upload files next to the notebook so the whole
+   shareable bundle (post + axelrod.wl + post_figures.wl) lives in community/. *)
+CopyFile[FileNameJoin[{repoRoot, "wolfram", "axelrod.wl"}],
+  FileNameJoin[{repoRoot, "community", "axelrod.wl"}], OverwriteTarget -> True];
+Print["[notebook] copied axelrod.wl into community/"];
+
 Print["[notebook] done."];
